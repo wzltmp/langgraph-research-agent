@@ -8,7 +8,7 @@
 
 A stateful research agent that plans, searches the web, reads sources, and writes a cited report — built with LangGraph as a graph of nodes with a bounded critique loop.
 
-**Live demo:** _(URL added after deploy)_
+**Live demo:** [langgraph-research-agent.streamlit.app](https://langgraph-research-agent.streamlit.app/)
 **Stack:** LangGraph · Claude Sonnet 4.6 + Haiku 4.5 · Tavily Search · Streamlit
 
 ---
@@ -38,6 +38,8 @@ The graph's measurable win is **citation density**, not raw factual accuracy. Sa
 One baseline judge call returned malformed JSON (1 of 20) — flagged here rather than refit. Full per-query scores and reasoning are in [`eval/results/summary.csv`](eval/results/summary.csv).
 
 ## How it works
+
+<p align="center"><img src="assets/graph.png" alt="LangGraph state machine" width="200"/></p>
 
 ```mermaid
 graph TD

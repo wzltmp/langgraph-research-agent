@@ -32,17 +32,9 @@ with st.sidebar:
     st.markdown(f"[Source on GitHub]({GITHUB_URL})")
     st.markdown("---")
     st.markdown("### Graph")
-    st.markdown(
-        """```mermaid
-graph TD
-    A([plan]) --> B([search])
-    B --> C([read])
-    C --> D([write])
-    D --> E{critique}
-    E -- gap found --> B
-    E -- OK --> F([END])
-```"""
-    )
+    graph_image = Path(__file__).resolve().parent.parent / "assets" / "graph.png"
+    if graph_image.exists():
+        st.image(str(graph_image), use_container_width=True)
     st.markdown("---")
     st.markdown("### Stack")
     st.markdown(
@@ -114,7 +106,10 @@ if run and query:
 
     # ---- Final report ----
     st.markdown("## Report")
-    st.markdown(final_state.get("draft", "*(no draft produced)*"))
+    # Escape `$` so Streamlit's KaTeX renderer doesn't turn "$0.008 ... $30/mo"
+    # into garbled inline math. Single regex pass is enough.
+    draft_safe = final_state.get("draft", "*(no draft produced)*").replace("$", "\\$")
+    st.markdown(draft_safe)
 
     sources = final_state.get("sources", [])
     if sources:
