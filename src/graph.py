@@ -6,6 +6,7 @@ Usage:
 from __future__ import annotations
 
 import sys
+from typing import Any
 
 from langgraph.graph import END, StateGraph
 
@@ -20,8 +21,13 @@ from src.nodes import (
 from src.state import AgentState
 
 
-def build_graph():
-    """Wire the plan→search→read→write→critique graph with a conditional loop edge."""
+def build_graph() -> Any:
+    """Wire the plan→search→read→write→critique graph with a conditional loop edge.
+
+    Returns:
+        A compiled LangGraph runnable. Typed as ``Any`` because langgraph's
+        ``CompiledStateGraph`` is generic in ways that don't add value here.
+    """
     g = StateGraph(AgentState)
     g.add_node("plan", plan_node)
     g.add_node("search", search_node)

@@ -1,5 +1,6 @@
 """Eval harness — run the agent and a Sonnet+web_search baseline on every
-question in ``queries.jsonl``, score both with an LLM judge, emit a CSV summary.
+question in ``queries.jsonl``, score both with an LLM judge, emit a CSV summary
+with per-query latency, token usage, and an estimated $ cost.
 
 Usage:
     python -m eval.grade                  # all 20 queries
@@ -12,18 +13,23 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import logging
 import sys
 import time
+from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
 from anthropic import Anthropic
+from anthropic.types import TextBlock, WebSearchToolResultBlock
 from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from src.graph import build_graph  # noqa: E402
+from src.exceptions import ResearchAgentError
+from src.graph import build_graph
 
 load_dotenv()
+log = logging.getLogger(__name__)
 
 EVAL_DIR = Path(__file__).resolve().parent
 RESULTS_DIR = EVAL_DIR / "results"
@@ -35,6 +41,14 @@ BASELINE_MAX_SEARCHES = 5
 BASELINE_MAX_TOKENS = 1500
 JUDGE_MAX_TOKENS = 300
 
+# Per-million-token list pricing (USD). Update if Anthropic changes rates.
+PRICING: dict[str, dict[str, float]] = {
+    "claude-haiku-4-5-20251001": {"input": 1.00, "output": 5.00},
+    "claude-sonnet-4-6": {"input": 3.00, "output": 15.00},
+}
+WEB_SEARCH_USD_PER_CALL = 10.00 / 1000  # $10 per 1000 searches
+
+
 _client: Anthropic | None = None
 
 
@@ -45,8 +59,13 @@ def _get_client() -> Anthropic:
     return _client
 
 
+def _usd_cost(model: str, input_tokens: int, output_tokens: int) -> float:
+    rates = PRICING.get(model, {"input": 0.0, "output": 0.0})
+    return (input_tokens * rates["input"] + output_tokens * rates["output"]) / 1_000_000
+
+
 # ---------- agent + baseline runners ----------
-def run_agent(query: str) -> dict:
+def run_agent(query: str) -> dict[str, Any]:
     result = build_graph().invoke({"query": query})
     return {
         "draft": result.get("draft", ""),
@@ -58,7 +77,7 @@ def run_agent(query: str) -> dict:
     }
 
 
-def run_baseline(query: str) -> dict:
+def run_baseline(query: str) -> dict[str, Any]:
     """Single Sonnet call with the built-in ``web_search`` tool — same model, different architecture."""
     msg = _get_client().messages.create(
         model=BASELINE_MODEL,
@@ -83,31 +102,37 @@ def run_baseline(query: str) -> dict:
     )
 
     text_parts: list[str] = []
-    sources: list[dict] = []
+    sources: list[dict[str, str]] = []
     seen_urls: set[str] = set()
     web_searches = 0
 
     for block in msg.content:
-        btype = getattr(block, "type", None)
-        if btype == "text":
+        if isinstance(block, TextBlock):
             text_parts.append(block.text)
             for citation in getattr(block, "citations", None) or []:
                 _maybe_add_source(citation, sources, seen_urls)
-        elif btype == "server_tool_use":
-            web_searches += 1
-        elif btype == "web_search_tool_result":
+        elif isinstance(block, WebSearchToolResultBlock):
             results = block.content if isinstance(block.content, list) else []
             for r in results:
                 _maybe_add_source(r, sources, seen_urls)
+        elif getattr(block, "type", "") == "server_tool_use":
+            web_searches += 1
+
+    usage = msg.usage
+    cost = _usd_cost(BASELINE_MODEL, usage.input_tokens, usage.output_tokens)
+    cost += web_searches * WEB_SEARCH_USD_PER_CALL
 
     return {
         "draft": "".join(text_parts),
         "sources": sources,
         "web_searches": web_searches,
+        "input_tokens": usage.input_tokens,
+        "output_tokens": usage.output_tokens,
+        "usd_cost": round(cost, 5),
     }
 
 
-def _maybe_add_source(obj: Any, sources: list[dict], seen_urls: set[str]) -> None:
+def _maybe_add_source(obj: Any, sources: list[dict[str, str]], seen_urls: set[str]) -> None:
     url = getattr(obj, "url", None)
     if not url or url in seen_urls:
         return
@@ -116,7 +141,7 @@ def _maybe_add_source(obj: Any, sources: list[dict], seen_urls: set[str]) -> Non
 
 
 # ---------- judge ----------
-def judge(query: str, draft: str, sources: list[dict]) -> dict:
+def judge(query: str, draft: str, sources: list[dict[str, str]]) -> dict[str, Any]:
     sources_block = "\n".join(
         f"[{i + 1}] {s['title']} -- {s['url']}" for i, s in enumerate(sources)
     )
@@ -136,26 +161,36 @@ def judge(query: str, draft: str, sources: list[dict]) -> dict:
         max_tokens=JUDGE_MAX_TOKENS,
         messages=[{"role": "user", "content": prompt}],
     )
-    raw = msg.content[0].text
-    return _extract_json(raw)
+    raw = ""
+    for block in msg.content:
+        if isinstance(block, TextBlock):
+            raw = block.text
+            break
+
+    score = _extract_json(raw)
+    usage = msg.usage
+    score["_judge_cost"] = round(
+        _usd_cost(JUDGE_MODEL, usage.input_tokens, usage.output_tokens), 5
+    )
+    return score
 
 
-def _extract_json(raw: str) -> dict:
+def _extract_json(raw: str) -> dict[str, Any]:
     """Strict JSON parse with a single brace-slice fallback for chatty models."""
     try:
-        return json.loads(raw)
+        return dict(json.loads(raw))
     except json.JSONDecodeError:
         pass
     start, end = raw.find("{"), raw.rfind("}")
     if start != -1 and end > start:
-        return json.loads(raw[start : end + 1])
+        return dict(json.loads(raw[start : end + 1]))
     raise json.JSONDecodeError("no JSON object found", raw, 0)
 
 
 # ---------- driver ----------
-def _load_queries(ids: str | None, limit: int | None) -> list[dict]:
+def _load_queries(ids: str | None, limit: int | None) -> list[dict[str, Any]]:
     lines = (EVAL_DIR / "queries.jsonl").read_text().splitlines()
-    queries = [json.loads(line) for line in lines if line.strip()]
+    queries: list[dict[str, Any]] = [json.loads(line) for line in lines if line.strip()]
     if ids:
         keep = set(ids.split(","))
         queries = [q for q in queries if q["id"] in keep]
@@ -164,15 +199,21 @@ def _load_queries(ids: str | None, limit: int | None) -> list[dict]:
     return queries
 
 
-def _run_one(label: str, runner, query: str, cache_path: Path, use_cache: bool) -> dict:
+def _run_one(
+    label: str,
+    runner: Callable[[str], dict[str, Any]],
+    query: str,
+    cache_path: Path,
+    use_cache: bool,
+) -> dict[str, Any]:
     if use_cache and cache_path.exists():
         print(f"  [{label}] cached")
-        return json.loads(cache_path.read_text())
+        return dict(json.loads(cache_path.read_text()))
     t0 = time.time()
     try:
         result = runner(query)
         result["elapsed_sec"] = time.time() - t0
-    except Exception as exc:  # noqa: BLE001 — last-resort: capture, don't crash the loop
+    except (ResearchAgentError, ValueError, KeyError) as exc:
         result = {
             "draft": "",
             "sources": [],
@@ -184,7 +225,7 @@ def _run_one(label: str, runner, query: str, cache_path: Path, use_cache: bool) 
     return result
 
 
-def _score_one(label: str, query: str, result: dict) -> dict:
+def _score_one(label: str, query: str, result: dict[str, Any]) -> dict[str, Any]:
     try:
         score = judge(query, result["draft"], result["sources"])
         print(
@@ -199,6 +240,7 @@ def _score_one(label: str, query: str, result: dict) -> dict:
             "completeness": 0,
             "citation_quality": 0,
             "reason": f"judge error: {exc!r}",
+            "_judge_cost": 0.0,
         }
 
 
@@ -213,7 +255,7 @@ def main() -> None:
     args = parser.parse_args()
 
     queries = _load_queries(args.ids, args.limit)
-    rows = []
+    rows: list[dict[str, Any]] = []
 
     for q in queries:
         qid = q["id"]
@@ -237,7 +279,8 @@ def main() -> None:
             print(
                 f"  [baseline] {len(baseline_result['sources'])} sources, "
                 f"{baseline_result.get('web_searches', '?')} searches, "
-                f"{baseline_result['elapsed_sec']:.1f}s"
+                f"{baseline_result['elapsed_sec']:.1f}s, "
+                f"${baseline_result.get('usd_cost', 0):.4f}"
             )
 
         agent_score = _score_one("agent", q["query"], agent_result)
@@ -263,6 +306,11 @@ def main() -> None:
                 "base_must": f"{b_hit}/{len(must)}" if must else "-",
                 "base_src": len(baseline_result["sources"]),
                 "base_sec": round(baseline_result.get("elapsed_sec", 0), 1),
+                "base_usd": baseline_result.get("usd_cost", 0.0),
+                "judge_usd": round(
+                    agent_score.get("_judge_cost", 0.0) + baseline_score.get("_judge_cost", 0.0),
+                    5,
+                ),
                 "agent_judge_reason": agent_score.get("reason", ""),
                 "baseline_judge_reason": baseline_score.get("reason", ""),
             }
@@ -282,9 +330,16 @@ def main() -> None:
         vals = [r[key] for r in rows if isinstance(r[key], (int, float))]
         return round(sum(vals) / len(vals), 2) if vals else 0.0
 
+    total_baseline_cost = sum(r.get("base_usd", 0.0) for r in rows)
+    total_judge_cost = sum(r.get("judge_usd", 0.0) for r in rows)
+
     print(f"\n\n=== AGGREGATE (n={len(rows)}) ===")
     print(f"  AGENT    fa={avg('agent_fa')}  cm={avg('agent_cm')}  cq={avg('agent_cq')}")
     print(f"  BASELINE fa={avg('base_fa')}  cm={avg('base_cm')}  cq={avg('base_cq')}")
+    print(
+        f"  COST     baseline=${total_baseline_cost:.4f}  judge=${total_judge_cost:.4f}  "
+        f"(agent cost not instrumented — typically ~$0.05-0.10/query)"
+    )
     print(f"  wrote {summary_path}")
 
 

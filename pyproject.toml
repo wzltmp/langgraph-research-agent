@@ -1,0 +1,43 @@
+[project]
+name = "langgraph-research-agent"
+version = "0.1.0"
+description = "Stateful research agent built with LangGraph, Tavily, and Claude. Plans, searches, reads, drafts, self-critiques — bounded loop, cited output."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = [".venv", "eval/results"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade
+    "SIM",  # flake8-simplify
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "B008",  # function calls in argument defaults (Anthropic() pattern)
+]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+warn_unused_ignores = true
+ignore_missing_imports = true  # langgraph / tavily / trafilatura lack stubs
+disallow_untyped_decorators = false
+files = ["src", "eval", "tests"]
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false  # tests can omit return annotations
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"

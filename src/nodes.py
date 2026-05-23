@@ -1,37 +1,47 @@
 """LangGraph nodes for the research agent.
 
 The graph is ``plan → search → read → write → critique`` with a conditional
-edge from ``critique`` back to ``search`` for up to ``MAX_ITERATIONS`` passes.
-Each node reads from and writes to a shared :class:`AgentState`.
+edge from ``critique`` back to ``search`` for up to :data:`MAX_ITERATIONS`
+passes. Each node reads from and writes to a shared :class:`AgentState`.
+
+Sub-queries are searched concurrently via a thread pool, which is the largest
+single latency win in this pipeline.
 """
 from __future__ import annotations
 
 import json
+import logging
 import os
+from concurrent.futures import ThreadPoolExecutor
+from typing import Any
 
 import httpx
 import trafilatura
 from anthropic import Anthropic
+from anthropic.types import TextBlock
 from dotenv import load_dotenv
 from tavily import TavilyClient
 
+from src.exceptions import EmptyLLMResponseError, PlanParseError
 from src.state import AgentState, Source
 
 load_dotenv()
+
+log = logging.getLogger(__name__)
 
 # ---- Models ----
 CHEAP_MODEL = "claude-haiku-4-5-20251001"
 WRITER_MODEL = "claude-sonnet-4-6"
 
 # ---- Tunables ----
-MAX_ITERATIONS = 2          # write→critique passes before forced stop
+MAX_ITERATIONS = 2
 TAVILY_RESULTS_PER_QUERY = 3
-MAX_SOURCES_READ = 8        # cap across all iterations to control cost / latency
-CONTENT_CHAR_LIMIT = 4000   # cap text passed to summarizer per source
+MAX_SOURCES_READ = 8
+CONTENT_CHAR_LIMIT = 4000
 FETCH_TIMEOUT_SEC = 10
+SEARCH_PARALLELISM = 5
 
-
-# ---- Lazy clients (module-level globals, instantiated on first use) ----
+# ---- Lazy clients (instantiated on first use) ----
 _anthropic: Anthropic | None = None
 _tavily: TavilyClient | None = None
 
@@ -55,7 +65,7 @@ def _chat(model: str, prompt: str, max_tokens: int = 1024) -> str:
     """Single-turn chat returning the first text content block.
 
     Raises:
-        RuntimeError: if the response has no text content (refusal or empty).
+        EmptyLLMResponseError: when the response has no text content (refusal/empty).
     """
     msg = _get_anthropic().messages.create(
         model=model,
@@ -63,28 +73,38 @@ def _chat(model: str, prompt: str, max_tokens: int = 1024) -> str:
         messages=[{"role": "user", "content": prompt}],
     )
     for block in msg.content:
-        if getattr(block, "type", None) == "text":
+        if isinstance(block, TextBlock):
             return block.text
-    raise RuntimeError(f"No text block in response (stop_reason={msg.stop_reason!r})")
+    raise EmptyLLMResponseError(
+        f"no text block in response (model={model}, stop_reason={msg.stop_reason!r})"
+    )
 
 
 def _parse_plan_json(raw: str) -> list[str]:
     """Extract ``sub_queries`` from the planner's reply.
 
-    Tries strict JSON first, then falls back to brace-slicing. The function is
-    deliberately liberal because the planner is a cheap (Haiku) model.
+    Tries strict JSON first, then falls back to brace-slicing for chatty models.
     """
-    try:
-        return json.loads(raw)["sub_queries"]
-    except (json.JSONDecodeError, KeyError):
-        pass
-    start, end = raw.find("{"), raw.rfind("}")
-    if start != -1 and end > start:
+    for candidate in (raw, raw[raw.find("{") : raw.rfind("}") + 1] if "{" in raw else ""):
+        if not candidate:
+            continue
         try:
-            return json.loads(raw[start : end + 1])["sub_queries"]
-        except (json.JSONDecodeError, KeyError):
-            pass
-    raise ValueError(f"could not parse sub_queries from: {raw!r}")
+            parsed = json.loads(candidate)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(parsed, dict) and isinstance(parsed.get("sub_queries"), list):
+            return [str(q) for q in parsed["sub_queries"]]
+    raise PlanParseError(f"could not parse sub_queries from: {raw!r}")
+
+
+def _fetch_clean_text(url: str) -> str:
+    """Best-effort HTML fetch + trafilatura extract. Returns empty string on any network error."""
+    try:
+        response = httpx.get(url, timeout=FETCH_TIMEOUT_SEC, follow_redirects=True)
+    except (httpx.HTTPError, OSError) as exc:
+        log.info("fetch failed for %s: %s", url, exc)
+        return ""
+    return trafilatura.extract(response.text) or ""
 
 
 # ---- Nodes ----
@@ -110,19 +130,31 @@ def plan_node(state: AgentState) -> AgentState:
     )
     try:
         plan = _parse_plan_json(_chat(CHEAP_MODEL, prompt))
-    except ValueError:
-        plan = [state["query"]]  # fallback: search the original question directly
+    except PlanParseError as exc:
+        log.warning("planner output unparseable, falling back to original query: %s", exc)
+        plan = [state["query"]]
+    log.info("planned %d sub-queries", len(plan))
     return {"plan": plan}
 
 
 def search_node(state: AgentState) -> AgentState:
-    """Tavily-search each sub-query; merge new sources with existing, dedupe by URL."""
+    """Tavily-search each sub-query in parallel; merge results with state, dedupe by URL."""
     tavily = _get_tavily()
+    sub_queries = state["plan"]
     sources = list(state.get("sources", []))
     seen: set[str] = {s["url"] for s in sources}
-    for sub_query in state["plan"]:
-        results = tavily.search(sub_query, max_results=TAVILY_RESULTS_PER_QUERY)
-        for r in results.get("results", []):
+
+    def _search(query: str) -> dict[str, Any]:
+        result: dict[str, Any] = tavily.search(query, max_results=TAVILY_RESULTS_PER_QUERY)
+        return result
+
+    workers = min(len(sub_queries), SEARCH_PARALLELISM) or 1
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        responses = list(pool.map(_search, sub_queries))
+
+    new_count = 0
+    for response in responses:
+        for r in response.get("results", []):
             if r["url"] in seen:
                 continue
             sources.append(
@@ -134,6 +166,8 @@ def search_node(state: AgentState) -> AgentState:
                 )
             )
             seen.add(r["url"])
+            new_count += 1
+    log.info("search added %d new sources (%d total)", new_count, len(sources))
     return {"sources": sources}
 
 
@@ -142,17 +176,23 @@ def read_node(state: AgentState) -> AgentState:
 
     Caps total reads at :data:`MAX_SOURCES_READ` across all iterations.
     """
-    sources = [dict(s) for s in state["sources"]]
+    sources: list[Source] = [Source(**s) for s in state["sources"]]
     notes = list(state.get("notes", []))
-    budget = MAX_SOURCES_READ - sum(1 for s in sources if s.get("content"))
+    already_read = sum(1 for s in sources if s["content"])
+    budget = MAX_SOURCES_READ - already_read
 
     for idx, source in enumerate(sources):
         if budget <= 0:
             break
-        if source.get("content"):
+        if source["content"]:
             continue
         text = _fetch_clean_text(source["url"]) or source["snippet"] or ""
-        sources[idx]["content"] = text[:CONTENT_CHAR_LIMIT]
+        sources[idx] = Source(
+            url=source["url"],
+            title=source["title"],
+            snippet=source["snippet"],
+            content=text[:CONTENT_CHAR_LIMIT],
+        )
         summary = _chat(
             CHEAP_MODEL,
             (
@@ -163,16 +203,13 @@ def read_node(state: AgentState) -> AgentState:
         )
         notes.append(f"({source['title']}) {summary}")
         budget -= 1
+
+    log.info(
+        "read %d new sources (budget remaining: %d)",
+        MAX_SOURCES_READ - already_read - budget,
+        budget,
+    )
     return {"sources": sources, "notes": notes}
-
-
-def _fetch_clean_text(url: str) -> str:
-    """Best-effort HTML fetch + trafilatura extract. Returns empty string on any network error."""
-    try:
-        html = httpx.get(url, timeout=FETCH_TIMEOUT_SEC, follow_redirects=True).text
-    except (httpx.HTTPError, OSError):
-        return ""
-    return trafilatura.extract(html) or ""
 
 
 def write_node(state: AgentState) -> AgentState:
@@ -189,7 +226,9 @@ def write_node(state: AgentState) -> AgentState:
         f"Sources:\n{sources_block}\n\n"
         f"Notes:\n{notes_block}"
     )
-    return {"draft": _chat(WRITER_MODEL, prompt, max_tokens=900)}
+    draft = _chat(WRITER_MODEL, prompt, max_tokens=900)
+    log.info("wrote draft (%d chars)", len(draft))
+    return {"draft": draft}
 
 
 def critique_node(state: AgentState) -> AgentState:
@@ -202,9 +241,13 @@ def critique_node(state: AgentState) -> AgentState:
         f"Question: {state['query']}\n\nDraft:\n{state['draft']}"
     )
     out = _chat(CHEAP_MODEL, prompt, max_tokens=200).strip()
+
     if out.upper().startswith("OK") or iterations >= MAX_ITERATIONS:
+        log.info("critique accepted at iteration %d", iterations)
         return {"critique": "", "iterations": iterations}
+
     new_plan = [q.strip() for q in out.split(",") if q.strip()]
+    log.info("critique found gaps at iteration %d, re-planning with %d sub-queries", iterations, len(new_plan))
     return {"critique": out, "plan": new_plan, "iterations": iterations}
 
 

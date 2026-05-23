@@ -1,5 +1,11 @@
 # LangGraph Research Agent
 
+[![CI](https://github.com/wzltmp/langgraph-research-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/wzltmp/langgraph-research-agent/actions/workflows/ci.yml)
+[![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/)
+[![ruff](https://img.shields.io/badge/lint-ruff-261230.svg)](https://github.com/astral-sh/ruff)
+[![mypy: strict](https://img.shields.io/badge/mypy-strict-2a6db2.svg)](http://mypy-lang.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](#license)
+
 A stateful research agent that plans, searches the web, reads sources, and writes a cited report — built with LangGraph as a graph of nodes with a bounded critique loop.
 
 **Live demo:** _(URL added after deploy)_
@@ -54,9 +60,19 @@ graph TD
 ## Key design decisions
 
 1. **Bounded critique loop (`MAX_ITERATIONS = 2`).** Without the cap, the agent will thrash on hard queries forever. In the 20-query eval, ~85% of runs used both iterations — the second pass measurably tightens citation coverage.
-2. **Model split: Sonnet for writing, Haiku for the rest.** The writer needs synthesis quality. The planner, reader, and critic are pattern-recognition tasks where Haiku is roughly free relative to Sonnet. Empirical cost: ~$0.10 per query end-to-end.
-3. **Cross-iteration source dedup + read-skip.** When the critic triggers another search pass, new sources are merged with existing ones (not replaced), and the reader skips any source whose `content` field is already populated. This prevents redundant Tavily calls and trafilatura fetches.
-4. **LLM-judge eval, not vibes.** Twenty queries spanning factual / multi-hop / recent, both judged on three explicit axes by Claude Sonnet 4.6 and checked with a cheap `must_mention` keyword heuristic. Each run is saved to `eval/results/*.json` for inspection.
+2. **Model split: Sonnet for writing, Haiku for the rest.** The writer needs synthesis quality. The planner, reader, and critic are pattern-recognition tasks where Haiku is roughly free relative to Sonnet. Empirical cost: ~$0.05–$0.10 per query end-to-end.
+3. **Parallel sub-query search.** Sub-queries are dispatched to Tavily concurrently via a `ThreadPoolExecutor` (`max_workers=5`). With 4 sub-queries this drops search latency from ~4–8s sequential to ~1–2s — the largest single latency win in the pipeline.
+4. **Cross-iteration source dedup + read-skip.** When the critic triggers another search pass, new sources are merged with existing ones (not replaced), and the reader skips any source whose `content` field is already populated. This prevents redundant Tavily calls and trafilatura fetches.
+5. **LLM-judge eval with cost tracking.** Twenty queries spanning factual / multi-hop / recent, judged on three explicit axes by Claude Sonnet 4.6, with `must_mention` keyword heuristic as a sanity check. Each run is saved to `eval/results/*.json`, with per-query token usage and estimated $ cost tracked in `summary.csv`.
+
+## Code quality
+
+- **CI:** Every push runs `ruff check`, `mypy --strict`, and `pytest` via GitHub Actions ([workflow](.github/workflows/ci.yml)). Badge at the top reflects the current main-branch status.
+- **Type-checked:** `mypy --strict` clean across `src/`, `eval/`, and `tests/`.
+- **Lint:** Ruff with the `E F I B UP SIM RUF` rule set.
+- **Tests:** 16 offline unit tests in `tests/` cover the JSON parse fallback, cross-iteration dedup, read-skip budget, critique loop cap, and graph wiring. All mocked — no API or network calls.
+- **Named exceptions:** `ResearchAgentError`, `PlanParseError`, `EmptyLLMResponseError` instead of bare `RuntimeError` / `ValueError`.
+- **Structured logging:** `logging.getLogger(__name__)` per module with INFO-level checkpoints at every state transition.
 
 ## Local setup
 

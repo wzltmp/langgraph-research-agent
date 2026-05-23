@@ -8,6 +8,8 @@ from pathlib import Path
 # fails without this shim. Lesson from project 1.
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from typing import Any
+
 import streamlit as st
 from dotenv import load_dotenv
 
@@ -71,7 +73,7 @@ if run and query:
     write_box = st.empty()
     critique_box = st.empty()
 
-    final_state: dict = {}
+    final_state: dict[str, Any] = {}
     iteration_seen = 0
 
     with st.status("Researching...", expanded=True) as status:
@@ -95,7 +97,6 @@ if run and query:
                         f"**Read & summarized** — {len(read)} / {len(sources)} sources."
                     )
                 elif node_name == "write":
-                    draft = node_state.get("draft", "")
                     write_box.markdown("**Draft ready** — running critic next.")
                 elif node_name == "critique":
                     iteration_seen = node_state.get("iterations", iteration_seen)
