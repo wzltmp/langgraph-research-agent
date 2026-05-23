@@ -105,6 +105,20 @@ python -m eval.grade --limit 3     # first 3 only
 python -m eval.grade --ids f01,m05 # specific queries
 ```
 
+## Observability (optional): LangSmith tracing
+
+LangGraph auto-instruments to [LangSmith](https://smith.langchain.com) when three env vars are set — no code change required. Useful for debugging slow nodes, inspecting prompt inputs/outputs per iteration, and showing recruiters you've thought about observability.
+
+1. Sign up at https://smith.langchain.com (free Developer tier — 5,000 traces/month)
+2. Create an API key
+3. Add to your local `.env` or Streamlit Cloud → Settings → Secrets:
+   ```toml
+   LANGSMITH_API_KEY = "lsv2_pt_..."
+   LANGSMITH_TRACING = "true"
+   LANGSMITH_PROJECT = "research-agent"
+   ```
+4. Run any query; the trace appears in the LangSmith dashboard within ~10s showing each node's input, output, latency, and token usage
+
 ## Caveats and what I'd do next
 
 - **No parallel sub-query search.** Each sub-query runs sequentially. Going parallel with `asyncio.gather` would cut wall time by 2-3×.
