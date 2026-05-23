@@ -35,6 +35,16 @@ with st.sidebar:
     graph_image = Path(__file__).resolve().parent.parent / "assets" / "graph.png"
     if graph_image.exists():
         st.image(str(graph_image), use_container_width=True)
+    st.markdown(
+        "Each node mutates a shared `AgentState`:\n\n"
+        "- **plan** — breaks the question into 3-5 search-friendly sub-queries (Haiku)\n"
+        "- **search** — fans out Tavily searches in parallel, dedupes by URL\n"
+        "- **read** — fetches each URL, extracts clean text, summarizes (Haiku)\n"
+        "- **write** — drafts the cited 250-400 word report (Sonnet)\n"
+        "- **critique** — checks for gaps; loops back to search if found, capped at 2 iters\n\n"
+        "The dashed edge is the bounded retry loop — the critic's "
+        "follow-up sub-queries feed back into `search`."
+    )
     st.markdown("---")
     st.markdown("### Stack")
     st.markdown(
