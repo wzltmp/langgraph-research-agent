@@ -1,4 +1,12 @@
-"""Eval harness: run agent + Sonnet+web_search baseline on queries.jsonl, LLM-judge both, emit summary CSV."""
+"""Eval harness — run the agent and a Sonnet+web_search baseline on every
+question in ``queries.jsonl``, score both with an LLM judge, emit a CSV summary.
+
+Usage:
+    python -m eval.grade                  # all 20 queries
+    python -m eval.grade --limit 3        # first 3 only
+    python -m eval.grade --ids f04,m05    # specific ids
+    python -m eval.grade --skip-agent     # re-grade cached agent runs only
+"""
 from __future__ import annotations
 
 import argparse
@@ -7,6 +15,7 @@ import json
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 from anthropic import Anthropic
 from dotenv import load_dotenv
@@ -22,13 +31,23 @@ RESULTS_DIR.mkdir(exist_ok=True)
 
 JUDGE_MODEL = "claude-sonnet-4-6"
 BASELINE_MODEL = "claude-sonnet-4-6"
+BASELINE_MAX_SEARCHES = 5
+BASELINE_MAX_TOKENS = 1500
+JUDGE_MAX_TOKENS = 300
 
-_client = Anthropic()
+_client: Anthropic | None = None
 
 
+def _get_client() -> Anthropic:
+    global _client
+    if _client is None:
+        _client = Anthropic()
+    return _client
+
+
+# ---------- agent + baseline runners ----------
 def run_agent(query: str) -> dict:
-    graph = build_graph()
-    result = graph.invoke({"query": query})
+    result = build_graph().invoke({"query": query})
     return {
         "draft": result.get("draft", ""),
         "plan": result.get("plan", []),
@@ -40,11 +59,17 @@ def run_agent(query: str) -> dict:
 
 
 def run_baseline(query: str) -> dict:
-    """Single Sonnet call with built-in web_search — apples-to-apples architecture comparison."""
-    msg = _client.messages.create(
+    """Single Sonnet call with the built-in ``web_search`` tool — same model, different architecture."""
+    msg = _get_client().messages.create(
         model=BASELINE_MODEL,
-        max_tokens=1500,
-        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 5}],
+        max_tokens=BASELINE_MAX_TOKENS,
+        tools=[
+            {
+                "type": "web_search_20250305",
+                "name": "web_search",
+                "max_uses": BASELINE_MAX_SEARCHES,
+            }
+        ],
         messages=[
             {
                 "role": "user",
@@ -66,20 +91,14 @@ def run_baseline(query: str) -> dict:
         btype = getattr(block, "type", None)
         if btype == "text":
             text_parts.append(block.text)
-            for c in (getattr(block, "citations", None) or []):
-                url = getattr(c, "url", None)
-                if url and url not in seen_urls:
-                    sources.append({"url": url, "title": getattr(c, "title", "") or ""})
-                    seen_urls.add(url)
+            for citation in getattr(block, "citations", None) or []:
+                _maybe_add_source(citation, sources, seen_urls)
         elif btype == "server_tool_use":
             web_searches += 1
         elif btype == "web_search_tool_result":
             results = block.content if isinstance(block.content, list) else []
             for r in results:
-                url = getattr(r, "url", None)
-                if url and url not in seen_urls:
-                    sources.append({"url": url, "title": getattr(r, "title", "") or ""})
-                    seen_urls.add(url)
+                _maybe_add_source(r, sources, seen_urls)
 
     return {
         "draft": "".join(text_parts),
@@ -88,7 +107,16 @@ def run_baseline(query: str) -> dict:
     }
 
 
-def judge(query: str, draft: str, sources: list) -> dict:
+def _maybe_add_source(obj: Any, sources: list[dict], seen_urls: set[str]) -> None:
+    url = getattr(obj, "url", None)
+    if not url or url in seen_urls:
+        return
+    sources.append({"url": url, "title": getattr(obj, "title", "") or ""})
+    seen_urls.add(url)
+
+
+# ---------- judge ----------
+def judge(query: str, draft: str, sources: list[dict]) -> dict:
     sources_block = "\n".join(
         f"[{i + 1}] {s['title']} -- {s['url']}" for i, s in enumerate(sources)
     )
@@ -103,35 +131,90 @@ def judge(query: str, draft: str, sources: list) -> dict:
         f"Sources available to the responder:\n{sources_block or '(none)'}\n\n"
         f"Response:\n{draft or '(empty)'}"
     )
-    out = _client.messages.create(
+    msg = _get_client().messages.create(
         model=JUDGE_MODEL,
-        max_tokens=300,
+        max_tokens=JUDGE_MAX_TOKENS,
         messages=[{"role": "user", "content": prompt}],
     )
-    raw = out.content[0].text
-    return json.loads(raw[raw.find("{") : raw.rfind("}") + 1])
+    raw = msg.content[0].text
+    return _extract_json(raw)
 
 
-def main():
+def _extract_json(raw: str) -> dict:
+    """Strict JSON parse with a single brace-slice fallback for chatty models."""
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        pass
+    start, end = raw.find("{"), raw.rfind("}")
+    if start != -1 and end > start:
+        return json.loads(raw[start : end + 1])
+    raise json.JSONDecodeError("no JSON object found", raw, 0)
+
+
+# ---------- driver ----------
+def _load_queries(ids: str | None, limit: int | None) -> list[dict]:
+    lines = (EVAL_DIR / "queries.jsonl").read_text().splitlines()
+    queries = [json.loads(line) for line in lines if line.strip()]
+    if ids:
+        keep = set(ids.split(","))
+        queries = [q for q in queries if q["id"] in keep]
+    if limit:
+        queries = queries[:limit]
+    return queries
+
+
+def _run_one(label: str, runner, query: str, cache_path: Path, use_cache: bool) -> dict:
+    if use_cache and cache_path.exists():
+        print(f"  [{label}] cached")
+        return json.loads(cache_path.read_text())
+    t0 = time.time()
+    try:
+        result = runner(query)
+        result["elapsed_sec"] = time.time() - t0
+    except Exception as exc:  # noqa: BLE001 — last-resort: capture, don't crash the loop
+        result = {
+            "draft": "",
+            "sources": [],
+            "error": repr(exc),
+            "elapsed_sec": time.time() - t0,
+        }
+        print(f"  [{label}] FAILED: {exc}")
+    cache_path.write_text(json.dumps(result, indent=2))
+    return result
+
+
+def _score_one(label: str, query: str, result: dict) -> dict:
+    try:
+        score = judge(query, result["draft"], result["sources"])
+        print(
+            f"  [{label} score] fa={score['factual_accuracy']} "
+            f"cm={score['completeness']} cq={score['citation_quality']}"
+        )
+        return score
+    except (json.JSONDecodeError, KeyError) as exc:
+        print(f"  [{label} judge] FAILED: {exc}")
+        return {
+            "factual_accuracy": 0,
+            "completeness": 0,
+            "citation_quality": 0,
+            "reason": f"judge error: {exc!r}",
+        }
+
+
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--limit", type=int, default=None, help="Run only the first N queries")
-    parser.add_argument("--ids", type=str, default=None, help="Comma-separated list of query ids to run")
-    parser.add_argument("--skip-baseline", action="store_true")
-    parser.add_argument("--skip-agent", action="store_true")
+    parser.add_argument("--ids", type=str, default=None, help="Comma-separated list of query ids")
+    parser.add_argument("--skip-agent", action="store_true", help="Re-grade cached agent runs only")
+    parser.add_argument(
+        "--skip-baseline", action="store_true", help="Re-grade cached baseline runs only"
+    )
     args = parser.parse_args()
 
-    queries = [
-        json.loads(line)
-        for line in (EVAL_DIR / "queries.jsonl").read_text().splitlines()
-        if line.strip()
-    ]
-    if args.ids:
-        keep = set(args.ids.split(","))
-        queries = [q for q in queries if q["id"] in keep]
-    if args.limit:
-        queries = queries[: args.limit]
-
+    queries = _load_queries(args.ids, args.limit)
     rows = []
+
     for q in queries:
         qid = q["id"]
         print(f"\n=== {qid} ({q['category']}) ===\n{q['query']}")
@@ -139,106 +222,51 @@ def main():
         agent_path = RESULTS_DIR / f"agent-{qid}.json"
         baseline_path = RESULTS_DIR / f"baseline-{qid}.json"
 
-        # --- AGENT ---
-        if args.skip_agent and agent_path.exists():
-            agent_result = json.loads(agent_path.read_text())
-            print("  [agent] cached")
-        else:
-            t0 = time.time()
-            try:
-                agent_result = run_agent(q["query"])
-                agent_result["elapsed_sec"] = time.time() - t0
-                agent_path.write_text(json.dumps(agent_result, indent=2))
-                print(
-                    f"  [agent] {len(agent_result['sources'])} sources, "
-                    f"{agent_result['elapsed_sec']:.1f}s, iters={agent_result.get('iterations', '?')}"
-                )
-            except Exception as e:
-                agent_result = {
-                    "draft": "",
-                    "sources": [],
-                    "error": str(e),
-                    "elapsed_sec": time.time() - t0,
-                }
-                agent_path.write_text(json.dumps(agent_result, indent=2))
-                print(f"  [agent] FAILED: {e}")
-
-        # --- BASELINE ---
-        if args.skip_baseline and baseline_path.exists():
-            baseline_result = json.loads(baseline_path.read_text())
-            print("  [baseline] cached")
-        else:
-            t0 = time.time()
-            try:
-                baseline_result = run_baseline(q["query"])
-                baseline_result["elapsed_sec"] = time.time() - t0
-                baseline_path.write_text(json.dumps(baseline_result, indent=2))
-                print(
-                    f"  [baseline] {len(baseline_result['sources'])} sources, "
-                    f"{baseline_result['web_searches']} searches, "
-                    f"{baseline_result['elapsed_sec']:.1f}s"
-                )
-            except Exception as e:
-                baseline_result = {
-                    "draft": "",
-                    "sources": [],
-                    "error": str(e),
-                    "elapsed_sec": time.time() - t0,
-                }
-                baseline_path.write_text(json.dumps(baseline_result, indent=2))
-                print(f"  [baseline] FAILED: {e}")
-
-        # --- JUDGE ---
-        try:
-            agent_score = judge(q["query"], agent_result["draft"], agent_result["sources"])
+        agent_result = _run_one("agent", run_agent, q["query"], agent_path, args.skip_agent)
+        if "error" not in agent_result:
             print(
-                f"  [agent score] fa={agent_score['factual_accuracy']} "
-                f"cm={agent_score['completeness']} cq={agent_score['citation_quality']}"
+                f"  [agent] {len(agent_result['sources'])} sources, "
+                f"{agent_result['elapsed_sec']:.1f}s, "
+                f"iters={agent_result.get('iterations', '?')}"
             )
-        except Exception as e:
-            agent_score = {
-                "factual_accuracy": 0, "completeness": 0, "citation_quality": 0,
-                "reason": f"judge error: {e}",
-            }
-            print(f"  [agent judge] FAILED: {e}")
 
-        try:
-            baseline_score = judge(
-                q["query"], baseline_result["draft"], baseline_result["sources"]
-            )
+        baseline_result = _run_one(
+            "baseline", run_baseline, q["query"], baseline_path, args.skip_baseline
+        )
+        if "error" not in baseline_result:
             print(
-                f"  [baseline score] fa={baseline_score['factual_accuracy']} "
-                f"cm={baseline_score['completeness']} cq={baseline_score['citation_quality']}"
+                f"  [baseline] {len(baseline_result['sources'])} sources, "
+                f"{baseline_result.get('web_searches', '?')} searches, "
+                f"{baseline_result['elapsed_sec']:.1f}s"
             )
-        except Exception as e:
-            baseline_score = {
-                "factual_accuracy": 0, "completeness": 0, "citation_quality": 0,
-                "reason": f"judge error: {e}",
-            }
-            print(f"  [baseline judge] FAILED: {e}")
+
+        agent_score = _score_one("agent", q["query"], agent_result)
+        baseline_score = _score_one("baseline", q["query"], baseline_result)
 
         must = q.get("must_mention", [])
         a_hit = sum(1 for m in must if m.lower() in agent_result["draft"].lower())
         b_hit = sum(1 for m in must if m.lower() in baseline_result["draft"].lower())
 
-        rows.append({
-            "id": qid,
-            "category": q["category"],
-            "agent_fa": agent_score["factual_accuracy"],
-            "agent_cm": agent_score["completeness"],
-            "agent_cq": agent_score["citation_quality"],
-            "agent_must": f"{a_hit}/{len(must)}" if must else "-",
-            "agent_src": len(agent_result["sources"]),
-            "agent_sec": round(agent_result.get("elapsed_sec", 0), 1),
-            "base_fa": baseline_score["factual_accuracy"],
-            "base_cm": baseline_score["completeness"],
-            "base_cq": baseline_score["citation_quality"],
-            "base_must": f"{b_hit}/{len(must)}" if must else "-",
-            "base_src": len(baseline_result["sources"]),
-            "base_sec": round(baseline_result.get("elapsed_sec", 0), 1),
-            "agent_judge_reason": agent_score.get("reason", ""),
-            "baseline_judge_reason": baseline_score.get("reason", ""),
-        })
+        rows.append(
+            {
+                "id": qid,
+                "category": q["category"],
+                "agent_fa": agent_score["factual_accuracy"],
+                "agent_cm": agent_score["completeness"],
+                "agent_cq": agent_score["citation_quality"],
+                "agent_must": f"{a_hit}/{len(must)}" if must else "-",
+                "agent_src": len(agent_result["sources"]),
+                "agent_sec": round(agent_result.get("elapsed_sec", 0), 1),
+                "base_fa": baseline_score["factual_accuracy"],
+                "base_cm": baseline_score["completeness"],
+                "base_cq": baseline_score["citation_quality"],
+                "base_must": f"{b_hit}/{len(must)}" if must else "-",
+                "base_src": len(baseline_result["sources"]),
+                "base_sec": round(baseline_result.get("elapsed_sec", 0), 1),
+                "agent_judge_reason": agent_score.get("reason", ""),
+                "baseline_judge_reason": baseline_score.get("reason", ""),
+            }
+        )
 
     if not rows:
         print("No queries ran.")
@@ -246,15 +274,15 @@ def main():
 
     summary_path = RESULTS_DIR / "summary.csv"
     with summary_path.open("w", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
-        w.writeheader()
-        w.writerows(rows)
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
 
-    def avg(k):
-        vals = [r[k] for r in rows if isinstance(r[k], (int, float))]
-        return round(sum(vals) / len(vals), 2) if vals else 0
+    def avg(key: str) -> float:
+        vals = [r[key] for r in rows if isinstance(r[key], (int, float))]
+        return round(sum(vals) / len(vals), 2) if vals else 0.0
 
-    print("\n\n=== AGGREGATE (n=%d) ===" % len(rows))
+    print(f"\n\n=== AGGREGATE (n={len(rows)}) ===")
     print(f"  AGENT    fa={avg('agent_fa')}  cm={avg('agent_cm')}  cq={avg('agent_cq')}")
     print(f"  BASELINE fa={avg('base_fa')}  cm={avg('base_cm')}  cq={avg('base_cq')}")
     print(f"  wrote {summary_path}")
