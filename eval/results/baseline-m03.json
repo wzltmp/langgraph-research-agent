@@ -1,0 +1,87 @@
+{
+  "draft": "## Prompt Caching Pricing: Anthropic Claude vs. OpenAI GPT for Repeated Long-Context Agents\n\nFor agents making repeated long-context API calls, prompt caching is one of the most impactful cost levers available \u2014 but Claude and OpenAI handle it quite differently in terms of structure, control, and pricing.\n\n---\n\n### Anthropic Claude: Explicit Caching with a Write Fee\n\nClaude uses an **opt-in model** requiring developers to explicitly mark content with `cache_control` parameters. Cache writes for a 5-minute TTL cost **1.25\u00d7 the base input price**, while 1-hour TTL cache writes cost **2\u00d7 the base price**. Cache reads, however, cost only **0.1\u00d7 (10%)** of the base input price.\n\nThis means caching pays off after just **one cache read** for the 5-minute duration, or after **two cache reads** for the 1-hour duration. For a long-running agent with a large, stable system prompt or document context, this compounds into large savings. For example, Claude Opus 4.7 (at $5/M input tokens) offers up to **90% cost savings** with prompt caching.\n\nThe minimum cacheable prompt length is 4,096 tokens for newer Opus models, and 1,024 tokens for Sonnet and some Opus variants. Beyond cost, Anthropic reports latency reductions of up to 85% for long prompts \u2014 in one example, a 100K-token book prompt dropped response time from 11.5s to 2.4s.\n\n---\n\n### OpenAI GPT: Automatic Caching, No Write Fee\n\nOpenAI takes a **fully automatic approach**. Prompt Caching can reduce latency by up to 80% and input token costs by up to 90%, and it works automatically on all API requests with **no additional fees**. There is no explicit cache write charge \u2014 you simply benefit from cache hits when they occur.\n\nAPI calls automatically benefit from Prompt Caching on prompts longer than **1,024 tokens**, with the system caching the longest prefix starting at 1,024 tokens and increasing in 128-token increments. For GPT-5.4 Standard, cached input costs **$0.25/M tokens** instead of $2.50/M \u2014 a 90% reduction.\n\nIn-memory cached prefixes generally remain active for 5 to 10 minutes of inactivity, up to a maximum of one hour. Extended prompt cache retention can keep cached prefixes active for up to **24 hours**, providing greater flexibility for low-frequency agent workloads.\n\n---\n\n### Key Difference for Agent Builders\n\nThe fundamental tradeoff is **control vs. simplicity**. Anthropic charges a **separate cache write fee** (with different rates for 5-minute and 1-hour TTLs), while OpenAI typically charges **only cache hit pricing** with no write or storage fee. This means OpenAI's caching is zero-risk on the first call, while Claude's carries a small upfront write cost that must be amortized over subsequent reads.\n\nFor agents on Anthropic, the break-even is roughly **1.4 reads per cached prefix**; for OpenAI, you **break even on the first hit**. For high-frequency agents reusing the same long context, both platforms can deliver equivalent ~90% savings on input tokens \u2014 but Claude offers more explicit, fine-grained cache control, while OpenAI offers frictionless automatic caching with no developer overhead.",
+  "sources": [
+    {
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching",
+      "title": "Prompt caching - Claude API Docs"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/about-claude/pricing",
+      "title": "Pricing - Claude API Docs"
+    },
+    {
+      "url": "https://spring.io/blog/2025/10/27/spring-ai-anthropic-prompt-caching-blog/",
+      "title": "Prompt Caching Support in Spring AI with Anthropic Claude"
+    },
+    {
+      "url": "https://www.finout.io/blog/anthropic-api-pricing",
+      "title": "Anthropic API Pricing in 2026: Complete Guide \u2014 Models, Caching, Batch & Optimization"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/sonnet",
+      "title": "Claude Sonnet 4.6"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/opus",
+      "title": "Claude Opus 4.7"
+    },
+    {
+      "url": "https://www.mindstudio.ai/blog/anthropic-prompt-caching-claude-subscription-limits",
+      "title": "What Is Anthropic's Prompt Caching and Why Does It Affect Your Claude Subscription Limits? | MindStudio"
+    },
+    {
+      "url": "https://intuitionlabs.ai/articles/claude-pricing-plans-api-costs",
+      "title": "Claude Pricing Explained: Subscription Plans & API Costs | IntuitionLabs"
+    },
+    {
+      "url": "https://claude.com/pricing",
+      "title": "Plans & Pricing | Claude by Anthropic"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/haiku",
+      "title": "Claude Haiku 4.5"
+    },
+    {
+      "url": "https://openai.com/api/pricing/",
+      "title": "OpenAI API Pricing | OpenAI"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/guides/prompt-caching",
+      "title": "Prompt caching | OpenAI API"
+    },
+    {
+      "url": "https://introl.com/blog/prompt-caching-infrastructure-llm-cost-latency-reduction-guide-2025",
+      "title": "Prompt Caching Infrastructure | Introl Blog"
+    },
+    {
+      "url": "https://developers.openai.com/api/docs/pricing",
+      "title": "Pricing | OpenAI API"
+    },
+    {
+      "url": "https://groq.com/blog/gpt-oss-improvements-prompt-caching-and-lower-pricing",
+      "title": "GroqCloud Introduces GPT\u2011OSS Improvements: Prompt Caching & Lower Pricing | Groq is fast, low cost inference."
+    },
+    {
+      "url": "https://openai.com/index/api-prompt-caching/",
+      "title": "Prompt Caching in the API | OpenAI"
+    },
+    {
+      "url": "https://promptbuilder.cc/blog/prompt-caching-token-economics-2025",
+      "title": "Prompt Caching Guide (2025): Lower AI Costs | Prompt Builder"
+    },
+    {
+      "url": "https://developers.openai.com/cookbook/examples/prompt_caching_201",
+      "title": "Prompt Caching 201"
+    },
+    {
+      "url": "https://www.cloudzero.com/blog/openai-pricing/",
+      "title": "OpenAI API Cost In 2026: Every Model Compared"
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/caching",
+      "title": "Prompt Caching: Cost & Performance Analysis Across Providers"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 25.00716805458069
+}

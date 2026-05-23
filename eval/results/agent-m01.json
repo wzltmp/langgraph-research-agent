@@ -1,0 +1,116 @@
+{
+  "draft": "# LangGraph vs. CrewAI: Stateful Multi-Agent Workflows\n\n## State Management\n\nLangGraph and CrewAI take fundamentally different approaches to state. LangGraph uses an explicit graph-based model where state is passed between nodes with precise control over context windows, retry strategies, and conditional branching [6]. Developers define `AgentState` objects that persist and evolve across multi-step interactions, with real-time editing capabilities available through LangGraph Studio [8]. CrewAI, by contrast, abstracts state behind a coordinator-worker model with role-based \"crews,\" trading fine-grained control for faster setup [6]. Critically, CrewAI's native memory architecture is fairly static and does not transfer well across sessions\u2014integrating third-party solutions like Mem0 is often required to achieve persistent context, which can reduce token costs by up to 90% [5].\n\n## Debugging\n\nLangGraph has a clear advantage in debugging tooling. LangSmith provides automatic tracing with parent-child span relationships and near-zero performance overhead, natively integrated into the LangChain/LangGraph ecosystem [7]. LangGraph Studio extends this further with visual workflow visualization, time-travel debugging, and hot-reload functionality for iterative testing [8]. CrewAI lacks equivalent native observability\u2014LangSmith requires manual instrumentation for non-LangChain frameworks, and while Arize Phoenix offers framework-agnostic tracing via OpenTelemetry and supports CrewAI, it demands significantly more setup boilerplate [7]. Multi-agent failures typically occur at communication boundaries between agents, making this debugging gap consequential in production [7].\n\n## Production Maturity\n\nLangGraph is the stronger choice for production enterprise deployments requiring robustness and observability [2]. Its integration with LaunchDarkly's AgentControl enables dynamic configuration changes\u2014swapping models or modifying agent behavior without code redeployment\u2014addressing real-world needs like cost optimization and regional compliance [3]. Among the four most-adopted frameworks, LangChain/LangGraph leads on orchestration flexibility and MCP maturity [4]. CrewAI is described as production-ready for specific use cases like finance, research, and customer support, and enables rapid multi-agent prototyping in as few as 50 lines of code [5][6]. However, it prioritizes quick setup over the granular control and observability that complex stateful workflows demand at scale [6].\n\n## Summary\n\nChoose **LangGraph** for complex, stateful workflows requiring explicit control, robust debugging, and enterprise-grade observability. Choose **CrewAI** for faster prototyping of role-based multi-agent systems where development speed outweighs architectural fine-tuning.",
+  "plan": [
+    "debugging tooling maturity for CrewAI (independent verification)",
+    "LangGraph production deployments at scale (case studies or metrics)",
+    "CrewAI state persistence mechanisms (technical deep-dive beyond Mem0 integration)"
+  ],
+  "sources": [
+    {
+      "url": "https://medium.com/@saimoguloju2/langgraph-building-intelligent-multi-agent-workflows-with-state-management-0427264b6318",
+      "title": "Building Intelligent Multi-Agent Workflows with State Management"
+    },
+    {
+      "url": "https://www.royalcyber.com/blogs/ai-ml/langgraph-multi-agent-workflows-enterprise-ai",
+      "title": "LangGraph for Multi-Agent Workflows in Enterprise AI"
+    },
+    {
+      "url": "https://launchdarkly.com/docs/tutorials/agents-langgraph",
+      "title": "Build a LangGraph Multi-Agent system in 20 Minutes ... - LaunchDarkly"
+    },
+    {
+      "url": "https://atlan.com/know/ai-agents-frameworks-compared",
+      "title": "AI Agent Frameworks Compared: LangChain, CrewAI, and More"
+    },
+    {
+      "url": "https://mem0.ai/blog/crewai-guide-multi-agent-ai-teams",
+      "title": "CrewAI Multi-Agent AI Teams: Complete Guide with Memory"
+    },
+    {
+      "url": "https://fast.io/resources/ai-agent-framework-comparison",
+      "title": "AI Agent Framework Comparison: LangChain vs AutoGPT vs CrewAI"
+    },
+    {
+      "url": "https://fast.io/resources/best-debugging-tools-multi-agent-systems",
+      "title": "6 Best Debugging Tools for Multi-Agent Systems | Fastio"
+    },
+    {
+      "url": "https://mem0.ai/blog/visual-ai-agent-debugging-langgraph-studio",
+      "title": "Getting Started with LangGraph Studio: The Complete Agent Development Tool"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=5vEC0Y4sV8g",
+      "title": "Strategies for debugging agents with LangGraph Studio - YouTube"
+    },
+    {
+      "url": "https://wandb.ai/onlineinference/genai-research/reports/Tracing-your-CrewAI-application--VmlldzoxMzQ5MDcwNA",
+      "title": "Weights & Biases"
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/1sxumaj/ai_agent_debugger_for_crewai_autogen_and_langgraph",
+      "title": "AI Agent Debugger for CrewAI, AutoGen and LangGraph : r/LangChain"
+    },
+    {
+      "url": "https://docs.crewai.com/en/observability/overview",
+      "title": "Overview - CrewAI"
+    },
+    {
+      "url": "https://ai.plainenglish.io/the-complete-guide-to-langchain-langgraph-2025-updates-and-production-ready-ai-frameworks-58bdb49a34b6",
+      "title": "The Complete Guide to LangChain & LangGraph: 2025 Updates ..."
+    },
+    {
+      "url": "https://www.linkedin.com/posts/lchavasse_is-langgraph-still-the-best-ai-agent-framework-activity-7290036455945457664-Flpo",
+      "title": "Is LangGraph still the best AI Agent framework for 2025??? \ud83d\udcc8 We\u2019ve seen how fast the LLM landscape is moving; for those looking to build AI applications this year, choosing the best platform for\u2026 | Lachlan C."
+    },
+    {
+      "url": "https://bcloud.consulting/en/blog/langraph-agentes-autonomos-customer-service-implementacion-2025/index.html",
+      "title": "How to Implement Autonomous AI Agents with LangGraph for Customer Service 2025 | BCloud Consulting"
+    },
+    {
+      "url": "https://www.zenml.io/llmops-database/building-and-orchestrating-multi-agent-systems-at-scale-with-crewai",
+      "title": "Building and Orchestrating Multi-Agent Systems at Scale with CrewAI"
+    },
+    {
+      "url": "https://crewai.com",
+      "title": "The Leading Multi-Agent Platform"
+    },
+    {
+      "url": "https://medium.com/@takafumi.endo/crewai-scaling-human-centric-ai-agents-in-production-a023e0be7af9",
+      "title": "CrewAI: Scaling Human\u2011Centric AI Agents in Production"
+    },
+    {
+      "url": "https://dev.to/apappascs/debugging-your-crew-isolating-agents-and-tasks-in-crewai-185k",
+      "title": "Debugging Your Crew: Isolating Agents and Tasks in CrewAI - DEV Community"
+    },
+    {
+      "url": "https://www.zenml.io/blog/langgraph-vs-crewai",
+      "title": "LangGraph vs CrewAI: Let's Learn About the Differences - ZenML Blog"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=pKk-LfhujwI",
+      "title": "How Unify Built AI Research Agents at Scale with LangGraph and ..."
+    },
+    {
+      "url": "https://ai.plainenglish.io/langgraph-mastery-part-3-production-deployment-enterprise-strategies-ed6fbc03eab6",
+      "title": "LangGraph Part 3: Production AI Deployment Guide"
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/1dl47vz/langgraph_in_production",
+      "title": "LangGraph in production? : r/LangChain - Reddit"
+    },
+    {
+      "url": "https://docs.mem0.ai/integrations/crewai",
+      "title": "CrewAI - Mem0"
+    },
+    {
+      "url": "https://www.facebook.com/groups/2600net/posts/4296824963873929",
+      "title": "#Mem0: Building Production-Ready AI Agents with Scalable Long ..."
+    },
+    {
+      "url": "https://community.crewai.com/t/crewai-long-term-memory-persistence/3044",
+      "title": "CrewAI Long Term Memory Persistence - CrewAI Community Support - CrewAI"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 63.86788487434387
+}

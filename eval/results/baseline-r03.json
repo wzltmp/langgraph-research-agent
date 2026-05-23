@@ -1,0 +1,67 @@
+{
+  "draft": "Here is a comprehensive overview of the current implementation status of the EU AI Act's general-purpose AI (GPAI) obligations as of mid-2026:\n\n---\n\n## EU AI Act: GPAI Obligations \u2014 Status as of Mid-2026\n\n**Obligations Now in Force**\n\nFrom 2 August 2025, the obligations for providers of GPAI models entered into application. Providers of GPAI models placed on the market after this date must comply and are expected to informally collaborate with the AI Office's technical staff. Core requirements include technical documentation and a public summary of training content (using the Commission template), alongside measures to comply with EU copyright rules. Providers of the most advanced models \u2014 those that pose systemic risks \u2014 are legally obliged to notify the AI Office of these models.\n\n**Enforcement Powers Incoming**\n\nA critical near-term milestone is fast approaching: from 2 August 2026, the Commission's enforcement powers enter into application, and the Commission will enforce compliance with obligations for providers of GPAI models, including with fines. Expect audits, investigations, and financial penalties for non-compliance.\n\n**The GPAI Code of Practice**\n\nThe GPAI Code of Practice is a voluntary compliance tool submitted to the Commission by independent experts, which offers practical guidance to help providers comply with their obligations under the AI Act related to transparency, copyright, and safety & security. Signing the Code creates a \"presumption of conformity\" \u2014 meaning regulators will assume compliance unless evidence suggests otherwise \u2014 making it the closest thing to a safe harbor that the AI Act offers.\n\n**Commission Guidelines Published**\n\nTo support compliance, the Commission has issued guidelines clarifying the scope of obligations for providers of GPAI models under the AI Act, which entered into application on 2 August 2025. These guidelines help actors in the AI ecosystem understand whether the obligations apply to them and what is expected of them. Notably, the guidelines clarify that only those making significant modifications to AI models need to comply with the obligations for providers of GPAI models, not those making minor changes.\n\n**Legacy Model Transition Period**\n\nProviders of GPAI models placed on the market before 2 August 2025 must take the necessary steps to comply by 2 August 2027.\n\n**The AI Omnibus Simplification**\n\nA significant legislative development occurred in May 2026. On 7 May 2026, the Council presidency and European Parliament negotiators reached a provisional agreement on a proposal to streamline certain AI rules, forming part of the so-called 'Omnibus VII' legislative package in the EU's simplification agenda. The deal also clarifies the competences of the AI Office for the supervision of AI systems based on GPAI models where the model and the system are developed by the same provider, by listing exceptions where national authorities remain competent.\n\n**Transparency Labelling Rules Finalizing**\n\nThe Commission published a second draft of its Code of Practice on marking and labelling of AI-generated content in March 2026, with finalization planned by mid-2026. The provisional agreement also adjusts the grace period for providers to implement transparency solutions for artificially generated content, setting the new deadline on 2 December 2026.\n\nIn summary, GPAI model obligations are **live and actively supervised**, with full Commission enforcement powers set to activate on 2 August 2026 \u2014 marking a decisive shift from soft collaboration to hard enforcement.",
+  "sources": [
+    {
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/guidelines-gpai-providers",
+      "title": "Guidelines for providers of general-purpose AI models | Shaping Europe\u2019s digital future"
+    },
+    {
+      "url": "https://www.bakermckenzie.com/en/insight/publications/resources/product-risk-radar-articles/eu-regulation-on-ai",
+      "title": "EU Regulation on AI | Insight | Baker McKenzie"
+    },
+    {
+      "url": "https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/",
+      "title": "Artificial Intelligence: Council and Parliament agree to simplify and streamline rules - Consilium"
+    },
+    {
+      "url": "https://www.kennedyslaw.com/en/thought-leadership/article/2026/the-eu-ai-act-implementation-timeline-understanding-the-next-deadline-for-compliance/",
+      "title": "The EU AI Act implementation timeline: understanding the next deadline for compliance"
+    },
+    {
+      "url": "https://www.softwareimprovementgroup.com/blog/eu-ai-act-summary/",
+      "title": "A comprehensive EU AI Act Summary [January 2026 update] - SIG"
+    },
+    {
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+      "title": "AI Act | Shaping Europe's digital future - European Union"
+    },
+    {
+      "url": "https://digital-strategy.ec.europa.eu/en/faqs/navigating-ai-act",
+      "title": "Navigating the AI Act | Shaping Europe\u2019s digital future"
+    },
+    {
+      "url": "https://www.legalnodes.com/article/eu-ai-act-2026-updates-compliance-requirements-and-business-risks",
+      "title": "EU AI Act 2026 Updates: Compliance Requirements and Business Risks"
+    },
+    {
+      "url": "https://artificialintelligenceact.eu/implementation-timeline/",
+      "title": "Implementation Timeline | EU Artificial Intelligence Act"
+    },
+    {
+      "url": "https://decodethefuture.org/en/eu-ai-act-explained/",
+      "title": "EU AI Act Explained: 7 Risk Tiers, Penalties & 2026 Timeline"
+    },
+    {
+      "url": "https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act",
+      "title": "Timeline for the Implementation of the EU AI Act | AI Act Service Desk"
+    },
+    {
+      "url": "https://www.dataguard.com/eu-ai-act/timeline",
+      "title": "EU AI Act Timeline: Key Compliance Dates & Deadlines Explained"
+    },
+    {
+      "url": "https://addcomply.com/eu-ai-act-compliance-timeline/",
+      "title": "EU AI Act Compliance Timeline: Key Dates and How to Prepare \u2014 AddComply"
+    },
+    {
+      "url": "https://trilateralresearch.com/responsible-ai/eu-ai-act-implementation-timeline-mapping-your-models-to-the-new-risk-tiers",
+      "title": "EU AI Act Compliance Timeline: Key Dates for 2025-2027 by Risk Tier - Trilateral Research"
+    },
+    {
+      "url": "https://eyreact.com/eu-ai-act-a-quick-guide-to-the-gpai-code-of-practice-2026-update/",
+      "title": "EU AI Act: A Quick Guide to the GPAI Code of Practice (2026 Update) \u2013 eyreACT: AI Compliance Automation Platform"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 24.777846574783325
+}

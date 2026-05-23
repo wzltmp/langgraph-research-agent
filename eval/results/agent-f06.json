@@ -1,0 +1,113 @@
+{
+  "draft": "## Recommended Chunk Size and Overlap for text-embedding-3-small in Document-QA RAG\n\nFor a typical document-QA RAG pipeline using `text-embedding-3-small`, the most widely cited recommendation is **1,000 tokens per chunk with a 200-token overlap (20%)** [1]. This configuration balances sufficient context for meaningful embeddings against the computational cost of generating and storing them, and sits well within the model's 8,191-token maximum context window [3].\n\n### Why These Numbers\n\nToken-based chunking is preferred over character-based splitting because `text-embedding-3-small` processes text as tokens using the `cl100k_base` encoding [4]. A 1,000-token chunk is large enough to capture coherent ideas from a paragraph or section while remaining small enough to keep retrieved passages focused and relevant to user queries [1]. Chunks that are too large introduce noise; chunks that are too small lose surrounding context and produce less useful embeddings [5].\n\nThe 200-token overlap ensures that sentences or concepts split across chunk boundaries are still represented in at least one chunk, preventing retrieval gaps at seams [1].\n\n### Practical Splitting Approach\n\nSplitting should follow logical text boundaries rather than hard token counts. Recursive character splitting using separators like `\"\\n\\n\"`, `\"\\n\"`, and spaces is recommended so that paragraphs and sentences remain intact wherever possible [1]. This preserves semantic coherence within each chunk.\n\n### Alternative Guidance\n\nSome sources suggest a slightly smaller default of **400\u2013512 tokens with 10\u201320% overlap** as the best starting point for general RAG use cases, noting that this range offers strong retrieval precision, particularly for shorter, denser documents [7]. The right choice ultimately depends on document type and query patterns \u2014 for paginated PDFs, page-level chunking has shown strong benchmark performance, while semantic chunking can improve recall by up to 9% at higher computational cost [7].\n\n### Summary\n\n| Parameter | Recommended Value |\n|---|---|\n| Chunk size | 1,000 tokens (or 400\u2013512 for denser docs) |\n| Overlap | 200 tokens (~20%) |\n| Splitting method | Recursive, boundary-aware |\n| Encoding | cl100k_base |\n\nFor most document-QA pipelines, starting at 1,000 tokens / 200-token overlap [1] and adjusting based on retrieval quality is a sound approach.",
+  "plan": [
+    "What is the source and methodology behind the \"1",
+    "000 tokens / 200-token overlap\" benchmark claim",
+    "How does text-embedding-3-small's performance compare empirically to other embedding models on document-QA tasks with these parameters",
+    "What is the actual NVIDIA 2024 evaluation methodology and does page-level chunking remain optimal for mixed document types beyond PDFs"
+  ],
+  "sources": [
+    {
+      "url": "https://blog.simplr.sh/posts/chunk-text-for-embeddings-with-openai-models",
+      "title": "The Best Way to Chunk Text Data for Generating Embeddings with ..."
+    },
+    {
+      "url": "https://techcommunity.microsoft.com/blog/azuredevcommunityblog/speed-up-openai-embedding-by-4x-with-this-simple-trick/4390081",
+      "title": "Speed Up OpenAI Embedding By 4x With This Simple Trick!"
+    },
+    {
+      "url": "https://zilliz.com/ai-models/text-embedding-3-small",
+      "title": "The guide to text-embedding-3-small | OpenAI - Zilliz"
+    },
+    {
+      "url": "https://developers.openai.com/cookbook/examples/embedding_long_inputs",
+      "title": "Embedding texts that are longer than the model's maximum context length"
+    },
+    {
+      "url": "https://www.pinecone.io/learn/chunking-strategies",
+      "title": "Chunking Strategies for LLM Applications | Pinecone"
+    },
+    {
+      "url": "https://community.databricks.com/t5/technical-blog/the-ultimate-guide-to-chunking-strategies-for-rag-applications/ba-p/113089",
+      "title": "Mastering Chunking Strategies for RAG - Databricks Community"
+    },
+    {
+      "url": "https://www.firecrawl.dev/blog/best-chunking-strategies-rag",
+      "title": "Best Chunking Strategies for RAG (and LLMs) in 2026"
+    },
+    {
+      "url": "https://blog.premai.io/rag-chunking-strategies-the-2026-benchmark-guide",
+      "title": "RAG Chunking Strategies: The 2026 Benchmark Guide - Prem AI"
+    },
+    {
+      "url": "https://arxiv.org/html/2505.21700v1",
+      "title": "Rethinking Chunk Size for Long-Document Retrieval - arXiv"
+    },
+    {
+      "url": "https://www.newline.co/@zaoyang/fixed-size-chunking-in-rag-pipelines-a-guide--af509f11",
+      "title": "Fixed-Size Chunking in RAG Pipelines: A Guide - Newline.co"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=lTdGt3vIhsY",
+      "title": "Master RAG: How to Find the Ideal Chunk Size for Better AI Retrieval"
+    },
+    {
+      "url": "https://community.openai.com/t/top-chunks-for-larges-context/607170",
+      "title": "Top chunks for larges context - API - OpenAI Developer Community"
+    },
+    {
+      "url": "https://community.openai.com/t/the-length-of-the-embedding-contents/111471",
+      "title": "The length of the embedding contents - OpenAI Developer Community"
+    },
+    {
+      "url": "https://www.scribd.com/document/671977901/1-CHAPTER-1-Introduction-to-History-Version-1",
+      "title": "History: Sources and Methodology Overview | PDF - Scribd"
+    },
+    {
+      "url": "https://www.slideshare.net/slideshow/chapter-1-introduction-to-history-definition-issues-sources-and-methodologypptx/261996273",
+      "title": "chapter 1 - Introduction to history Definition ISSUES SOURCES And METHODOLOGY.pptx"
+    },
+    {
+      "url": "https://study.com/learn/lesson/historical-methodology-evidence-interpreation.html",
+      "title": "Historical Methodology & Evidence | Sources & Procedures - Lesson | Study.com"
+    },
+    {
+      "url": "https://news.ycombinator.com/item?id=43683869",
+      "title": "Are there any benchmarks or someone who did tests of performance ..."
+    },
+    {
+      "url": "https://arxiv.org/html/2510.27246v1",
+      "title": "Benchmarking and Enhancing Long-Term Memory in LLMs - arXiv"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=cmf1lzbyxY8",
+      "title": "Really Long Context LLMs - 200k input tokens - YouTube"
+    },
+    {
+      "url": "https://community.openai.com/t/embeddings-performance-difference-between-small-vs-large-at-1536-dimensions/618069",
+      "title": "Embeddings performance difference between small vs large at 1536 ..."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=zIkHOrbpbCY",
+      "title": "text-embedding-3 Small vs Large (with Code & Benchmarks)"
+    },
+    {
+      "url": "https://www.pinecone.io/learn/openai-embeddings-v3",
+      "title": "OpenAI's Text Embeddings v3 - Pinecone"
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses",
+      "title": "Finding the Best Chunking Strategy for Accurate AI Responses"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/nvidia-ai_rag-activity-7343741674709315586-ZoRa",
+      "title": "How to boost AI accuracy with page-level chunking - LinkedIn"
+    },
+    {
+      "url": "https://www.reddit.com/r/Rag/comments/1rp5xd1/chunking_is_not_a_setandforget_parameter_and_most",
+      "title": "and most RAG pipelines ignore the PDF extraction step too - Reddit"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 68.39603686332703
+}

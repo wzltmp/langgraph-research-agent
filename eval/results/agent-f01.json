@@ -1,0 +1,96 @@
+{
+  "draft": "# Context Windows: Claude Sonnet 4.6 vs. Claude Opus 4.7\n\n## Claude Sonnet 4.6 Context Window\n\nClaude Sonnet 4.6 supports a maximum context window of **1 million tokens**. This capability became generally available at standard API pricing (input/output rates of $3/$15 per million tokens) with no long-context premium or multiplier applied above 200K tokens [3]. On paid Claude plans, Sonnet 4.6 also supports this 1M token window within Claude Code, though usage credits are required [1].\n\n## Claude Opus 4.7 Context Window\n\nClaude Opus 4.7 likewise features a **1 million token context window** [6]. Both models are confirmed to share identical context windows of 1,000K tokens [7]. In Claude Code specifically, Opus 4.7 supports the full 1M token context as the default recommended model, though some third-party integrations (such as GitHub Copilot CLI) have not yet exposed this full capacity, remaining capped at around 192K\u2013200K tokens pending feature updates [4].\n\n## Comparison\n\nIn terms of raw context window size, **both models are equivalent at 1 million tokens** [7]. Neither holds an advantage in maximum context capacity. The primary differences between the two lie elsewhere: Opus 4.7 was released in April 2026 (roughly two months after Sonnet 4.6's February 2026 release) and is positioned as the more capable model for complex coding and agentic workflows [6][7].\n\nOne practical distinction involves how context is managed in tools like Claude Code. There have been reports that Claude Code's auto-compaction behavior can effectively limit usable context well below 1M tokens\u2014one source noted the system was using only about 20% of Opus 4.7's available context before triggering compaction [5]. This is a tooling limitation rather than a model-level difference, and feature requests exist to ensure the full 1M window is accessible across platforms for both models [2][4].\n\nIn summary, Claude Sonnet 4.6 and Claude Opus 4.7 are on **equal footing at 1M tokens** for maximum context window size [7].",
+  "plan": [
+    "unsupported claim about Claude Opus 4.7 release date (April 2026)",
+    "unsupported claim about Claude Sonnet 4.6 release date (February 2026)",
+    "verification of whether Claude Opus 4.7 actually exists as a current model"
+  ],
+  "sources": [
+    {
+      "url": "https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans",
+      "title": "How large is the context window on paid Claude plans?"
+    },
+    {
+      "url": "https://github.com/anthropics/claude-code/issues/26003",
+      "title": "[Feature Request] Enable 1M token context window for Claude Max ..."
+    },
+    {
+      "url": "https://forum.cursor.com/t/anthropic-just-announced-1m-context-ga-at-standard-pricing-for-opus-4-6-sonnet-4-6-when-will-cursor-reflect-this/154701",
+      "title": "Anthropic just announced 1M context GA at standard pricing for ..."
+    },
+    {
+      "url": "https://github.com/github/copilot-cli/issues/2785",
+      "title": "Support 1M context window for Claude Opus 4.7 (parity with Claude Code) \u00b7 Issue #2785 \u00b7 github/copilot-cli \u00b7 GitHub"
+    },
+    {
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1ssgnfb/claude_code_was_wasting_80_of_opus_47s_context",
+      "title": "r/ClaudeAI - Claude Code was wasting 80% of Opus 4.7' ..."
+    },
+    {
+      "url": "https://www.anthropic.com/claude/opus",
+      "title": "Claude Opus 4.7 - Anthropic"
+    },
+    {
+      "url": "https://artificialanalysis.ai/models/comparisons/claude-opus-4-7-non-reasoning-vs-claude-sonnet-4-6",
+      "title": "Claude Opus 4.7 (Non-reasoning, High Effort) vs Claude Sonnet 4.6 ..."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=otaBlTOldAE",
+      "title": "I Tried NEW Opus 4.7 vs Opus 4.6 on Long-Running Coding Task"
+    },
+    {
+      "url": "https://ssntpl.com/claude-opus-4-5-vs-4-6-vs-4-7-benchmarks-comparison",
+      "title": "Claude Opus 4.5 vs 4.6 vs 4.7: Full Benchmark Comparison (2026)"
+    },
+    {
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-anthropic-claude-sonnet-4-6.html",
+      "title": "Claude Sonnet 4.6 - Amazon Bedrock"
+    },
+    {
+      "url": "https://inworld.ai/models/anthropic-claude-sonnet-4-6",
+      "title": "Claude Sonnet 4.6 by Anthropic \u2014 Pricing, Specs & API Access"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/sonnet",
+      "title": "Claude Sonnet 4.6 - Anthropic"
+    },
+    {
+      "url": "https://webscraft.org/blog/claude-opus-47-detalniy-oglyad-modeli-anthropic-u-2026?lang=en",
+      "title": "Claude Opus 4.7: Detailed Review of Anthropic's Model in 2026"
+    },
+    {
+      "url": "https://medium.com/nlplanet/claude-opus-4-7-is-out-weekly-ai-newsletter-april-20th-2026-c88eb74ffb45",
+      "title": "Claude Opus 4.7 is Out \u2014 Weekly AI Newsletter (April 20th 2026)"
+    },
+    {
+      "url": "https://www.reddit.com/r/Anthropic/comments/1slwnjg/claude_opus_47_is_reportedly_dropping_this_week",
+      "title": "Claude Opus 4.7 is reportedly dropping this week : here's ... - Reddit"
+    },
+    {
+      "url": "https://medium.com/@AdithyaGiridharan/claude-sonnet-4-6-when-the-mid-tier-model-starts-eating-the-flagships-lunch-66b0d2d4eaa3",
+      "title": "Claude Sonnet 4.6: When the Mid-Tier Model Starts Eating ... - Medium"
+    },
+    {
+      "url": "https://www.macrumors.com/2026/02/17/anthropic-releases-claude-sonnet-4-6",
+      "title": "Claude Sonnet 4.6 Brings Improved Coding, Computer Use, and ..."
+    },
+    {
+      "url": "https://webscraft.org/blog/claude-sonnet-46-detalniy-oglyad-novoyi-modeli-anthropic-2026?lang=en",
+      "title": "Claude Sonnet 4.6 Review The New Default Model"
+    },
+    {
+      "url": "https://www.sitepoint.com/claude-opus-47-what-developers-get",
+      "title": "Claude Opus 4.7: What Changed for Developers - SitePoint"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DXR3pgrCWGi",
+      "title": "Opus 4.7 - all you need to know \u2060 \u2060 Every time Claude drops a new ..."
+    },
+    {
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1sn5m04/claude_model_claudeopus47",
+      "title": "model claude-opus-4-7 : r/ClaudeAI - Reddit"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 63.08300733566284
+}

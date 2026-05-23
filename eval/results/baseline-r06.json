@@ -1,0 +1,75 @@
+{
+  "draft": "Here is a summary of the key changes in the LangGraph 1.x release line during 2025\u20132026:\n\n---\n\n## LangGraph 1.x: What Changed in 2025\u20132026\n\n### LangGraph 1.0 GA \u2014 October 2025\n\nLangGraph 1.0, released on October 22, 2025, was the first stable major release in the durable agent framework space \u2014 a milestone for production-ready AI systems, coming after more than a year of powering agents at companies like Uber, LinkedIn, and Klarna.\n\nCrucially, the release shipped with zero breaking changes \u2014 it was about stability, not flashy features, with the core graph primitives (state, nodes, edges) remaining unchanged. The only notable breaking change was the deprecation of `langgraph.prebuilt`, with enhanced functionality moved to `langchain.agents`.\n\nThe 1.0 release formally stabilized four core production runtime features:\n\n- **Durable state**: Agent execution state persists automatically \u2014 if a server restarts mid-conversation or a workflow gets interrupted, it picks up exactly where it left off.\n- **Built-in persistence**: Save and resume agent workflows at any point without custom database logic, enabling multi-day approval processes and workflows spanning multiple sessions.\n- **Human-in-the-loop**: The runtime pauses execution, saves state, and waits for human input without blocking threads; when the human responds, execution resumes from the exact point it paused.\n- **Memory**: Short-term memory (working context) is built into state management, while long-term memory across sessions uses persistent checkpointers that plug into databases \u2014 both provided natively.\n\n### Pre-1.0 Feature Additions (Early\u2013Mid 2025)\n\nSeveral features shipped in the lead-up to 1.0:\n\n- In May 2025, LangGraph added node-input-based caching to avoid redundant computation, and support for deferred node execution \u2014 allowing a node to run only after all parallel branches complete.\n- Pre/post model hooks were added, letting developers insert custom logic before or after model calls \u2014 great for controlling context bloat and adding guardrails or human-in-the-loop checks.\n- In May 2025, LangGraph agents gained the ability to connect to remote MCP servers via the new streamable HTTP transport.\n- In August 2025, dynamic tool calling was introduced, allowing developers to control which tools are available at different points in a workflow.\n\n### Post-1.0 Additions (Late 2025\u20132026)\n\nAfter the stable release, improvements continued in the 1.x line:\n\n- Per-node timeouts were added via a `timeout=` parameter in `add_node`, supporting a hard wall-clock limit (`run_timeout`) or an idle limit (`idle_timeout`); when the limit fires, LangGraph raises a `NodeTimeoutError` and hands off to the retry policy.\n- Node-level error handlers were introduced via `error_handler=` in `add_node`, allowing a recovery function to run after all retries are exhausted; the handler receives a typed `NodeError` and can route to a different node, useful for Saga/compensation patterns.\n- Type-safe streaming (`version=\"v2\"`) was added to `stream()` / `astream()`, providing unified `StreamPart` output with `type`, `ns`, and `data` keys, with each mode having its own `TypedDict` importable from `langgraph.types`.\n- Graceful shutdown support landed as well: a `RunControl` object allows requesting a drain after the current superstep completes, saving a resumable checkpoint instead of crashing mid-run.\n\nOverall, LangGraph 1.0 is a graph-based agent runtime providing durable execution, state management, branching, event logs, and fine-grained control \u2014 and by 2026, it has become the backbone for production AI systems, especially for multi-agent workflows and long-running processes.",
+  "sources": [
+    {
+      "url": "https://changelog.langchain.com/announcements/langgraph-1-0-is-now-generally-available",
+      "title": "LangChain - Changelog | LangGraph 1.0 is now generally available"
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/releases",
+      "title": "Releases \u00b7 langchain-ai/langgraph"
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/releases/changelog",
+      "title": "Changelog - Docs by LangChain"
+    },
+    {
+      "url": "https://www.clickittech.com/ai/langchain-1-0-vs-langgraph-1-0/",
+      "title": "LangChain 1.0 vs LangGraph 1.0: Which One to Use in 2026"
+    },
+    {
+      "url": "https://medium.com/@romerorico.hugo/langgraph-1-0-released-no-breaking-changes-all-the-hard-won-lessons-8939d500ca7c",
+      "title": "LangGraph 1.0 released in October 2025: Production ready, all the hard-won lessons"
+    },
+    {
+      "url": "https://medium.com/mitb-for-all/langchain-a-second-look-6ed720e27fec",
+      "title": "LangChain 1.0 \u2014 A second look"
+    },
+    {
+      "url": "https://changelog.langchain.com/?categories=cat_5UBL6DD8PcXXL&date=2025-10-01",
+      "title": "LangChain - Changelog"
+    },
+    {
+      "url": "https://www.digitalapplied.com/blog/langchain-1-deep-dive-agent-protocol-runtime-2026",
+      "title": "LangChain 1 Deep Dive: Agent Protocol + Runtime 2026"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/harrison-chase-961287118_announcing-langchain-and-langgraph-10-activity-7386795886137434114--AC0",
+      "title": "LangChain and LangGraph 1.0: New Docs, Agent ..."
+    },
+    {
+      "url": "https://towardsdatascience.com/lessons-learnt-from-upgrading-to-langchain-1-0-in-production/",
+      "title": "Lessons Learned from Upgrading to LangChain 1.0 in Production | Towards Data Science"
+    },
+    {
+      "url": "https://docs.langchain.com/oss/javascript/releases/changelog",
+      "title": "Changelog - Docs by LangChain"
+    },
+    {
+      "url": "https://changelog.langchain.com/announcements/langgraph-workflow-updates-python-js",
+      "title": "LangChain - Changelog | LangGraph Workflow Updates (Python & JS)"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph/",
+      "title": "LangGraph"
+    },
+    {
+      "url": "https://blog.langchain.com/langgraph-release-week-recap/",
+      "title": "LangGraph Release Week Recap"
+    },
+    {
+      "url": "https://changelog.langchain.com/announcements/langchain-1-0-now-generally-available",
+      "title": "LangChain - Changelog | LangChain 1.0 now generally available"
+    },
+    {
+      "url": "https://forum.langchain.com/t/when-will-langgraph-cli-be-updated/2534",
+      "title": "When will langgraph-cli be updated? - LangSmith Product Help - LangChain Forum"
+    },
+    {
+      "url": "https://www.threads.com/@langchain.ai/post/DOMFneEj-dR/we-are-working-towards-an-official-10-release-in-late-october-please-give-us-any",
+      "title": "We are working towards an official 1.0 release in late October - please give us any feedback! TL,DR: 1. LangGraph is largely the same as before, no breaking changes. We\u2019ve heard good feedback about LangGraph and are excited to move to 1.0 2. New standard content blocks on messages in LangChain Core. Message formats are evolving, and so is LangChain. Backwards compatible"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 28.970547914505005
+}

@@ -1,0 +1,75 @@
+{
+  "draft": "## Claude Sonnet 4.6 Context Window: How It Compares to Claude Opus 4.7\n\n### Claude Sonnet 4.6 Context Window\n\nClaude Sonnet 4.6 features a **1 million (1M) token context window**, currently available in beta. This 1M token context window is currently available in beta on the API only. To put the scale in perspective, a standard A4/letter-sized page contains around 500\u20131,000 tokens of English, meaning 1 million tokens is roughly 1,000\u20132,000 pages \u2014 or about 4\u20135 novels worth of text.\n\nSonnet 4.6's 1M token context window is enough to hold entire codebases, lengthy contracts, or dozens of research papers in a single request \u2014 and more importantly, Sonnet 4.6 reasons effectively across all that context. This is a major leap from its predecessor: other Claude models, including Claude Sonnet 4.5, have only a 200k-token context window.\n\nOn the Claude Platform, Sonnet 4.6 also supports context compaction in beta, which automatically summarizes older context as conversations approach limits, increasing effective context length.\n\n---\n\n### Claude Opus 4.7 Context Window\n\nClaude Opus 4.7 also supports the **1M token context window**, along with 128k max output tokens and adaptive thinking. So at the top-line level, both models share the same maximum context window size. Claude Mythos Preview, Claude Opus 4.7, Claude Opus 4.6, and Claude Sonnet 4.6 all have a 1M-token context window.\n\nClaude Opus 4.7 provides its 1M context window at standard API pricing with no long-context premium. Similarly, Anthropic has dropped the long-context surcharge entirely with the 4.6/4.7 generation of models.\n\n---\n\n### Key Differences Beyond Context Size\n\nWhile both models share the 1M token context window, there are differences in how they're positioned and what they offer:\n\n- **Performance tier:** Claude Opus 4.7 is Anthropic's most capable, generally available model, performing at the frontier across coding, agentic, and knowledge work capabilities. Sonnet 4.6 is positioned as a more cost-efficient alternative that approaches Opus-level quality.\n\n- **Pricing:** Sonnet 4.6 starts at $3/$15 per million tokens, while Opus 4.7 starts at $5 per million input tokens and $25 per million output tokens.\n\n- **Vision:** Claude Opus 4.7 is the first Claude model with high-resolution image support, with maximum image resolution increased to 2,576px / 3.75MP.\n\n- **On paid plans:** Sonnet 4.6, Opus 4.6, and Opus 4.7 support a 500K token context window on all paid plans when chatting with Claude.\n\nIn summary, both Claude Sonnet 4.6 and Claude Opus 4.7 share the same 1M token context window, making them equally capable of processing massive inputs \u2014 but Opus 4.7 leads in raw intelligence, vision capabilities, and agentic performance, at a higher price point.",
+  "sources": [
+    {
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "title": "Introducing Claude Sonnet 4.6"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+      "title": "Context windows - Claude API Docs"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/sonnet",
+      "title": "Claude Sonnet 4.6"
+    },
+    {
+      "url": "https://martinalderson.com/posts/why-claudes-new-1m-context-length-is-a-big-deal/",
+      "title": "Why Claude's new 1M context length is a big deal - Martin Alderson"
+    },
+    {
+      "url": "https://support.claude.com/en/articles/8606394-how-large-is-the-context-window-on-paid-claude-plans",
+      "title": "How large is the context window on paid Claude plans? | Claude Help Center"
+    },
+    {
+      "url": "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/claude-sonnet-4-6-in-microsoft-foundry-frontier-performance-for-scale/4494873",
+      "title": "Claude Sonnet 4.6 in Microsoft Foundry-Frontier Performance for Scale | Microsoft Community Hub"
+    },
+    {
+      "url": "https://www.datacamp.com/blog/claude-sonnet-4-6",
+      "title": "Claude Sonnet 4.6: Features, Access, Tests, and Benchmarks | DataCamp"
+    },
+    {
+      "url": "https://www.gend.co/blog/claude-sonnet-4-6",
+      "title": "Claude Sonnet 4.6: 1M context and stronger computer use"
+    },
+    {
+      "url": "https://www.geeky-gadgets.com/claude-sonnet-4-6-context/",
+      "title": "Claude Sonnet 4.6 1M Context Window & Pricing Explained - Geeky Gadgets"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/about-claude/models/whats-new-claude-4-7",
+      "title": "What's new in Claude Opus 4.7 - Claude API Docs"
+    },
+    {
+      "url": "https://www.anthropic.com/claude/opus",
+      "title": "Claude Opus 4.7"
+    },
+    {
+      "url": "https://github.com/github/copilot-cli/issues/2785",
+      "title": "Support 1M context window for Claude Opus 4.7 (parity with Claude Code) \u00b7 Issue #2785 \u00b7 github/copilot-cli"
+    },
+    {
+      "url": "https://www.damiangalarza.com/posts/2026-04-30-claude-opus-4-7-claude-code-tips-extended-context/",
+      "title": "Claude Opus 4/7 + Claude Code: 7 Practical Tips for Maximizing Extended Context - Damian Galarza | Software Engineering & AI Consulting"
+    },
+    {
+      "url": "https://www.vibecademy.ai/blog/claude-opus-4-7-context-window-strategy",
+      "title": "Claude Opus 4.7 Context Window: The 1M-Token Strategy | BridgeMind Vibe Coding Blog"
+    },
+    {
+      "url": "https://almcorp.com/blog/claude-opus-4-7/",
+      "title": "Claude Opus 4.7 Explained: Benchmarks, Pricing, Context Window, and What Changed for Coding, Vision, and Enterprise AI | ALM Corp"
+    },
+    {
+      "url": "https://evomap.ai/blog/claude-opus-4-7-context-window-real-limits",
+      "title": "Claude Opus 4.7 Context Window: Real Limits - EvoMap Blog"
+    },
+    {
+      "url": "https://llm-stats.com/blog/research/claude-opus-4-7-launch",
+      "title": "Claude Opus 4.7: Benchmarks, Pricing, Context & What's New"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 22.945686101913452
+}

@@ -1,0 +1,51 @@
+{
+  "draft": "Here is a comprehensive answer drawing on published benchmarks and research:\n\n---\n\n## When Does Hybrid Retrieval (BM25 + Dense) Outperform Pure Dense Retrieval?\n\n### The Core Reason: Complementary Failure Modes\n\nThe core empirical finding across dozens of retrieval benchmarks is that BM25 and dense retrieval have complementary recall \u2014 documents missed by BM25 are often found by dense retrieval, and vice versa. This complementarity is most pronounced in specific query scenarios.\n\nThe query types that systematically fail under pure dense retrieval follow a consistent pattern: error codes and identifiers (e.g., `0x80070005`, `INV-2024-00847`) have near-zero semantic representation signal, and the embedding model has no principled way to distinguish between similar-looking identifiers. Similarly, product SKUs like RTX-4090 and RTX-4070 are semantically almost identical in embedding space but represent different products.\n\nSparse methods excel at precise term matching and interpretable scoring but struggle with semantic variations and synonymy, while dense methods capture semantic relationships effectively but require significant computational resources and struggle with exact matching scenarios. Hybrid retrieval is particularly valuable when a workload mixes *both* query types in the same session [2].\n\nIn domain-specific settings, the advantage is even sharper. In highly technical or matching-sensitive domains (medical harmonization, legal texts), two-thirds or more weight on BM25 remains optimal, but hybridization is necessary to capture terminological variability.\n\n---\n\n### Benchmark Numbers: How Much Does It Help?\n\n**General RAG benchmarks:** Dense-only retrieval hits 78% recall@10, sparse-only BM25 lands at 65%, and hybrid search reaches 91% recall@10 \u2014 a gap that is the difference between a production-ready RAG system and one that hallucinates on edge cases.\n\n**Financial QA (T2-RAGBench, 23,088 queries):** A 2025 arXiv paper benchmarking ten retrieval strategies found that the two-stage pipeline of hybrid retrieval followed by neural reranking (Hybrid + Cohere Rerank) dominates all single-stage methods by a wide margin: Recall@5 of 0.816 compared to 0.695 for Hybrid RRF alone (+17.4%), 0.644 for BM25 (+26.7%), and 0.587 for dense retrieval (+39.0%). Notably, BM25 outperforms state-of-the-art dense retrieval on financial documents, challenging the common assumption that semantic search universally dominates.\n\n**Open-domain QA (Natural Questions):** Top-1 BM25 passage recall is 22.1%; dense retrievers (DPR) reach 48.7%, but hybrid pipelines achieve up to 53.4%.\n\n**BEIR / TREC-DL:** BM25 achieves an nDCG@10 of 43.4 (BEIR average), improved to >52.6 via hybrid reranking.\n\n**Production RAG systems:** One production system reported 91% retrieval accuracy, up from 62% with dense-only search \u2014 a 48% improvement that transformed the RAG system from \"good enough\" to genuinely reliable.\n\n---\n\n### Caveats\n\nAcross a wide range of retrieval and RAG benchmarks, hybrid BM25 retrieval consistently outperforms both sparse-only and dense-only retrievers \u2014 often by double-digit margins in nDCG and MAP. However, hybrid search is not a silver bullet \u2014 it is a set of engineering tradeoffs where every decision (fusion algorithm, weight balance, reranking strategy) depends entirely on your data and queries, and getting it wrong can make things worse than using BM25 alone.\n\nIn summary, hybrid retrieval most reliably outperforms pure dense retrieval on **exact-match queries** (IDs, codes, rare terms), **domain-specific corpora** (finance, law, medicine), and **mixed query workloads** \u2014 with gains typically ranging from **+5 to +39 percentage points** in recall depending on the domain and baseline.",
+  "sources": [
+    {
+      "url": "https://mbrenndoerfer.com/writing/hybrid-search-bm25-dense-retrieval-fusion",
+      "title": "Hybrid Search: BM25 and Dense Retrieval Combined - Interactive | Michael Brenndoerfer | Michael Brenndoerfer"
+    },
+    {
+      "url": "https://tianpan.co/blog/2026-04-12-hybrid-search-production-bm25-dense-embeddings",
+      "title": "Hybrid Search in Production: Why BM25 Still Wins on the Queries That Matter - TianPan.co"
+    },
+    {
+      "url": "https://medium.com/@pbronck/better-rag-accuracy-with-hybrid-bm25-dense-vector-search-ea99d48cba93",
+      "title": "Better RAG Accuracy with Hybrid BM25 + Dense Vector Search | by Patricia | Jan, 2026 | Medium"
+    },
+    {
+      "url": "https://blog.supermemory.ai/hybrid-search-guide/",
+      "title": "Hybrid Search Guide: Vectors & Full-Text (April 2026)"
+    },
+    {
+      "url": "https://medium.com/@noumannawaz/lesson-8-hybrid-retrieval-bm25-dense-bac3c702318b",
+      "title": "Lesson 8: Hybrid Retrieval: BM25 + Dense | by Nouman Nawaz | Medium"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2604.01733",
+      "title": "From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents"
+    },
+    {
+      "url": "https://arxiv.org/html/2604.01733v1",
+      "title": "From BM25 to Corrective RAG: Benchmarking Retrieval Strategies for Text-and-Table Documents"
+    },
+    {
+      "url": "https://ranjankumar.in/building-a-full-stack-hybrid-search-system-bm25-vectors-cross-encoders-with-docker",
+      "title": "Building Hybrid Search That Actually Works: BM25 + Dense Retrieval + Cross-Encoders | Ranjan Kumar"
+    },
+    {
+      "url": "https://www.emergentmind.com/topics/hybrid-bm25-retrieval",
+      "title": "Hybrid BM25 Retrieval"
+    },
+    {
+      "url": "https://mbrenndoerfer.com/writing/hybrid-retrieval-combining-sparse-dense-methods-effective-information-retrieval",
+      "title": "Hybrid Retrieval: Combining Sparse and Dense Methods for Effective Information Retrieval - Interactive | Michael Brenndoerfer | Michael Brenndoerfer"
+    },
+    {
+      "url": "https://www.emergentmind.com/topics/bm25-retrieval",
+      "title": "BM25 Retrieval: Methods and Applications"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 30.821283102035522
+}

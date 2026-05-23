@@ -1,0 +1,127 @@
+{
+  "draft": "Here's a detailed comparison of **HuggingFace Inference Endpoints**, **Modal**, and **Replicate** for serving a fine-tuned 7B parameter model:\n\n---\n\n## \ud83d\udcb0 Cost\n\n**HuggingFace Inference Endpoints** uses hourly, dedicated-instance pricing. Pricing is pay-as-you-go based on hourly compute and number of replicas, starting as low as $0.50/GPU/hr. For a 7B model, you'd likely target an A10G (~$1.00/hr), meaning 4x A10G GPUs running 24/7 would cost around $2,920/month. A key risk: there are no built-in spending caps or automated warnings, so a traffic spike or code bug can cause costs to explode before you see the bill.\n\n**Modal** uses fully consumption-based, per-second billing. Pricing is billed per second of actual compute usage, with automatic scale-to-zero when idle. This is cost-efficient for bursty workloads, but users describe Modal as \"more expensive than alternatives\" like Lambda Labs \u2014 a significant barrier for cost-sensitive users. If your GPU is busy more than ~51% of the time, a dedicated instance is cheaper than Modal's per-second billing.\n\n**Replicate** also bills per second of GPU time. An A100 80GB runs $0.001400/sec, and for private model deployments, you pay for all the time instances are online: setup time, idle time, and active processing time. However, for \"fast booting fine-tunes,\" you'll only be billed for the time the model is active and processing requests, so you won't pay for idle time.\n\n---\n\n## \u23f1\ufe0f Cold Start\n\n**HuggingFace Inference Endpoints** advertises production-ready deployment with no cold starts \u2014 because it keeps a minimum number of replicas always warm, though you pay for that idle time continuously.\n\n**Modal** has made cold starts a core engineering focus. Modal operates a proprietary container runtime delivering sub-second cold starts. However, in practice, cold starts can add anywhere from a few seconds for simple workloads to over a minute for large model deployments on the first request to an unoptimized container. To address this, Modal introduced GPU memory snapshots in 2025 (currently in alpha) that capture the full GPU state, with some workloads achieving up to 10x faster cold starts.\n\n**Replicate** has the most significant cold start problem of the three. Replicate uses a serverless architecture that spins down idle models to save costs; when a model hasn't been used recently, it must reload into GPU memory \u2014 which takes 10\u2013180 seconds depending on model size. On a private H100 deployment, a 2-minute cold start costs $0.183 before your prediction even starts.\n\n---\n\n## \ud83d\udee0\ufe0f Deploy Ergonomics\n\n**HuggingFace Inference Endpoints** wins for Hub-native workflows. You can deploy any ML model on dedicated and autoscaling infrastructure directly from the HF Hub. If your fine-tuned model is already on the Hub, deployment is largely point-and-click with minimal code changes.\n\n**Modal** is the most developer-flexible option. Developers decorate Python functions with `@app.function()`, specify container environments and hardware in code, and invoke workloads via `.remote()` \u2014 Modal handles container builds, scheduling, autoscaling, and logging automatically. Infrastructure is defined as code with decorators; no YAML configuration is needed. That said, Modal isn't a plug-and-play solution \u2014 it rewards teams comfortable with Python-first infrastructure thinking.\n\n**Replicate** offers the simplest path for packaging and sharing. For custom models, Replicate offers Cog, an open-source CLI tool that packages models with their code, weights, and dependencies into reproducible containers. However, custom model deployments can suffer long cold-start times (over 60 seconds for many custom models) when scaling from zero, unless you pay to keep instances warm. One additional consideration: Cloudflare acquired Replicate in November 2025, and the brand continues operating independently with plans to integrate into Cloudflare's Workers AI ecosystem \u2014 introducing some product-direction uncertainty.\n\n---\n\n## \ud83c\udfc1 Summary\n\n| | HuggingFace IE | Modal | Replicate |\n|---|---|---|---|\n| **Cost model** | Hourly, dedicated | Per-second, serverless | Per-second, serverless |\n| **Cold starts** | None (always-on) | Sub-second (with tuning) | 10\u2013180 seconds |\n| **Ergonomics** | Hub-native, low-code | Python-first, code-heavy | Cog packaging, simple API |\n| **Best for** | Steady, HF-native workloads | Bursty traffic, ML engineers | Prototyping, model sharing |\n\n**Bottom line:** For a fine-",
+  "sources": [
+    {
+      "url": "https://huggingface.co/docs/inference-endpoints/en/pricing",
+      "title": "Pricing \u00b7 Hugging Face"
+    },
+    {
+      "url": "https://huggingface.co/pricing",
+      "title": "Pricing - Hugging Face"
+    },
+    {
+      "url": "https://www.metacto.com/blogs/the-true-cost-of-hugging-face-a-guide-to-pricing-and-integration",
+      "title": "Hugging Face Pricing 2026: Is It Free? Complete Cost Breakdown | MetaCTO"
+    },
+    {
+      "url": "https://www.eesel.ai/blog/hugging-face-pricing",
+      "title": "A guide to Hugging Face pricing in 2025: Understanding the true costs | eesel AI"
+    },
+    {
+      "url": "https://huggingface.co/docs/inference-endpoints/en/support/pricing",
+      "title": "Pricing"
+    },
+    {
+      "url": "https://huggingface.co/docs/inference-providers/pricing",
+      "title": "Pricing and Billing \u00b7 Hugging Face"
+    },
+    {
+      "url": "https://huggingface.co/docs/inference-endpoints/guides/access",
+      "title": "Access \ud83e\udd17 Inference Endpoints \u00b7 Hugging Face"
+    },
+    {
+      "url": "https://endpoints.huggingface.co/",
+      "title": "Inference Endpoints by Hugging Face"
+    },
+    {
+      "url": "https://aionx.co/ai-comparisons/huggingface-inference-api/",
+      "title": "HuggingFace Inference API: Full Review and Comparison"
+    },
+    {
+      "url": "https://borisagain.substack.com/p/chatgpt-api-pricing-versus-inference",
+      "title": "ChatGPT API pricing versus Inference Endpoints on Huggingface"
+    },
+    {
+      "url": "https://devtune.ai/verticals/llm-inference-serverless-gpu/modal-labs",
+      "title": "Modal Labs AI search visibility, competitors, reviews, and pricing | DevTune"
+    },
+    {
+      "url": "https://modal.com/",
+      "title": "Modal: High-performance AI infrastructure"
+    },
+    {
+      "url": "https://www.spheron.network/blog/modal-alternatives/",
+      "title": "10 Best Modal Alternatives in 2026: Serverless GPU Without the Lock-In | Spheron Blog"
+    },
+    {
+      "url": "https://introl.com/blog/serverless-gpu-platforms-runpod-modal-beam-comparison-guide-2025",
+      "title": "Serverless GPU Platforms: RunPod, Modal, and Beam Compared | Introl Blog"
+    },
+    {
+      "url": "https://siliconvalleyinvestclub.com/modal-labs/",
+      "title": "Modal Labs | Silicon Valley Investclub"
+    },
+    {
+      "url": "https://startupintros.com/orgs/modal-labs",
+      "title": "Modal Labs: Funding, Team & Investors"
+    },
+    {
+      "url": "https://skywork.ai/skypage/en/Modal-Labs-Deep-Dive-The-Serverless-Engine-Redefining-AI-Development/1972878452262105088",
+      "title": "Modal Labs Deep Dive: The Serverless Engine Redefining AI Development"
+    },
+    {
+      "url": "https://pguso.medium.com/running-llms-on-modal-gpu-powered-inference-that-scales-to-zero-635854513557",
+      "title": "Running LLMs on Modal: GPU-Powered Inference That Scales to Zero | by Patric | Medium"
+    },
+    {
+      "url": "https://checkthat.ai/brands/modal",
+      "title": "Modal: Details, Reviews, Pricing, & Features | CheckThat.ai"
+    },
+    {
+      "url": "https://www.eesel.ai/blog/modal-ai-pricing",
+      "title": "A complete guide to Modal AI pricing in 2025 | eesel AI"
+    },
+    {
+      "url": "https://wavespeed.ai/blog/posts/replicate-review-2026/",
+      "title": "Replicate Just Got Acquired by Cloudflare \u2014 Should You Still Use It Over WaveSpeedAI? | WaveSpeedAI Blog"
+    },
+    {
+      "url": "https://replicate.com/pricing",
+      "title": "Pricing \u2013 Replicate"
+    },
+    {
+      "url": "https://checkthat.ai/brands/replicate/pricing",
+      "title": "Replicate Pricing 2026: Plans, Costs & What You'll Pay - Replicate | CheckThat.ai"
+    },
+    {
+      "url": "https://replicate.com/docs/topics/billing",
+      "title": "Billing - Replicate"
+    },
+    {
+      "url": "https://dodopayments.com/blogs/replicate-billing-model",
+      "title": "How Replicate Handles Billing: A Complete Breakdown | Dodo Payments"
+    },
+    {
+      "url": "https://getdeploying.com/replicate",
+      "title": "Replicate | Review, Pricing & Alternatives"
+    },
+    {
+      "url": "https://sacra.com/c/replicate/",
+      "title": "Replicate funding, news & analysis | Sacra"
+    },
+    {
+      "url": "https://www.beam.cloud/blog/best-replicate-alternatives",
+      "title": "Best Alternatives to Replicate for AI Inference and Training \u2022 Beam"
+    },
+    {
+      "url": "https://www.toolsforhumans.ai/ai-tools/replicate",
+      "title": "Replicate review 2026 \u2014 hosted ML model API"
+    },
+    {
+      "url": "https://www.buildmvpfast.com/alternatives/replicate",
+      "title": "Best Replicate Alternatives (2026): GPU Pricing, ML Models"
+    }
+  ],
+  "web_searches": 3,
+  "elapsed_sec": 35.86260509490967
+}

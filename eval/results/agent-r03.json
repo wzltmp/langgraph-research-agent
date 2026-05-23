@@ -1,0 +1,108 @@
+{
+  "draft": "## Implementation Status of EU AI Act General-Purpose AI Obligations (Mid-2026)\n\nThe EU AI Act's general-purpose AI (GPAI) obligations formally became applicable on **August 2, 2025**, marking a critical compliance milestone for providers of large language models and similar systems [3]. However, as of mid-2026, implementation remains uneven across both industry and member states.\n\n**Core GPAI Obligations Now in Force**\n\nAll GPAI model providers must meet mandatory transparency requirements, including comprehensive technical documentation, information sharing with downstream AI system providers, and published summaries of training data [4]. Providers of models posing systemic risks\u2014such as high-capability generative AI systems\u2014face additional obligations including adversarial model evaluations, cybersecurity measures, and mandatory incident reporting to the European Commission [4][6]. Enforcement of these systemic-risk provisions is centralized exclusively under the Commission rather than national authorities [7].\n\n**Codes of Practice and Guidance**\n\nThe Commission was required to finalize a GPAI Code of Practice by May 2, 2025, providing practical compliance guidance for providers [3][5]. Additionally, Commission guidelines on post-market monitoring under Article 6 were due by February 2, 2026 [3]. These instruments are intended to operationalize the statutory obligations, particularly for the systemic-risk tier.\n\n**Transitional Arrangements**\n\nProviders of GPAI models already on the market before August 2, 2025 benefit from a transitional period extending until **August 2, 2027** to achieve full compliance [3][5]. New market entrants, however, must comply immediately with all applicable obligations.\n\n**Enforcement Infrastructure Gaps**\n\nDespite obligations being in force, enforcement capacity is notably underdeveloped. As of March 2026, only **8 of 27 EU member states** had designated the required national single points of contact for AI enforcement [7]. While GPAI systemic-risk supervision sits centrally with the Commission\u2014mitigating some national gaps\u2014the broader enforcement ecosystem remains incomplete [7].\n\n**Penalties**\n\nNon-compliance with GPAI obligations can trigger fines up to **\u20ac15 million or 3% of global annual turnover**, with violations of prohibited practices reaching \u20ac35 million or 7% [2][6].\n\nIn summary, the legal framework for GPAI obligations is operative, but practical enforcement and member-state infrastructure are still catching up as of mid-2026 [7][3].",
+  "plan": [
+    "EU AI Act GPAI Code of Practice finalization status and timeline",
+    "enforcement actions or compliance monitoring data from Commission as of mid-2026",
+    "current status of Article 6 post-market monitoring guidelines publication"
+  ],
+  "sources": [
+    {
+      "url": "https://www.dentons.com/en/insights/articles/2025/september/5/eu-ai-act-implementation",
+      "title": "EU AI Act implementation: New obligations for general-purpose AI ..."
+    },
+    {
+      "url": "https://gdprlocal.com/eu-ai-act-summary",
+      "title": "EU AI Act Summary: Europe\u2019s AI Regulation - GDPR Local"
+    },
+    {
+      "url": "https://artificialintelligenceact.eu/implementation-timeline",
+      "title": "Implementation Timeline | EU Artificial Intelligence Act"
+    },
+    {
+      "url": "https://www.linkedin.com/pulse/eu-ai-acts-transparency-deadline-unveiling-impacts-people-thornton-pvxie",
+      "title": "The EU AI Act's Transparency Deadline: Unveiling Non-Obvious ..."
+    },
+    {
+      "url": "https://www.dataguard.com/eu-ai-act/timeline",
+      "title": "EU AI Act Timeline: Key Compliance Dates & Deadlines Explained"
+    },
+    {
+      "url": "https://whisperly.ai/eu-ai-act-summary",
+      "title": "EU AI Act Summary 2026: Key Rules and Deadlines | Whisperly"
+    },
+    {
+      "url": "https://epthinktank.eu/2026/03/18/enforcement-of-the-ai-act",
+      "title": "Enforcement of the AI Act | Epthinktank | European Parliament"
+    },
+    {
+      "url": "https://www.twobirds.com/-/media/new-website-content/pdfs/capabilities/artificial-intelligence/european-union-artificial-intelligence-act-guide.pdf",
+      "title": "[PDF] European Union Artificial Intelligence Act: a guide"
+    },
+    {
+      "url": "https://www.freshfields.com/en/our-thinking/campaigns/tech-data-and-ai-the-digital-frontier/eu-digital-strategy/artificial-intelligence-act",
+      "title": "Artificial Intelligence Act"
+    },
+    {
+      "url": "https://docs.modulos.ai/frameworks/eu-ai-act/general-purpose-ai-models",
+      "title": "EU AI Act \u2014 General-Purpose AI Models (Chapter V, Articles 51\u201356) | Modulos Docs"
+    },
+    {
+      "url": "https://www.eipa.eu/blog/understanding-general-purpose-ai",
+      "title": "Understanding General Purpose AI - Eipa"
+    },
+    {
+      "url": "https://www.rand.org/pubs/research_reports/RRA3243-1.html",
+      "title": "General-Purpose Artificial Intelligence (GPAI) Models and GPAI Models with Systemic Risk: Classification and Requirements for Providers | RAND"
+    },
+    {
+      "url": "https://decodethefuture.org/en/eu-ai-act-explained",
+      "title": "EU AI Act Explained: 7 Risk Tiers, Penalties & 2026 Timeline"
+    },
+    {
+      "url": "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
+      "title": "AI Act | Shaping Europe's digital future - European Union"
+    },
+    {
+      "url": "https://visioncompliance.eu/en/blog/eu-ai-act-compliance-guide",
+      "title": "EU AI Act Compliance Guide 2026"
+    },
+    {
+      "url": "https://www.jdsupra.com/legalnews/eu-ai-act-at-the-crossroads-gpai-rules-8567594",
+      "title": "EU AI Act at the Crossroads: GPAI Rules, AI Literacy Guidance and ..."
+    },
+    {
+      "url": "https://www.taylorwessing.com/de/insights-and-events/insights/2025/07/update-ai-act",
+      "title": "The final GPAI Code of Practice"
+    },
+    {
+      "url": "https://verfassungsblog.de/the-gpai-code-of-practice",
+      "title": "The GPAI Code of Practice"
+    },
+    {
+      "url": "https://www.ferc.gov/civil-penalties/all-civil-penalty-actions-2026",
+      "title": "All Civil Penalty Actions - 2026"
+    },
+    {
+      "url": "https://www.ncontracts.com/nsight-blog/enforcement-actions-roundup-march-2026",
+      "title": "Enforcement Actions Roundup: March 2026"
+    },
+    {
+      "url": "https://www.koleyjessen.com/insights/publications/lessons-for-businesses-from-2026s-first-california-privacy-enforcement-actions",
+      "title": "Lessons for Businesses From 2026's First California Privacy Enforcement Actions | Koley Jessen"
+    },
+    {
+      "url": "https://www.interamericancoalition-medtech.org/regulatory-convergence/wp-content/uploads/sites/4/2021/07/Post-market-surveillance-MDs-IVDs-eng.pdf",
+      "title": "[PDF] Guidance for post-market surveillance and market surveillance of ..."
+    },
+    {
+      "url": "https://climateactiontransparency.org/resources/article-6-guide",
+      "title": "[PDF] A guide to navigating the links between Articles 6 and 13"
+    },
+    {
+      "url": "https://ca1-aip.edcdn.com/knowledge-hub/A6_Implementation-Status-Report-ISR_Web_FY2024.pdf?v=1741083956",
+      "title": "[PDF] Paris Agreement Article 6 Implementation Status Report"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 64.9967827796936
+}

@@ -1,0 +1,67 @@
+{
+  "draft": "Here is a comprehensive overview of the major announcements at OpenAI DevDay 2025:\n\n---\n\n**OpenAI DevDay 2025: Major Announcements**\n\nOn October 6, 2025, OpenAI hosted its annual DevDay event in San Francisco, marking the company's largest developer event yet with over 1,500 attendees. The event marked a significant strategic shift for the company.\n\n**1. ChatGPT Becomes an App Platform**\n\nOne of the biggest announcements was that ChatGPT is becoming a platform for third-party applications. OpenAI introduced a new ChatGPT \"Apps\" platform, which allows users to interact with external services inside ChatGPT conversations. The initial launch partners include Booking.com, Canva, Coursera, Figma, Expedia, Spotify, and Zillow, with future integrations planned for DoorDash, Uber, Instacart, OpenTable, and AllTrails. Built on the Model Context Protocol (MCP), the new Apps SDK lets developers make their apps discoverable and callable directly inside ChatGPT conversations. [1][7]\n\n**2. AgentKit and ChatKit**\n\nAltman introduced AgentKit, which is designed to help developers build AI agents and take them from \"prototype to production.\" AgentKit includes a visual Agent Builder, a Connector Registry for governing data sources, ChatKit for embeddable agent UIs, and integrated evaluation and tracing, enabling teams to observe and improve workflows. To demonstrate how fast AgentKit can be, OpenAI's Christina Huang was able to build a simple agent in front of the audience in under 8 minutes. [9][15]\n\n**3. New Models: GPT-5 Pro, Sora 2, and Voice**\n\nAltman introduced GPT-5 Pro, a more powerful version of OpenAI's flagship model, and gpt-realtime-mini, which supports real-time voice interactions \u2014 both made available to developers through the API. OpenAI also introduced Sora 2, accessible via API \u2014 this upgraded version of OpenAI's video generation model adds realistic soundscapes and synchronized audio, allowing developers to create rich multimedia content. [10][12]\n\n**4. Codex Goes Generally Available**\n\nAltman announced that Codex, OpenAI's software engineering agent, is generally available. The company had launched a research preview of Codex earlier in the year. Codex transitioned from research preview to a supported enterprise product and now includes an SDK, Slack integration, and enterprise security/monitoring features. [9][11]\n\n**5. AMD Hardware Partnership**\n\nOpenAI announced a deal with Advanced Micro Devices (AMD) that sent the chipmaker's stock soaring more than 30%. OpenAI will deploy 6 gigawatts of AMD's Instinct graphics processing units over several years. AMD also issued OpenAI a warrant for up to 160 million shares of AMD common stock with vesting milestones tied to both deployment volume and AMD's share price. [9]\n\n**6. Jony Ive and AI Hardware Hints**\n\nIn a rare public appearance, former Apple design head Jony Ive joined Altman to talk about OpenAI's work on AI hardware. Key insights included the development of \"15 to 20 truly exciting product concepts\" as they refine their hardware focus, and the creation of a \"family of devices\" rather than a single product. [6][12]\n\nOverall, October 6, 2025 marked a milestone: OpenAI is doubling down on the idea that AI is not a single product, but the next computing platform. [4]",
+  "sources": [
+    {
+      "url": "https://openai.com/devday/",
+      "title": "OpenAI DevDay 2025 | OpenAI"
+    },
+    {
+      "url": "https://openai.com/index/announcing-devday-2025/",
+      "title": "OpenAI DevDay is back and bigger than ever | OpenAI"
+    },
+    {
+      "url": "https://x.com/OpenAI/status/1938277642014494980",
+      "title": "OpenAI on X: \"OpenAI DevDay Oct 6, 2025 in San Francisco Our biggest one yet: - 1500+ developers - Livestreamed opening keynote - Hands-on building with our latest models &amp; tools - More stages &amp; more demos https://t.co/6O4i1M9aFD\" / X"
+    },
+    {
+      "url": "https://medium.com/@ilanpoonjolai/openais-devday-2025-major-announcements-and-their-implications-b21d09724a8f",
+      "title": "OpenAI\u2019s DevDay 2025: Major Announcements and Their Implications | by Ilan Poonjolai | Oct, 2025 | Medium"
+    },
+    {
+      "url": "https://intuitionlabs.ai/articles/openai-devday-2025-announcements",
+      "title": "OpenAI DevDay 2025: GPT-5 Pro, Sora 2 & Platform Updates | IntuitionLabs"
+    },
+    {
+      "url": "https://aidatainsider.com/ai/openai-devday-2025-complete-breakdown-of-key-announcements/",
+      "title": "OpenAI DevDay 2025: Complete Breakdown of Key Announcements"
+    },
+    {
+      "url": "https://www.prompthub.us/blog/openai-devday-2025-roundup-apps-agents-and-the-new-ai-stack",
+      "title": "PromptHub Blog: OpenAI DevDay 2025 Roundup: Apps, Agents, and the New AI Stack"
+    },
+    {
+      "url": "https://www.davydovconsulting.com/post/openai-devday-2025-full-summary-key-announcements-and-future-vision",
+      "title": "OpenAI DevDay 2025 Highlights | AI Innovation Unveiled"
+    },
+    {
+      "url": "https://www.cnbc.com/2025/10/06/open-ai-devday-live-updates-altman-jony-ive.html",
+      "title": "OpenAI DevDay 2025: Live updates and analysis from the AI startup"
+    },
+    {
+      "url": "https://www.digit.in/news/general/from-gpt-5-pro-to-sora-2-every-major-announcement-from-openai-devday-2025.html",
+      "title": "From GPT-5 Pro to Sora 2: Every major announcement from OpenAI DevDay 2025"
+    },
+    {
+      "url": "https://theaitrack.com/openai-agentkit-chatgpt-apps-devday-2025/",
+      "title": "OpenAI Launches AgentKit and ChatGPT Apps Platform"
+    },
+    {
+      "url": "https://geekflare.com/news/from-gpt-5-pro-to-sora-2-the-biggest-reveals-at-openai-devday-2025/",
+      "title": "From GPT-5 Pro to Sora 2: The Biggest Reveals at OpenAI DevDay 2025"
+    },
+    {
+      "url": "https://www.infoq.com/news/2025/10/openai-dev-day/",
+      "title": "OpenAI DevDay 2025 Introduces GPT-5 Pro API, Agent Kit, and More - InfoQ"
+    },
+    {
+      "url": "https://community.openai.com/t/devday-2025-apps-sdk-sora-2-gpt-5-pro-agentkit-new-image-generation-and-speech-to-speech-mini-models-and-more/1361279/5",
+      "title": "DevDay 2025: Apps SDK, Sora 2, GPT-5 Pro, AgentKit, new image generation and speech-to-speech mini models, and more - #5 by scott12 - Announcements - OpenAI Developer Community"
+    },
+    {
+      "url": "https://cybernews.com/ai-news/openai-dev-day-2025-altman-keynote-api-announcenents/",
+      "title": "OpenAI DevDay 2025 touts new models GPT-5 Pro and Sora 2 in the API"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 27.051129817962646
+}

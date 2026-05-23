@@ -1,0 +1,67 @@
+{
+  "draft": "## MCP Servers vs. Traditional REST APIs for LLM Agents\n\nThe rise of LLM-powered agents has exposed a fundamental mismatch between how tools were historically exposed and how AI agents actually need to consume them. Here's a breakdown of the key operational differences:\n\n---\n\n### 1. Design Intent: Human Developers vs. AI Agents\n\nREST APIs were designed for deterministic clients \u2014 like web or mobile apps \u2014 where every request and response is explicitly coded in advance. By contrast, AI agents operate probabilistically, inferring what needs to happen based on user intent, prior context, and available capabilities. APIs are general-purpose, designed for software-to-software communication, not specifically for AI. MCP, on the other hand, was built from the ground up for large language models, standardizing how LLMs fetch context and use tools.\n\n---\n\n### 2. Discovery: Static Docs vs. Runtime Self-Description\n\nThis is perhaps the most critical operational difference. With a traditional API, you need documentation \u2014 the API doesn't tell you what it can do; you have to already know. MCP flips this: an MCP server can be queried \u2014 \"What tools do you offer?\" \u2014 and it responds with a machine-readable list of functions, their inputs, and outputs. An AI agent can adapt to new capabilities without pre-programming. This runtime discovery means you can add new capabilities to a server without updating the agent \u2014 the agent picks them up automatically the next time it connects.\n\n---\n\n### 3. Statefulness: Stateless Requests vs. Persistent Sessions\n\nREST is stateless \u2014 every request carries all the context it needs, and the server doesn't remember previous requests. MCP is stateful \u2014 the session maintains context across multiple tool calls. For individual calls, MCP has slightly more overhead due to the JSON-RPC envelope and session handshake, but for multi-step agent tasks, MCP is faster overall because the session persists \u2014 no repeated auth handshakes or context re-sending between calls.\n\n---\n\n### 4. Standardization vs. Fragmentation\n\nEvery REST API is different \u2014 one might use OAuth, another API keys, another a custom scheme; one returns XML, another JSON. MCP eliminates this variability: all MCP servers speak the same protocol, so once an AI knows how to use one, it knows how to use any of them. MCP solves the \"NxM problem,\" where each AI model previously required a separate integration for every external tool.\n\n---\n\n### 5. Complementary, Not Competing\n\nImportantly, MCP doesn't replace your REST API \u2014 it's a protocol layer that sits on top of existing APIs and makes them consumable by AI agents. An MCP GitHub Server might expose `repository/list` as a tool, but internally it calls GitHub's REST API; an MCP Database Server might offer `query_table`, but underneath it uses SQL. MCP isn't replacing APIs \u2014 it's adding a layer on top, optimized for AI.\n\n---\n\nIn summary, REST was built for predictable, developer-written clients, while MCP was purpose-built to give LLM agents dynamic discovery, persistent session context, semantic tool descriptions, and a universal interface \u2014 all things REST was never designed to provide [1][2][3].",
+  "sources": [
+    {
+      "url": "https://medium.com/@andrii.tkachuk7/model-context-protocol-mcp-vs-rest-api-why-mcp-is-the-better-fit-for-ai-agents-than-rest-or-bff-bd8b8c2fde31",
+      "title": "Model Context Protocol (MCP) vs REST API: Why MCP Is the Better Fit for AI Agents Than REST or BFF | by Andrii Tkachuk | Towards AI"
+    },
+    {
+      "url": "https://workos.com/blog/mcp-vs-rest",
+      "title": "MCP vs. REST: What's the right way to connect AI agents to your API? \u2014 WorkOS"
+    },
+    {
+      "url": "https://medium.com/@tahirbalarabe2/model-context-protocol-mcp-vs-apis-the-new-standard-for-ai-integration-d6b9a7665ea7",
+      "title": "Model Context Protocol (MCP) vs. APIs: The New Standard for AI Integration | by Tahir | Medium"
+    },
+    {
+      "url": "https://modelslab.com/blog/api/mcp-vs-rest-api-ai-agents-2026",
+      "title": "MCP vs REST API for AI Agents: Why Dev Teams Skip the Protocol | AI Blog API for Developers"
+    },
+    {
+      "url": "https://mcpplaygroundonline.com/blog/mcp-vs-rest-api-whats-different",
+      "title": "MCP vs REST API \u2014 What's Different? Complete Developer Comparison (2026) | MCP Playground"
+    },
+    {
+      "url": "https://medium.com/@kramiknakrani100/rest-api-vs-mcp-server-for-llm-workflows-whats-the-real-difference-92cd8b44213e",
+      "title": "REST API vs MCP Server for LLM Workflows: What\u2019s the Real Difference? | by Kramiknakrani | Medium"
+    },
+    {
+      "url": "https://blog.buildbetter.ai/mcp-vs-rest-api-why-product-teams-are-switching-in-2026/",
+      "title": "MCP vs REST API: Why Product Teams Are Switching in 2026"
+    },
+    {
+      "url": "https://medium.com/@ohusiev_6834/why-mcp-instead-of-rest-understanding-the-model-context-protocol-61045b0b4de8",
+      "title": "Why MCP Instead of REST? Understanding the Model Context Protocol | by Oleksandr Husiev | Medium"
+    },
+    {
+      "url": "https://www.contentful.com/blog/model-context-protocol-introduction/",
+      "title": "Model Context Protocol: The new AI connection standard | Contentful"
+    },
+    {
+      "url": "https://serpapi.com/blog/model-context-protocol-mcp-a-unified-standard-for-ai-agents-and-tools/",
+      "title": "Model Context Protocol (MCP): A Unified Standard for AI Agents and Tools"
+    },
+    {
+      "url": "https://openai.github.io/openai-agents-python/mcp/",
+      "title": "Model context protocol (MCP) - OpenAI Agents SDK"
+    },
+    {
+      "url": "https://www.mindstudio.ai/blog/what-is-model-context-protocol-mcp",
+      "title": "What Is MCP (Model Context Protocol)? The Standard for AI Tool Integrations | MindStudio"
+    },
+    {
+      "url": "https://codingscape.com/blog/how-model-context-protocol-mcp-works-connect-ai-agents-to-tools",
+      "title": "How Model Context Protocol (MCP) works: connect AI agents to tools"
+    },
+    {
+      "url": "https://docs.keeper.io/en/keeperpam/secrets-manager/integrations/model-context-protocol-mcp-for-ai-agents-node",
+      "title": "Model Context Protocol (MCP) for AI Agents (Node) | KeeperPAM and Secrets Manager | Keeper Documentation"
+    },
+    {
+      "url": "https://www.confluent.io/blog/ai-agents-using-anthropic-mcp/",
+      "title": "Powering AI Agents with Real-Time Data Using Anthropic\u2019s MCP and Confluent"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 26.15672492980957
+}

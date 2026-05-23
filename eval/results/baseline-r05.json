@@ -1,0 +1,47 @@
+{
+  "draft": "Yes, Meta did release Llama 4 in 2025! Here is a comprehensive overview:\n\n---\n\n## Meta Llama 4: Release, Context Window & Key Capabilities\n\nOn April 5, 2025, Meta announced their 4th iteration of Llama models. The release introduced Llama 4 Scout and Llama 4 Maverick \u2014 the first open-weight natively multimodal models with unprecedented context length support and Meta's first models built using a mixture-of-experts (MoE) architecture. Meta also previewed Llama 4 Behemoth, described as one of the smartest LLMs in the world and their most powerful model yet, intended to serve as a teacher for the newer models.\n\n### Context Window\n\nOne of the most headline-grabbing features is the context window. Llama 4 Scout dramatically increases the supported context length from 128K in Llama 3 to an industry-leading 10 million tokens. This 10 million token context window roughly equals the text of about 80 average novels, while Llama 4 Maverick's 1 million token context window equals about eight novels.\n\n### Model Variants & Architecture\n\nLlama 4 includes three models: **Scout**, with 17 billion active parameters, 109 billion total parameters, and a context window of 10 million tokens; **Maverick**, with 17 billion active parameters, 400 billion total parameters, and a context window of 1 million tokens; and **Behemoth**, not yet released, which will have 288 billion active parameters and 2 trillion total parameters.\n\nLlama 4 is Meta's first cohort of models to use a mixture-of-experts (MoE) architecture, which is more computationally efficient for training and answering queries. MoE architectures break down data processing tasks into subtasks and delegate them to smaller, specialized \"expert\" models.\n\n### Key Capabilities\n\n- **Multimodality:** Both Llama 4 models are built with native multimodality, meaning they're designed from the ground up to seamlessly understand text and images together, rather than handling them as separate inputs.\n\n- **Multilingual support:** The models were trained on data encompassing 200 languages, with fine-tuning support for 12 languages including Arabic, English, French, German, Hindi, Indonesian, Italian, Portuguese, Spanish, Tagalog, Thai, and Vietnamese.\n\n- **Long-context tasks:** The 10M context window opens up a world of possibilities, including multi-document summarization, parsing extensive user activity for personalized tasks, and reasoning over vast codebases.\n\n- **Competitive benchmarks:** Llama 4 Maverick is described as a best-in-class multimodal model, exceeding comparable models like GPT-4o and Gemini 2.0 on coding, reasoning, multilingual, long-context, and image benchmarks, and competitive with the much larger DeepSeek v3.1 on coding and reasoning.\n\n- **Training scale:** The overall data mixture for training consisted of more than 30 trillion tokens, which is more than double the Llama 3 pre-training mixture and includes diverse text, image, and video datasets.\n\nScout and Maverick are openly available on Llama.com and from Meta's partners, including Hugging Face, while Behemoth is still in training. Meta also updated its Meta AI assistant across WhatsApp, Messenger, and Instagram to use Llama 4 in 40 countries.",
+  "sources": [
+    {
+      "url": "https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+      "title": "The Llama 4 herd: The beginning of a new era of natively multimodal AI innovation"
+    },
+    {
+      "url": "https://www.llama.com/models/llama-4/",
+      "title": "Unmatched Performance and Efficiency | Llama 4"
+    },
+    {
+      "url": "https://techcrunch.com/2025/10/06/meta-llama-everything-you-need-to-know-about-the-open-generative-ai-model/",
+      "title": "Meta Llama: Everything you need to know about the open generative AI model | TechCrunch"
+    },
+    {
+      "url": "https://medium.com/@KiteAI/metas-llama-4-release-context-matters-b38447cd11b4",
+      "title": "Meta\u2019s Llama 4 Release \u2014 Context Matters! | by Kite AI | Medium"
+    },
+    {
+      "url": "https://www.interconnects.ai/p/llama-4",
+      "title": "Llama 4: Did Meta just push the panic button?"
+    },
+    {
+      "url": "https://docs.oracle.com/en-us/iaas/Content/generative-ai/meta-llama-4-maverick.htm",
+      "title": "Meta Llama 4 Maverick"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Llama_(language_model)",
+      "title": "Llama (language model) - Wikipedia"
+    },
+    {
+      "url": "https://techcrunch.com/2025/04/05/meta-releases-llama-4-a-new-crop-of-flagship-ai-models/",
+      "title": "Meta releases Llama 4, a new crop of flagship AI models | TechCrunch"
+    },
+    {
+      "url": "https://www.aboutamazon.com/news/aws/aws-meta-llama-4-models-available",
+      "title": "Meta's Llama 4 models now available on AWS"
+    },
+    {
+      "url": "https://www.aicerts.ai/news/metas-llama-4-and-the-rise-of-open-source-multimodal-ai/",
+      "title": "Meta's Llama 4 and the rise of open-source multimodal AI - AI CERTs News"
+    }
+  ],
+  "web_searches": 1,
+  "elapsed_sec": 22.85344696044922
+}

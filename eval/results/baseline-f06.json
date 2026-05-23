@@ -1,0 +1,71 @@
+{
+  "draft": "Here is a comprehensive answer on recommended chunk size and overlap settings for a document-QA RAG pipeline using `text-embedding-3-small`:\n\n---\n\n## Recommended Chunk Size & Overlap for `text-embedding-3-small` in a RAG Pipeline\n\n### Chunk Size\n\nThere is no single universally correct answer, but strong consensus has emerged across the community. Recursive character splitting at **400\u2013512 tokens** with 10\u201320% overlap is considered the best default for most use cases. More broadly, best practices suggest using chunks of **256\u20131,024 tokens**, adjusting overlap to 10\u201320% to maintain context, and aligning the chunking method with document structure and query types.\n\nThe right size also depends on content type:\n- **256\u2013512 tokens** works well for fact-focused and general-purpose retrieval. Smaller chunks reduce noise and return precise information for definitions, policies, and single data points \u2014 customer support and documentation Q&A systems perform well at this size.\n- **512\u20131,024 tokens** suits context-heavy tasks requiring understanding of broader concepts or relationships, such as complex analytical queries, research paper analysis, or conversational AI needing narrative flow.\n- Legal and research documents with dense cross-references may also benefit from larger chunks of 512\u20131,024 tokens.\n\n`text-embedding-3-small` supports up to **8,192 tokens** per input, so you have significant headroom \u2014 but keeping chunks well below this limit is critical for retrieval precision. Chunks that are too small lack context; too large and they dilute the semantic signal, exceed embedding model limits, or consume too much of your LLM's context window.\n\n### Chunk Overlap\n\nChunk overlap ensures that sentences split at chunk boundaries are captured by at least one chunk in full. The recommended overlap is typically **10\u201320% of the chunk size** \u2014 for a 512-token chunk, that means 50\u2013100 tokens of overlap. Overlap increases storage and embedding costs, but significantly improves retrieval quality for content with long-running arguments or multi-sentence conclusions.\n\nIn practice, many RAG pipelines have settled on chunk sizes roughly in the **200\u2013500 token range** with about **15% overlap** for typical use cases \u2014 not a hard rule, but a common ballpark.\n\nEmpirical research supports this: NVIDIA tested sizes of 128, 256, 512, 1,024, and 2,048 tokens, and found **15% overlap** to perform best on the FinanceBench dataset with 1,024-token chunks.\n\n### A Practical Warning\n\nOpenAI Assistants use an 800-token default chunk size with a 400-token overlap, but this configuration has shown below-average recall and poor precision scores \u2014 showing that a large overlap does not automatically improve performance.\n\n### Recommended Starting Point\n\nStart with `RecursiveCharacterTextSplitter` using **256\u2013512 token chunks**, moderate overlap (10\u201315%), and complete metadata preservation. This baseline respects semantic boundaries while meeting typical question-answering requirements. From there, experiment by tweaking parameters like chunk size and overlap, and test retrieval using metrics like hit rate, precision, and recall to find which strategy delivers best for your data.",
+  "sources": [
+    {
+      "url": "https://www.newline.co/@zaoyang/fixed-size-chunking-in-rag-pipelines-a-guide--af509f11",
+      "title": "Fixed-Size Chunking in RAG Pipelines: A Guide - Newline.co"
+    },
+    {
+      "url": "https://www.tigerdata.com/blog/which-rag-chunking-and-formatting-strategy-is-best",
+      "title": "Which RAG Chunking and Formatting Strategy | Tiger Data"
+    },
+    {
+      "url": "https://toolsfast.app/developer/rag-chunk-size-calculator/",
+      "title": "RAG Chunk Size Calculator - Optimal Chunking Free"
+    },
+    {
+      "url": "https://gpt-trainer.com/blog/rag+chunking+strategy",
+      "title": "RAG Chunking Strategy<!-- --> | GPT-trainer Blog"
+    },
+    {
+      "url": "https://dev.to/tak089/what-is-chunk-size-and-chunk-overlap-1hlj",
+      "title": "What is Chunk Size and Chunk Overlap - DEV Community"
+    },
+    {
+      "url": "https://towardsdatascience.com/hitchhikers-guide-to-rag-from-tiny-files-to-tolstoy-with-openais-api-and-langchain/",
+      "title": "Hitchhiker\u2019s Guide to RAG: From Tiny Files to Tolstoy with OpenAI\u2019s API and LangChain | Towards Data Science"
+    },
+    {
+      "url": "https://weaviate.io/blog/chunking-strategies-for-rag",
+      "title": "Chunking Strategies to Improve LLM RAG Pipeline Performance | Weaviate"
+    },
+    {
+      "url": "https://milvus.io/ai-quick-reference/what-is-the-optimal-chunk-size-for-rag-applications",
+      "title": "What is the optimal chunk size for RAG applications?"
+    },
+    {
+      "url": "https://harshadsuryawanshi.medium.com/evaluating-the-optimal-document-chunk-size-for-a-rag-application-9cb482365bbf",
+      "title": "Evaluating the Optimal Document Chunk Size for a RAG Application | by Harshad | Medium"
+    },
+    {
+      "url": "https://community.databricks.com/t5/technical-blog/the-ultimate-guide-to-chunking-strategies-for-rag-applications/ba-p/113089",
+      "title": "The Ultimate Guide to Chunking Strategies for RAG Applications with Databricks"
+    },
+    {
+      "url": "https://www.firecrawl.dev/blog/best-chunking-strategies-rag",
+      "title": "Best Chunking Strategies for RAG (and LLMs) in 2026"
+    },
+    {
+      "url": "https://airbyte.com/agentic-data/ag-document-chunking-best-practices",
+      "title": "RAG Document Chunking: 6 Best Practices"
+    },
+    {
+      "url": "https://www.technetexperts.com/rag-chunking-optimization-guide/",
+      "title": "Optimizing RAG: Selecting Chunk Size and Overlap [Fixed]"
+    },
+    {
+      "url": "https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses/",
+      "title": "Finding the Best Chunking Strategy for Accurate AI Responses | NVIDIA Technical Blog"
+    },
+    {
+      "url": "https://docs.unstract.com/unstract/unstract_platform/user_guides/chunking/",
+      "title": "Chunk size and overlap | Unstract Documentation"
+    },
+    {
+      "url": "https://unstructured.io/blog/chunking-for-rag-best-practices",
+      "title": "Chunking Strategies for RAG: Best Practices and Key Methods | Unstructured"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 25.931591749191284
+}

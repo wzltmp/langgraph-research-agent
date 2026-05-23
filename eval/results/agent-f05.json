@@ -1,0 +1,68 @@
+{
+  "draft": "# Latest Stable Version of LangGraph on PyPI (May 2026)\n\n## Overview\n\nBased on available source information, the latest stable version of LangGraph published on PyPI as of May 2026 is **version 1.2.1**.\n\n## Version Details\n\nThe core `langgraph` package reached version 1.2.1 as the most recent stable release [3]. This release included several notable changes: bug fixes to keep tool results out of v3 messages, new opt-in functionality for stream transformers via `before_builtins`, and general dependency updates [3].\n\n## Accompanying Package Versions\n\nLangGraph's ecosystem consists of several interdependent packages, all of which have corresponding stable releases alongside the core library. As of the same timeframe, the following companion packages were published on PyPI [3]:\n\n- **langgraph-sdk** == 0.3.15\n- **langgraph-checkpoint** == 4.1.1\n- **langgraph-prebuilt** == 1.1.0\n- **langgraph-cli** == 0.4.26\n- **langgraph-checkpoint-sqlite** == 3.1.0\n- **langgraph-checkpoint-postgres** == 3.1.0\n\n## Recent Development Focus\n\nLeading up to version 1.2.1, the LangGraph team concentrated on reliability and expanded functionality. Key improvements included durable error-handler resume across host crashes, the introduction of `set_node_defaults()` for `StateGraph`, delta channel snapshot enhancements, and streaming walk overrides for checkpoint history retrieval [3].\n\n## Caveats\n\nIt is worth noting that the PyPI project page for `langgraph` [1] and the `langgraph-api` page [2] did not return accessible content, so the version confirmation relies primarily on the GitHub releases page [3]. Users should verify the current stable release directly on [pypi.org/project/langgraph](https://pypi.org/project/langgraph) to confirm no newer release has been published since this reporting period.",
+  "plan": [
+    "LangGraph PyPI current version as of May 2026",
+    "LangGraph 1.2.1 release date and changelog verification",
+    "PyPI API or direct version query to confirm 1.2.1 is latest stable release"
+  ],
+  "sources": [
+    {
+      "url": "https://pypi.org/project/langgraph",
+      "title": "langgraph \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-api",
+      "title": "langgraph-api \u00b7 PyPI"
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/releases",
+      "title": "Releases \u00b7 langchain-ai/langgraph - GitHub"
+    },
+    {
+      "url": "https://docs.langchain.com/oss/javascript/releases/changelog",
+      "title": "Changelog - Docs by LangChain"
+    },
+    {
+      "url": "https://www.agentframeworkhub.com/blog/langgraph-news-updates-2026",
+      "title": "Before You Upgrade to LangGraph in 2026, Read This"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-bigtool",
+      "title": "langgraph-bigtool - PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-supervisor",
+      "title": "langgraph-supervisor \u00b7 PyPI"
+    },
+    {
+      "url": "https://labs.cloudsecurityalliance.org/wp-content/uploads/2026/03/CSA_research_note_LangChain-LangGraph-critical-vulns-framework-security-20260327-csa-styled.pdf",
+      "title": "[PDF] LangChain/LangGraph: Critical Flaws in the AI Dev Stack - Lab Space"
+    },
+    {
+      "url": "https://deps.dev/pypi/langgraph/0.1.19/dependencies?filter=license%3A%22MIT%22",
+      "title": "Dependencies | langgraph | PyPI | Open Source Insights"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-sdk",
+      "title": "langgraph-sdk - PyPI"
+    },
+    {
+      "url": "https://changelog.langchain.com/announcements/week-of-1-22-24-langchain-release-notes",
+      "title": "Introducing LangGraph - LangChain - Changelog"
+    },
+    {
+      "url": "https://stackoverflow.com/questions/28774852/pypi-api-how-to-get-stable-package-version",
+      "title": "python - PyPI API - How to get stable package version - Stack Overflow"
+    },
+    {
+      "url": "https://dashboard.stablebuild.com/pypi-deleted-packages/pkg/pypi-search/1.2.1",
+      "title": "Download pypi-search==1.2.1 - StableBuild's Deleted PyPI mirror"
+    },
+    {
+      "url": "https://pypi.org/project/pypi-changes",
+      "title": "pypi-changes"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 53.35235142707825
+}

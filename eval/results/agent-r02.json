@@ -1,0 +1,152 @@
+{
+  "draft": "# Anthropic's Claude Opus 4.7 Launch (April 16, 2026)\n\nAnthropic announced Claude Opus 4.7 on April 16, 2026, delivering substantial improvements across coding, vision, and agentic capabilities while keeping pricing unchanged.\n\n## Coding and Benchmark Performance\n\nThe most notable improvements came in software engineering tasks. Opus 4.7 achieved **70% on CursorBench**, up from 58%, and scored **87.6% on SWE-bench Verified** [4]. It also posted a +10.9 point gain on SWE-bench Pro, reaching 64.3% compared to 53.4% for its predecessor [1]. Anthropic claimed the model solves 3x more production coding tasks than Opus 4.6 [5].\n\n## Vision Capabilities\n\nVision performance saw dramatic improvement, with visual acuity jumping from 54.5% to 98.5% [5]. The model now supports images up to **3.75 megapixels**, three times the resolution supported by Opus 4.6 [1].\n\n## Context Window and Technical Features\n\nOpus 4.7 retained a **1 million token context window** with no long-context pricing premium, along with up to 128K output tokens [4]. New capabilities include file system-level memory and a new **xhigh reasoning tier**. Anthropic also introduced adaptive thinking via `thinking={\"type\": \"adaptive\"}`, replacing the previously supported manual extended thinking [1][4]. The model carries a knowledge cutoff of January 2026 [4].\n\n## Breaking Changes for Developers\n\nThe launch introduced significant migration requirements. A new tokenizer uses **1.0\u20131.35x more tokens** for equivalent text, and parameters including temperature, top_p, and top_k were removed in favor of prompt-based behavior steering [1][4]. Anthropic warned that old prompts may break because the model now follows instructions more literally [1].\n\n## Pricing and Availability\n\nPricing remained unchanged at **$5 per million input tokens and $25 per million output tokens** [5]. The model was made available across Claude products, the Anthropic API, Amazon Bedrock, Google Cloud Vertex AI, and Microsoft Foundry [5].\n\nOne notable concession: Opus 4.7 showed regression on web search tasks, performing worse on the BrowseComp benchmark than its predecessor [1][3].",
+  "plan": [
+    "I need to flag a critical issue: **this is a future date (April 16",
+    "2026)**",
+    "and I'm responding in 2024/2025. This draft presents speculative or fabricated information as fact.\n\nUnsupported claims",
+    "missing angles",
+    "or weak citations:\n\nVerify Claude 4.7 actually exists and launched on this date",
+    "Provide primary source links for all numbered citations [1][3][4][5] which appear to be placeholders",
+    "Clarify whether this is a prediction/speculation or confirmed announcement"
+  ],
+  "sources": [
+    {
+      "url": "https://webscraft.org/blog/claude-opus-47-detalniy-oglyad-modeli-anthropic-u-2026?lang=en",
+      "title": "Claude Opus 4.7: Detailed Review of Anthropic's Model in 2026"
+    },
+    {
+      "url": "https://www.instagram.com/p/DXOo-sQgqds",
+      "title": "Anthropic published an announcement on Apr 16, 2026, introducing ..."
+    },
+    {
+      "url": "https://www.axios.com/2026/04/16/anthropic-claude-opus-model-mythos",
+      "title": "Anthropic releases Claude Opus 4.7, concedes it trails ... - Axios"
+    },
+    {
+      "url": "https://caylent.com/blog/claude-opus-4-7-deep-dive-capabilities-migration-and-the-new-economics-of-long-running-agents",
+      "title": "Claude Opus 4.7 Deep Dive: Capabilities, Migration, and the New ..."
+    },
+    {
+      "url": "https://www.nxcode.io/resources/news/claude-opus-4-7-complete-guide-features-benchmarks-pricing-2026",
+      "title": "Claude Opus 4.7: Complete Guide to Features, Benchmarks ..."
+    },
+    {
+      "url": "https://www.claudecodecamp.com/p/claude-code-1m-context-window",
+      "title": "Claude Code 1M Context Window: Cost, Limits, and When to Use It"
+    },
+    {
+      "url": "https://www.mindstudio.ai/blog/claude-code-1m-token-context-window-vs-old-rate-limits",
+      "title": "Claude Code 1M Token Context Window vs. Old Rate Limits"
+    },
+    {
+      "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows",
+      "title": "Context windows - Claude API Docs"
+    },
+    {
+      "url": "https://www.finout.io/blog/claude-opus-4.7-pricing-the-real-cost-story-behind-the-unchanged-price-tag",
+      "title": "Claude Opus 4.7 Pricing 2026: The Real Cost Story Behind ... - Finout"
+    },
+    {
+      "url": "https://pricepertoken.com/pricing-page/model/anthropic-claude-opus-4.7",
+      "title": "Claude Opus 4.7 API Pricing 2026 - Costs, Performance & Providers"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=pwbtoo77RMY",
+      "title": "Claude Opus 4.7 vs Sonnet 4.6 (2026): Is the Premium ... - YouTube"
+    },
+    {
+      "url": "https://claudefa.st/blog/models",
+      "title": "Every Claude Model: From Claude 3 to Mythos Preview"
+    },
+    {
+      "url": "https://webwallah.in/claude-opus-4-7-anthropic-models-complete-guide",
+      "title": "Claude Opus 4.7 Review: Every Anthropic Claude Model Explained"
+    },
+    {
+      "url": "https://fsapartners.ed.gov/fafsacentral/Updates",
+      "title": "FAFSA Articles | Fafsacentral - FSA Partner Connect"
+    },
+    {
+      "url": "https://www.drought.gov/drought-status-updates/drought-status-update-southeast-2026-04-16",
+      "title": "Drought Status Update for the Southeast | April 16, 2026 | Drought.gov"
+    },
+    {
+      "url": "https://www.csis.org/analysis/usmca-review-2026",
+      "title": "USMCA Review 2026 - CSIS"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=mKylRDoZXPU",
+      "title": "James Bond (2026) Trailer - Daniel Craig, Charlize Theron - YouTube"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/2026",
+      "title": "2026 - Wikipedia"
+    },
+    {
+      "url": "https://www.ittf.com/2026-events-calendar",
+      "title": "2026 Events Calendar - International Table Tennis Federation"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=bHeAlWIp5yk",
+      "title": "Is 2026 the Year of False Info? | Craig Silverman | Truth Talks"
+    },
+    {
+      "url": "https://www.instagram.com/p/DQ3y62vjMAh",
+      "title": "Renuka Shahane Defends Aishwarya Rai Bachchan Against Trolls"
+    },
+    {
+      "url": "https://www.jdsupra.com/legalnews/false-claims-act-recoveries-reach-2459753",
+      "title": "False Claims Act Recoveries Reach Historic Highs in FY 2025"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=rq6HM-jggI4",
+      "title": "How To Calculate Missing Angles - YouTube"
+    },
+    {
+      "url": "https://khanacademy.fandom.com/wiki/Finding_missing_angles",
+      "title": "Finding missing angles | Khan Academy Wiki - Fandom"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ye-QCJVleSA",
+      "title": "Finding Missing Angle Measures - YouTube"
+    },
+    {
+      "url": "https://www.sitepoint.com/claude-opus-47-what-developers-get",
+      "title": "Claude Opus 4.7: What Changed for Developers - SitePoint"
+    },
+    {
+      "url": "https://blog.stackademic.com/anthropics-claude-opus-4-7-what-actually-changed-in-48-hours-101dfed8fde2",
+      "title": "Anthropic's Claude Opus 4.7: What Actually Changed in 48 Hours"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=xo2A9ZuwjDk",
+      "title": "Claude Opus 4.7 Just Dropped. Here's What Actually Matters."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=UF_DFNpJGVE",
+      "title": "Word 2016 Tutorial Insert a Citation Placeholder Microsoft Training"
+    },
+    {
+      "url": "https://tex.stackexchange.com/questions/171598/get-multiple-citations-1-5-instead-of-1-2-3-4-5",
+      "title": "Get multiple citations; [1-5] instead of [1,2,3,4,5] [duplicate]"
+    },
+    {
+      "url": "https://libguides.aalto.fi/c.php?g=410674&p=2798423",
+      "title": "Number reference system - Citation Guide - LibGuides at Aalto University"
+    },
+    {
+      "url": "https://www.reddit.com/r/kvsdiscuss/comments/1qe1c5d/whats_your_wildest",
+      "title": "What's your wildest prediction/speculation/premonition for KVS 2026?"
+    },
+    {
+      "url": "https://www.facebook.com/Askkubeir/posts/the-thing-with-predictions-and-speculations-is-that-if-you-make-them-and-they-co/1080252352677348",
+      "title": "The thing with predictions and speculations is that if you make them ..."
+    },
+    {
+      "url": "https://www.instagram.com/reel/DXfQ9QRiOtQ",
+      "title": "Well-timed bets on prediction markets about the Iran war raise ..."
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 66.00655317306519
+}

@@ -1,0 +1,47 @@
+{
+  "draft": "## Tavily Search API Free Tier Monthly Limit (2026)\n\nAs of 2026, Tavily's free tier offers a clearly defined and generous starting allowance for developers. Here's a comprehensive breakdown:\n\n### Free Tier: 1,000 API Credits Per Month\n\nTavily provides **1,000 free API credits every month**, and no credit card is required to get started. This is consistent across Tavily's official documentation and multiple third-party sources verified in 2026.\n\nTavily's free plan includes 1,000 API credits/month, community support, and access to both Search and Extract endpoints.\n\n### How Credits Translate to Searches\n\nIt's important to understand that \"credits\" and \"searches\" are not always a 1:1 ratio \u2014 the number of searches you can perform depends on the search depth you choose:\n\n- **Basic Search**: Each request costs **1 API credit**.\n- **Advanced Search**: Each request costs **2 API credits**.\n\nSo, on the free tier, you can run up to **1,000 basic searches** or **500 advanced searches** per month.\n\n### Who Is the Free Tier For?\n\nTavily's Free Research plan is permanently free and suited to individual developers testing the API at low volume. It is not designed for production AI agents that require high search volumes.\n\n### Paid Plan Options\n\nIf you need more, Tavily's $30/month plan bumps the monthly allowance to 4,000 credits, and pay-as-you-go usage runs $0.008 per credit. There is also a Startup plan at $100/month, best for startups building AI agents.\n\n### Context: Tavily in 2026\n\nFollowing Tavily's acquisition by Nebius in February 2026, teams building AI agents have had more reasons than ever to evaluate their web search API options carefully. Despite the ownership change, the free tier limit has remained at 1,000 credits per month as confirmed by multiple sources updated through April 2026 [1][3][6][8].\n\nIn summary, **Tavily's free tier monthly search limit is 1,000 API credits**, which equals up to 1,000 basic searches or 500 advanced searches per month, with no credit card required [1][9].",
+  "sources": [
+    {
+      "url": "https://docs.tavily.com/documentation/api-credits",
+      "title": "Credits & Pricing - Tavily Docs"
+    },
+    {
+      "url": "https://www.tavily.com/pricing",
+      "title": "Tavily"
+    },
+    {
+      "url": "https://costbench.com/software/web-scraping/tavily/free-plan/",
+      "title": "Is Tavily Free? Free Research Plan Limits & Upgrade Triggers (2026)"
+    },
+    {
+      "url": "https://alphacorp.ai/blog/perplexity-search-api-vs-tavily-for-rag-2026",
+      "title": "Perplexity Search API vs Tavily for RAG 2026"
+    },
+    {
+      "url": "https://websearchapi.ai/blog/tavily-alternatives",
+      "title": "Beyond Tavily - The Complete Guide to AI Search APIs in 2026"
+    },
+    {
+      "url": "https://aisotools.com/pricing/tavily",
+      "title": "Tavily Pricing 2026: Plans, Costs & Free Options | AISO Tools"
+    },
+    {
+      "url": "https://apify.com/clearpath/tavily-search-api",
+      "title": "Tavily Search API - AI Web Search, No API Key Needed \u00b7 Apify"
+    },
+    {
+      "url": "https://openclawlaunch.com/guides/tavily-api-key",
+      "title": "TAVILY_API_KEY: Free Signup, Direct Link & Code Examples (2026) | OpenClaw Launch"
+    },
+    {
+      "url": "https://www.firecrawl.dev/blog/best-web-search-apis",
+      "title": "Best Web Search APIs for AI Applications in 2026"
+    },
+    {
+      "url": "https://costbench.com/software/web-scraping/tavily/",
+      "title": "Tavily Pricing 2026: Free-$100/User Plans Compared"
+    }
+  ],
+  "web_searches": 1,
+  "elapsed_sec": 15.193777799606323
+}

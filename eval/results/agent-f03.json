@@ -1,0 +1,57 @@
+{
+  "draft": "# Current CEO of OpenAI as of May 2026\n\nAs of May 2026, **Sam Altman is the CEO of OpenAI**. Multiple sources consistently confirm his continued leadership of the company throughout this period.\n\nAltman has remained a central and highly visible figure in OpenAI's strategic direction. According to [3], he leads what is currently the world's most valuable privately owned company, having announced ambitious plans including $1 trillion in datacenter investments and aggressive expansion into industries such as e-commerce, healthcare, and entertainment. The Guardian profile describes 2026 as a pivotal \"make-or-break year\" for Altman personally, as OpenAI prepares for a potential IPO toward the end of 2026 at a projected $1 trillion valuation, despite the company remaining unprofitable and spending tens of billions annually [3].\n\nAltman has also been at the forefront of OpenAI's strategic pivot toward enterprise customers. He personally told a room of editors that enterprise would be a top priority in 2026, framing it as an \"application problem\" the company needed to solve [1]. This shift comes as OpenAI's enterprise market share dropped from approximately 50% in 2023 to 27% by the end of 2025, with Anthropic capturing around 40% of the market [7].\n\nWhile Altman's role as CEO remains stable, OpenAI has seen notable changes among other senior executives. Brad Lightcap, the former COO, was shifted into a special projects role reporting directly to Altman, and Chief Marketing Officer Kate Rouch and AGI development lead Fidji Simo both took medical leaves [6]. These internal restructuring moves have been framed as part of a broader effort to win larger enterprise business deals [7].\n\nAltman has also significantly expanded OpenAI's political footprint, increasing the company's lobbying spending from $260,000 in 2023 to $2.99 million in 2025 [3]. In terms of competitive outlook, he has publicly downplayed Google's Gemini as an existential threat, characterizing it as one of several \"code reds\" the company has navigated [1].\n\nIn summary, Sam Altman continues to serve as CEO of OpenAI as of May 2026, steering the company through an ambitious and consequential period of growth and restructuring [1][2][3][6].",
+  "plan": [
+    "OpenAI CEO May 2026",
+    "Sam Altman OpenAI CEO 2026",
+    "OpenAI leadership changes 2025 2026",
+    "current OpenAI chief executive officer"
+  ],
+  "sources": [
+    {
+      "url": "https://www.linkedin.com/pulse/enterprise-top-openai-priority-2026-sam-altman-tells-nyc-kantrowitz-9rarc",
+      "title": "Enterprise Will Be a Top OpenAI Priority In 2026, Sam Altman Tells ..."
+    },
+    {
+      "url": "https://www.digitimes.com/news/a20251105PD205/openai-sam-altman-ipo-revenue-2026.html",
+      "title": "OpenAI's revenue far exceeds US$13 billion as CEO denies 2026 ..."
+    },
+    {
+      "url": "https://www.theguardian.com/technology/ng-interactive/2026/jan/25/sam-altman-openai",
+      "title": "Sam Altman\u2019s make-or-break year: can the OpenAI CEO cash in his bet on the future? | Sam Altman | The Guardian"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=5eouRdDYM2c",
+      "title": "Sam Altman in conversation with Patrick Collison - YouTube"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/davidelkington_sam-altman-told-a-room-full-of-editors-that-activity-7406377572076314624-d1Dk",
+      "title": "OpenAI to Prioritize Enterprise in 2026, Admitting Lag | David Elkington posted on the topic | LinkedIn"
+    },
+    {
+      "url": "https://www.indexbox.io/blog/openai-executive-team-shifts-coo-moves-cmo-agi-lead-take-medical-leave",
+      "title": "OpenAI Leadership Changes 2026: COO Role Shift & Senior Executives on Medical Leave - News and Statistics - IndexBox"
+    },
+    {
+      "url": "https://autogpt.net/openai-reshuffles-leadership-to-win-bigger-business-deals-in-2026",
+      "title": "OpenAI Reshuffles Leadership to Win Bigger Business Deals in 2026"
+    },
+    {
+      "url": "https://community.openai.com/t/openai-announces-leadership-transition/524400",
+      "title": "OpenAI announces leadership transition - Community - OpenAI Developer Community"
+    },
+    {
+      "url": "https://openai.com/index/openai-announces-leadership-transition",
+      "title": "OpenAI announces leadership transition"
+    },
+    {
+      "url": "https://businesschief.com/news/why-is-openai-reshuffling-its-c-suite",
+      "title": "Why is OpenAI Reshuffling its C-suite? | Business Chief"
+    },
+    {
+      "url": "https://www.clay.com/dossier/openai-executives",
+      "title": "List of Openai Executives & Org Chart - Clay"
+    }
+  ],
+  "iterations": 1,
+  "elapsed_sec": 45.153101205825806
+}

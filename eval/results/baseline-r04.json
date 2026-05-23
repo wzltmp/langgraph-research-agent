@@ -1,0 +1,79 @@
+{
+  "draft": "Here is a summary of the most notable RAG-related papers presented at NeurIPS 2025, based on available records from the conference proceedings and community trackers:\n\n---\n\n## Notable RAG-Related Papers at NeurIPS 2025\n\nNeurIPS 2025 featured a rich cluster of papers advancing Retrieval-Augmented Generation (RAG), spanning smarter retrieval optimization, graph-structured knowledge, and domain-specific applications.\n\n**1. CoRAG \u2013 Chain-of-Retrieval Augmented Generation**\nOne of the most discussed RAG papers was CoRAG. Conventional RAG methods usually perform a single retrieval step before generation, limiting their effectiveness on complex queries. CoRAG allows the model to dynamically reformulate the query based on the evolving state. To train CoRAG effectively, the authors utilized rejection sampling to automatically generate intermediate retrieval chains, augmenting existing RAG datasets that only provide the correct final answer. [1]\n\n**2. R3 \u2013 Optimizing Retrieval for RAG via Reinforcement Learning**\nExisting retrievers rely on supervised fine-tuning with human labels or synthetic data, resulting in static relevance that struggles to adapt to diverse RAG environments. To address this, the authors propose R3, a retrieval framework optimized for RAG through reinforcement learning (RL). Experiments across diverse tasks demonstrate that R3 improves RAG performance by 5.2% over the original retriever and surpasses state-of-the-art retrievers by 4.9%. [2]\n\n**3. RAG4GFM \u2013 RAG for Graph Foundation Models (Oral)**\nThis oral paper from NeurIPS 2025 addresses Graph Foundation Models (GFMs), which face significant challenges in knowledge updating and reasoning faithfulness. It introduces the RAG paradigm for GFMs and proposes RAG4GFM, an end-to-end framework that integrates multi-level graph indexing, task-aware retrieval, and graph fusion enhancement. [3]\n\n**4. HyperGraphRAG**\nAlso presented at NeurIPS 2025, HyperGraphRAG focuses on retrieval-augmented generation via hypergraph-structured knowledge representation, offering a richer relational structure than standard graph-based RAG approaches. [4]\n\n**5. MMOA-RAG \u2013 Multi-Agent Reinforcement Learning for RAG**\nThis paper proposes treating the complex RAG pipeline with multiple components as a multi-agent cooperative task, presenting MMOA-RAG (Multi-Module joint Optimization Algorithm for RAG), which employs multi-agent reinforcement learning to harmonize all agents' goals toward a unified reward such as the F1 score of the final answer. [5]\n\n**6. TS-RAG \u2013 RAG for Time Series Forecasting**\nTS-RAG is a retrieval-augmented generation framework for time series forecasting that enhances the generalization of foundation models. It leverages pre-trained time series encoders to retrieve semantically relevant segments from a dedicated knowledge base, and proposes an Adaptive Retrieval Mixer module that dynamically fuses retrieved patterns with the model's internal representation, improving forecasting accuracy without task-specific fine-tuning. [6]\n\nOverall, NeurIPS 2025 RAG research trended heavily toward **reinforcement learning-driven retrieval optimization**, **graph-structured knowledge**, and **domain-specific RAG** (video, time series), reflecting a maturing field moving well beyond simple vector-similarity retrieval.",
+  "sources": [
+    {
+      "url": "https://arxiv.org/pdf/2508.06401",
+      "title": "A Systematic Literature Review of Retrieval-Augmented Generation: Techniques, Metrics, and Challenges"
+    },
+    {
+      "url": "https://www.analyticsvidhya.com/blog/2025/11/top-papers-of-neurips-2025/",
+      "title": "Top 4 Papers of NeurIPS 2025 That You Must Read"
+    },
+    {
+      "url": "https://papers.cool/venue/NeurIPS.2025",
+      "title": "NeurIPS.2025 | Cool Papers - Immersive Paper Discovery"
+    },
+    {
+      "url": "https://github.com/DavidZWZ/Awesome-RAG-Reasoning",
+      "title": "GitHub - DavidZWZ/Awesome-RAG-Reasoning: [EMNLP 2025] Awesome RAG Reasoning Resources \u00b7 GitHub"
+    },
+    {
+      "url": "https://arxiv.org/abs/2602.20735",
+      "title": "[2602.20735] RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/116740",
+      "title": "NeurIPS Poster Chain-of-Retrieval Augmented Generation"
+    },
+    {
+      "url": "https://github.com/LHRLAB/HyperGraphRAG",
+      "title": "GitHub - LHRLAB/HyperGraphRAG: [NeurIPS 2025] Official resources of \"HyperGraphRAG: Retrieval-Augmented Generation via Hypergraph-Structured Knowledge Representation\". \u00b7 GitHub"
+    },
+    {
+      "url": "https://cs.nju.edu.cn/lm/en/post/2025-10-11-neurips-2025-accepted-papers/index.html",
+      "title": "NeurIPS 2025 Accepted Papers Overview | \u5357\u4eac\u5927\u5b66\u5927\u6a21\u578b\u7814\u7a76\u534f\u540c\u521b\u65b0\u4e2d\u5fc3"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2602.20735",
+      "title": "RMIT-ADM+S at the MMU-RAG NeurIPS 2025 Competition"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2503.04789",
+      "title": "Aligning Extraction and Generation for Robust Retrieval-Augmented Generation"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2406.13249",
+      "title": "R^2AG: Incorporating Retrieval Information into Retrieval Augmented   Generation"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2512.22442",
+      "title": "HiFi-RAG: Hierarchical Content Filtering and Two-Pass Generation for Open-Domain RAG"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/118173",
+      "title": "NeurIPS Poster TS-RAG: Retrieval-Augmented Generation based Time Series Foundation Models are Stronger Zero-Shot Forecaster"
+    },
+    {
+      "url": "https://arxiv.org/abs/2510.24652",
+      "title": "[2510.24652] Optimizing Retrieval for RAG via Reinforcement Learning"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/115133",
+      "title": "NeurIPS Poster Optimizing Retrieval for RAG via Reinforcement Learning"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2510.24652",
+      "title": "Optimizing Retrieval for RAG via Reinforcement Learning Jiawei Zhou Lei Chen"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2602.03645",
+      "title": "Reinforcement Fine-Tuning for History-Aware Dense Retriever in RAG"
+    },
+    {
+      "url": "https://openreview.net/forum?id=9Ia0KiVAut",
+      "title": "Improving Retrieval-Augmented Generation through Multi-Agent Reinforcement Learning | OpenReview"
+    }
+  ],
+  "web_searches": 3,
+  "elapsed_sec": 26.017657995224
+}

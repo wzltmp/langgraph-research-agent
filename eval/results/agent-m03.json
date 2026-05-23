@@ -1,0 +1,100 @@
+{
+  "draft": "# Prompt Caching Pricing: Anthropic Claude vs. OpenAI GPT\n\n## Overview\n\nFor agents making repeated long-context calls, prompt caching pricing differs substantially between Anthropic Claude and OpenAI GPT, with each model's structure favoring different usage patterns.\n\n## Claude's Pricing Structure\n\nClaude uses an **explicit, opt-in three-tier pricing model** [8]. Cache writes cost approximately $6.25 per million tokens \u2014 actually more expensive than standard input pricing \u2014 while cache reads are discounted to roughly $0.50 per million tokens, representing a 90% reduction [8]. Standard input tokens fall between these two rates. Importantly, Claude requires developers to manually designate cacheable content using a specific HTTP header (`anthropic-beta: prompt-caching-2024-07-31`) [2], giving teams precise control but demanding deliberate implementation.\n\nThe cache TTL is **5 minutes**, resetting on each cache hit [1]. This means an agent making rapid successive calls within that window benefits greatly, but sessions with idle times exceeding 5 minutes force a full cache rebuild at write prices. One audit found 54% of sessions exceeded this idle threshold, generating significant unnecessary costs [8].\n\n## OpenAI's Pricing Structure\n\nOpenAI's approach is **automatic and transparent to the developer** \u2014 any prompt exceeding 1,024 tokens with an identical prefix is cached without requiring special configuration [4]. Cache hits are charged at approximately **50% of the standard input token price**, a shallower discount than Claude's 90% read discount [3][4]. There is no surcharge for cache writes; the first call is billed at full price and subsequent matching calls receive the discount automatically [4].\n\n## Comparative Economics for Long-Context Agents\n\n| Factor | Claude | OpenAI |\n|---|---|---|\n| Cache write cost | +25% surcharge | Standard price |\n| Cache read discount | ~90% off | ~50% off |\n| Activation | Manual | Automatic |\n| Cache TTL | 5 min (resets on hit) | 5\u201310 min |\n\nFor agents with **high cache-hit ratios and short inter-call intervals**, Claude's deeper 90% read discount outperforms OpenAI's 50% [3][4]. However, Claude's expensive write tier means infrequent or interrupted usage can result in a **net cost increase** compared to no caching at all [1][2]. OpenAI's flat 50% discount on reads with no write penalty offers more predictable savings across variable workloads [4]. Knowledge-base-style agents with largely static system prompts gain the most from Claude's model, while agents with irregular cadences may fare better with OpenAI's automatic approach [3].",
+  "plan": [
+    "prompt caching TTL specifications verification",
+    "OpenAI automatic caching triggering conditions and token thresholds",
+    "Claude cache write surcharge justification and real-world agent benchmarks"
+  ],
+  "sources": [
+    {
+      "url": "https://simonwillison.net/2024/Aug/14/prompt-caching-with-claude",
+      "title": "Prompt caching with Claude"
+    },
+    {
+      "url": "https://www.okoone.com/spark/technology-innovation/anthropic-introduces-cost-saving-prompt-caching-for-claude",
+      "title": "Anthropic introduces cost-saving prompt caching for Claude | Okoone"
+    },
+    {
+      "url": "https://www.prompthub.us/blog/prompt-caching-with-openai-anthropic-and-google-models",
+      "title": "Prompt Caching with OpenAI, Anthropic, and Google Models"
+    },
+    {
+      "url": "https://llmindset.co.uk/posts/2024/10/openai-prompt-caching",
+      "title": "OpenAI Prompt Caching \u2013 LLMindset.co.uk"
+    },
+    {
+      "url": "https://openai.com/index/api-prompt-caching",
+      "title": "Prompt Caching in the API"
+    },
+    {
+      "url": "https://www.reddit.com/r/ClaudeAI/comments/1fvqqjk/openai_launches_prompt_caching_which_reduces_cost",
+      "title": "OpenAI launches Prompt Caching which reduces cost by 50 ... - Reddit"
+    },
+    {
+      "url": "https://pub.towardsai.net/use-prompt-caching-to-reduce-input-tokens-with-claude-d6b050500983",
+      "title": "Use Prompt Caching to Reduce Input Tokens with Claude"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/abhishekray00_spent-the-last-week-digging-into-claude-code-activity-7445488974217007104-qqjz",
+      "title": "Claude Code Pricing Breakdown: Tokens, Cache, and Output Costs"
+    },
+    {
+      "url": "https://www.duanlightfoot.com/posts/prompt-caching-is-a-must-how-i-went-from-spending-720-to-72-monthly-on-api-costs",
+      "title": "Prompt Caching is a Must! How I Went From Spending $720 to $72 ..."
+    },
+    {
+      "url": "https://portkey.ai/blog/openais-prompt-caching-a-deep-dive",
+      "title": "OpenAI's Prompt Caching: A Deep Dive - Portkey"
+    },
+    {
+      "url": "https://help.apiyi.com/en/gpt-vs-claude-prompt-caching-pricing-comparison-en.html",
+      "title": "Complete Comparison of GPT and Claude Prompt Caching Billing: 5 Core Differences and the Real Cost Impact of the 1.25x Write Premium - Apiyi.com Blog"
+    },
+    {
+      "url": "https://inventivehq.com/blog/llm-api-cost-comparison",
+      "title": "LLM API Cost Comparison: GPT-4 vs Claude vs Llama (2026)"
+    },
+    {
+      "url": "https://tripleminds.co/blogs/comparison/claude-api-vs-chatgpt-api-pricing-features-comparison",
+      "title": "Claude API vs ChatGPT API - Pricing & Features Comparison - 2026"
+    },
+    {
+      "url": "https://github.com/BerriAI/litellm/issues/19848",
+      "title": "Support AWS Bedrock Prompt Caching TTL Parameter \u00b7 Issue #19848"
+    },
+    {
+      "url": "https://www.reddit.com/r/SillyTavernAI/comments/1tebvn0/prompt_caching_and_ttl",
+      "title": "Prompt caching and TTL??? : r/SillyTavernAI - Reddit"
+    },
+    {
+      "url": "https://www.ibm.com/think/topics/prompt-caching",
+      "title": "What is Prompt Caching? - IBM"
+    },
+    {
+      "url": "https://www.reddit.com/r/LLMDevs/comments/1p85ko5/i_tested_openais_prompt_caching_across_model",
+      "title": "I tested OpenAI's prompt caching across model generations ... - Reddit"
+    },
+    {
+      "url": "https://community.openai.com/t/prompt-caching-automatic/963981",
+      "title": "Prompt caching (automatic!) - Announcements - OpenAI Developer Community"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=tECAkJAI_Vk",
+      "title": "Build Hour: Prompt Caching - YouTube"
+    },
+    {
+      "url": "https://pub.towardsai.net/why-your-claude-code-bill-is-5x-what-it-should-be-and-these-secretive-14-cache-patterns-that-fix-b4745c28f72e",
+      "title": "Why Your Claude Code Bill Is 5x What It Should Be (and these secretive 14 Cache Patterns That Fix\u2026"
+    },
+    {
+      "url": "https://www.metacto.com/blogs/anthropic-api-pricing-a-full-breakdown-of-costs-and-integration",
+      "title": "Claude API Pricing 2026: Full Anthropic Cost Breakdown - MetaCTO"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=x_GIh9NpVds",
+      "title": "Advanced AI Agents, Claude Prompt Caching, Grok-2, AI Scientist ..."
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 67.17484211921692
+}

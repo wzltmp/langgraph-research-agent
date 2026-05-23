@@ -1,0 +1,47 @@
+{
+  "draft": "## Federal Reserve's Federal Funds Rate Target Range at the End of Q1 2026\n\nAt the end of the first quarter of 2026, the Federal Reserve maintained its federal funds rate target range at **3.50% to 3.75%** (3-1/2 to 3-3/4 percent). This decision came directly from the Federal Open Market Committee's (FOMC) meeting on March 17\u201318, 2026.\n\nEffective March 19, 2026, the FOMC directed the Federal Reserve Bank of New York to undertake open market operations as necessary to maintain the federal funds rate in a target range of 3-1/2 to 3-3/4 percent. Consistent with the Committee's decision to leave the target range unchanged, the Board of Governors of the Federal Reserve System voted unanimously to maintain the interest rate paid on reserve balances at 3.65 percent, effective March 19, 2026.\n\nIn Q1 2026, the US federal funds target rate remained at 3.75%, flat compared to the previous value, fully in line with market expectations. The Fed's hold on rates reflected a cautious posture amid ongoing economic uncertainties. Affected by the situation in the Middle East and surging oil prices, the Federal Reserve revised up its full-year inflation forecast, but the dot plot still maintained the estimate of one quarter-point rate cut for the year.\n\nThe FOMC's official statement noted that available indicators suggested economic activity had been expanding at a solid pace, job gains had remained low with the unemployment rate little changed in recent months, and inflation remained somewhat elevated. The Committee acknowledged that uncertainty about the economic outlook remained elevated, and that the implications of developments in the Middle East for the U.S. economy were uncertain.\n\nThis stance carried directly into Q2 2026, when the FOMC met again on April 28\u201329. The Federal Reserve concluded its third meeting of the year by maintaining the federal funds rate at 3.50%\u20133.75% \u2014 a decision that markets had fully priced in \u2014 keeping the benchmark rate at its lowest level since November 2022 for the third meeting in a row.\n\nLooking ahead, the latest dot plot from March 2026 revealed a committee that had grown more unified in the near term, with most participants anticipating the federal funds rate will hold between 3.25% and 3.75% through the end of 2026.\n\n**Sources:** [1] Federal Reserve FOMC Minutes, March 17\u201318, 2026 (federalreserve.gov) | [2] DataTrack TrendForce | [3] Advisor Perspectives, April 29, 2026",
+  "sources": [
+    {
+      "url": "https://fred.stlouisfed.org/series/DFEDTARU",
+      "title": "Federal Funds Target Range - Upper Limit (DFEDTARU) | FRED | St. Louis Fed"
+    },
+    {
+      "url": "https://www.ishares.com/us/insights/fed-outlook-2026-interest-rate-forecast",
+      "title": "Fed Outlook 2026: Rate Forecasts and Fixed Income Strategies | iShares"
+    },
+    {
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260318.htm",
+      "title": "FOMC Minutes, March 17-18, 2026"
+    },
+    {
+      "url": "https://datatrack.trendforce.com/Chart/content/2761/united-states-federal-funds-rate-target-rate",
+      "title": "United States: Federal Funds Rate - Target Rate | DataTrack"
+    },
+    {
+      "url": "https://streetstats.finance/rates/fedfunds",
+      "title": "Fed Funds Rate Forecast 2026-2031 | StreetStats"
+    },
+    {
+      "url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20260429.htm",
+      "title": "FOMC Minutes, April 28-29, 2026"
+    },
+    {
+      "url": "https://www.federalreserve.gov/aboutthefed/fedexplained/accessible-version.htm",
+      "title": "The Fed Explained - Accessible: FOMC's target federal funds rate or range, change (basis points) and level"
+    },
+    {
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260429a1.htm",
+      "title": "Federal Reserve Board - Implementation Note issued April 29, 2026"
+    },
+    {
+      "url": "https://fred.stlouisfed.org/series/DFEDTARL",
+      "title": "Federal Funds Target Range - Lower Limit (DFEDTARL) | FRED | St. Louis Fed"
+    },
+    {
+      "url": "https://www.advisorperspectives.com/dshort/updates/2026/04/29/feds-interest-rate-decision-april-29-2026",
+      "title": "Fed\u2019s Interest Rate Decision: April 29, 2026 - dshort - Advisor Perspectives"
+    }
+  ],
+  "web_searches": 1,
+  "elapsed_sec": 15.36316204071045
+}

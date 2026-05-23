@@ -1,0 +1,100 @@
+{
+  "draft": "# MCP Servers vs. Traditional REST APIs: Operational Differences for LLM Agents\n\n## Core Architectural Distinction\n\nThe fundamental operational difference lies in **protocol design purpose**. Traditional REST APIs use stateless HTTP request-response cycles optimized for general software-to-software communication, requiring LLM agents to parse external documentation, manually construct requests, and interpret raw responses [2]. MCP, by contrast, is a standardized bidirectional messaging protocol built specifically for LLM agent interaction from the ground up [1].\n\n## Tool Discovery and Invocation\n\nIn a REST architecture, tool exposure is passive: agents must be pre-configured with knowledge of available endpoints, parameter formats, and authentication schemes, typically through hardcoded prompt instructions or documentation parsing [3]. MCP servers fundamentally change this through **runtime discovery** \u2014 agents can query an MCP server at runtime to automatically retrieve available tools, their structured schemas, and invocation requirements without design-time configuration [1][5]. This eliminates what has been called the \"N\u00d7M problem,\" where every new model-tool combination previously required a custom integration layer [1].\n\n## Statefulness and Context Preservation\n\nREST APIs are inherently stateless; each request carries no memory of prior interactions, forcing developers to manually reconstruct context on every call [2]. MCP servers maintain **conversational context across interactions**, enabling agents to execute multi-step tasks coherently without re-injecting full context each time [6]. This is particularly critical for agentic workflows involving sequential tool calls.\n\n## Scalability of Integration\n\nWith REST, scaling to multiple tools means building and maintaining individual connectors per LLM-API combination, producing complex prompt engineering overhead [5]. A single MCP server can expose multiple tools under one standardized interface, and a single LLM can interface with multiple MCP servers simultaneously using the same protocol [5]. This modularity is architecturally unavailable in conventional REST designs.\n\n## Trade-offs\n\nMCP's streamlined integration model introduces a notable security consideration: MCP servers typically run with host environment privileges and can access data and APIs directly, whereas REST APIs generally enforce more deliberate, explicit permission boundaries at each layer [4].\n\nIn summary, REST APIs expose generic endpoints that agents must laboriously interpret, while MCP servers expose tools in a format **natively consumable by LLM agents** \u2014 with built-in discovery, bidirectional communication, and context persistence [2][3].",
+  "plan": [
+    "How do MCP servers handle authentication and authorization compared to REST APIs",
+    "What are concrete examples of \"decision-ready formats\" that MCP delivers versus REST raw responses",
+    "Does MCP require changes to LLM model architecture or only to the agent framework layer"
+  ],
+  "sources": [
+    {
+      "url": "https://eleks.com/expert-opinion/model-context-protocol-rest-api",
+      "title": "Model Context Protocol vs. REST API: Which Approach is Better?"
+    },
+    {
+      "url": "https://www.reddit.com/r/mcp/comments/1kovd7x/rest_api_vs_model_context_protocol_mcp_a",
+      "title": "REST API vs Model Context Protocol (MCP): A Developer's ... - Reddit"
+    },
+    {
+      "url": "https://www.facebook.com/groups/coding4beginners/posts/2090482101756117",
+      "title": "REST, GraphQL, gRPC, etc. MCP (Model Context Protocol ..."
+    },
+    {
+      "url": "https://www.giskard.ai/knowledge/model-context-protocol-understanding-mcp-security-risks-and-prevention-methods",
+      "title": "Model Context Protocol: Understanding MCP security risks ... - Giskard"
+    },
+    {
+      "url": "https://www.itential.com/blog/company/ai-networking/context-as-the-new-currency-designing-effective-mcp-servers-for-ai",
+      "title": "The Crucial Role of MCP in Optimizing LLM Context and Agent Performance"
+    },
+    {
+      "url": "https://www.facebook.com/groups/aieverydayvn/posts/1133194514888715",
+      "title": "mcp enables two-way communication between ai apps and servers"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=EEE-l41_VQ0",
+      "title": "MCP has a BIG problem - YouTube"
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/181xapd/why_arent_llm_apis_stateful_why_are_we_wasting",
+      "title": "Why aren't LLM APIs stateful? Why are we wasting compute? - Reddit"
+    },
+    {
+      "url": "https://www.gravitee.io/blog/designing-apis-for-llm-apps",
+      "title": "Designing APIs for LLM Apps: Build Scalable and AI- ..."
+    },
+    {
+      "url": "https://workos.com/blog/mcp-vs-rest",
+      "title": "MCP vs. REST: What's the right way to connect AI agents to your API?"
+    },
+    {
+      "url": "https://modelcontextprotocol.io/specification/2025-06-18/server/resources",
+      "title": "Resources - Model Context Protocol"
+    },
+    {
+      "url": "https://www.scalekit.com/blog/mcp-vs-apis-how-are-they-different",
+      "title": "MCP vs API: How are they different? - Scalekit"
+    },
+    {
+      "url": "https://www.databricks.com/blog/what-is-model-context-protocol",
+      "title": "What is the Model Context Protocol (MCP)? - Databricks"
+    },
+    {
+      "url": "https://github.com/modelcontextprotocol/modelcontextprotocol/discussions/102",
+      "title": "State, and long-lived vs. short-lived connections \u00b7 modelcontextprotocol/modelcontextprotocol \u00b7 Discussion #102 \u00b7 GitHub"
+    },
+    {
+      "url": "https://www.redhat.com/en/blog/mcp-security-implementing-robust-authentication-and-authorization",
+      "title": "MCP security: Implementing robust authentication and authorization"
+    },
+    {
+      "url": "https://stackoverflow.blog/2026/01/21/is-that-allowed-authentication-and-authorization-in-model-context-protocol",
+      "title": "Is that allowed? Authentication and authorization in Model Context ..."
+    },
+    {
+      "url": "https://modelcontextprotocol.io/docs/tutorials/security/authorization",
+      "title": "Understanding Authorization in MCP - Model Context Protocol"
+    },
+    {
+      "url": "https://bytebridge.medium.com/from-rest-to-mcp-why-developers-should-embrace-the-model-context-protocol-003e3806874a",
+      "title": "From REST to MCP: Why Developers Should Embrace the Model ..."
+    },
+    {
+      "url": "https://techcommunity.microsoft.com/blog/azurearchitectureblog/decision-matrix-api-vs-mcp-tools-%E2%80%94-the-great-integration-showdown-%F0%9F%A5%8A/4499385",
+      "title": "Decision Matrix: API vs MCP Tools \u2014 The Great Integration ..."
+    },
+    {
+      "url": "https://zenity.io/blog/current-events/model-context-protocol",
+      "title": "AI Agent Security | Model Context Protocol (MCP): A Primer - Zenity"
+    },
+    {
+      "url": "https://cloud.google.com/discover/what-is-model-context-protocol",
+      "title": "What is Model Context Protocol (MCP)? A guide"
+    },
+    {
+      "url": "https://www.reddit.com/r/LLMDevs/comments/1jbqegg/model_context_protocol_mcp_clearly_explained",
+      "title": "Model Context Protocol (MCP) Clearly Explained : r/LLMDevs - Reddit"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 66.72829389572144
+}

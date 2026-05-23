@@ -1,0 +1,144 @@
+{
+  "draft": "# Serving a Fine-Tuned 7B Model: HuggingFace Inference Endpoints vs. Modal vs. Replicate\n\n## Cost\n\n**HuggingFace Inference Endpoints** uses dedicated, always-on instances billed by the minute. A suitable GPU for a 7B model (e.g., A10G) runs approximately $1\u20132/hour, but the platform charges 2\u20133x over bare-metal rates\u2014an H100 costs $6.40\u20138.00/hr versus ~$2/hr elsewhere [3]. There is no serverless/pay-per-request option; you pay whether or not traffic flows.\n\n**Modal** is genuinely serverless: you pay only for active compute time, with billing stopping when containers scale to zero [6]. This makes it highly cost-efficient for sporadic or bursty traffic, though sustained high-traffic workloads lose this advantage since containers stay warm and accrue costs continuously [4].\n\n**Replicate** also uses pay-per-use pricing based on active runtime, with input pricing starting around $0.03/1M tokens for smaller models [8]. For a custom fine-tuned 7B, costs depend on the GPU tier selected at deployment. Like Modal, it suits variable workloads better than HuggingFace's dedicated model.\n\n## Cold Start\n\n**HuggingFace Inference Endpoints** has no cold start in the traditional sense\u2014endpoints run continuously on dedicated hardware, so latency is consistent. The tradeoff is the ongoing cost [1].\n\n**Modal** cold starts stem from two sources: container boot (~1 second for Modal's optimized stack) plus model loading time, which for a 7B model can add minutes unless the model is pre-cached in a volume [4]. Modal exposes `min_containers` and `buffer_containers` parameters to mitigate this at extra cost [4].\n\n**Replicate** cold starts are present but the platform handles infrastructure automatically. Community reports suggest cold starts of 10\u201330 seconds for 7B-scale models [5], though this varies by hardware availability.\n\n## Deploy Ergonomics\n\n**HuggingFace Inference Endpoints** offers the lowest friction for HuggingFace-hosted models: a GUI or API call deploys a model in minutes, but it is locked into the TGI inference engine and a fixed set of GPU tiers with no customization of the serving stack [3].\n\n**Modal** requires writing Python deployment code using its SDK, wrapping the model in a decorated class with GPU specifications [6]. This is more verbose but maximally flexible\u2014any inference framework, custom preprocessing, and arbitrary dependencies are supported.\n\n**Replicate** uses the \"Cog\" tool to containerize models, auto-generating an API endpoint with minimal coding [8]. It occupies a middle ground: more flexible than HuggingFace Endpoints but less so than Modal, with straightforward CLI-driven deployment.\n\n## Summary\n\nFor **prototyping or steady traffic**, HuggingFace Inference Endpoints wins on simplicity but loses on cost at scale [3]. For **variable/low traffic**, Modal or Replicate's serverless billing is preferable, with Modal offering greater control and Replicate prioritizing ease of deployment.",
+  "plan": [
+    "How are fine-tuned model uploads/integration handled across each platform",
+    "how do actual cold starts for a 7B model compare empirically (measured latency)",
+    "what are the actual per-token costs for inference on each platform for a 7B model"
+  ],
+  "sources": [
+    {
+      "url": "https://huggingface.co/docs/inference-endpoints/en/pricing",
+      "title": "Pricing \u00b7 Hugging Face"
+    },
+    {
+      "url": "https://huggingface.co/inference/models",
+      "title": "Hugging Face Inference Providers \u00b7 Supported Models"
+    },
+    {
+      "url": "https://www.spheron.network/blog/hugging-face-inference-endpoints-alternatives",
+      "title": "Hugging Face Inference Endpoints Alternatives: 10 Self-Hosted GPU Cloud Options for Production LLM Inference (2026) | Spheron Blog"
+    },
+    {
+      "url": "https://modal.com/docs/guide/cold-start",
+      "title": "Cold start performance | Modal Docs"
+    },
+    {
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1dvqygu/discussion_looking_for_true_serverless_gpu",
+      "title": "[Discussion] Looking for True Serverless GPU Services \u2013 Only Pay ..."
+    },
+    {
+      "url": "https://blog.premai.io/serverless-deployment-using-huggingface-and-modal",
+      "title": "Serverless Deployment of Mistral 7B with Modal Labs and HuggingFace"
+    },
+    {
+      "url": "https://llm-stats.com/providers/replicate",
+      "title": "Replicate: API Pricing, Performance & Model Catalog"
+    },
+    {
+      "url": "https://www.llmreference.com/provider/replicate/models",
+      "title": "Replicate API Models \u2014 117 AI Models with Pricing | LLM Reference"
+    },
+    {
+      "url": "https://replicate.com/docs/topics/models/official-models",
+      "title": "Official models - Replicate"
+    },
+    {
+      "url": "https://www.digitalocean.com/resources/articles/hugging-face-vs-replicate",
+      "title": "Hugging Face vs Replicate: From Model Discovery to Deployment | DigitalOcean"
+    },
+    {
+      "url": "https://www.peerspot.com/products/comparisons/hugging-face_vs_replicate",
+      "title": "Hugging Face vs Replicate (2026)"
+    },
+    {
+      "url": "https://pecollective.com/tools/huggingface-vs-replicate",
+      "title": "Hugging Face vs Replicate 2026: 800K Models vs Simple API"
+    },
+    {
+      "url": "https://repost.aws/questions/QUDboilwqLQpOELFQZs5kOBg/reduce-cold-start-times-of-async-sagemaker-endpoints-huggingface-tgi-image",
+      "title": "Reduce cold-start times of Async Sagemaker endpoints (HuggingFace TGI image) | AWS re:Post"
+    },
+    {
+      "url": "https://huggingface.co/docs/huggingface_hub/en/guides/inference_endpoints",
+      "title": "Inference Endpoints \u00b7 Hugging Face"
+    },
+    {
+      "url": "https://discuss.huggingface.co/t/inquiry-about-120s-timeout-on-hugging-face-inference-endpoint-for-llama-3-1-8b/147764",
+      "title": "Inquiry About 120s Timeout on Hugging Face Inference Endpoint for Llama 3.1-8B - Models - Hugging Face Forums"
+    },
+    {
+      "url": "https://parlance-labs.com/education/fine_tuning_course/workshop_4.html",
+      "title": "Deploying Fine-Tuned Models \u2013 Parlance"
+    },
+    {
+      "url": "https://docs.vllm.ai/en/latest/deployment/frameworks/hf_inference_endpoints",
+      "title": "Hugging Face Inference Endpoints - vLLM"
+    },
+    {
+      "url": "https://discuss.huggingface.co/t/guide-tutorial-to-write-an-inference-endpoint-for-custom-models/78517",
+      "title": "Guide/Tutorial to write an inference endpoint for custom models - Inference Endpoints on the Hub - Hugging Face Forums"
+    },
+    {
+      "url": "https://modal.com/blog/serverless-gpu-article",
+      "title": "Top 5 serverless GPU providers"
+    },
+    {
+      "url": "https://modal.com/docs/guide",
+      "title": "Introduction | Modal Docs"
+    },
+    {
+      "url": "https://www.runpod.io/articles/guides/top-serverless-gpu-clouds",
+      "title": "Top Serverless GPU Clouds for 2026: Comparing Runpod, Modal ..."
+    },
+    {
+      "url": "https://replicate.com/docs/get-started/deploy-a-custom-model",
+      "title": "Deploy a custom model - Replicate"
+    },
+    {
+      "url": "https://replicate.com/docs/guides/build/push-a-model",
+      "title": "Push your own model - Replicate"
+    },
+    {
+      "url": "https://replicate.com/docs/topics/models/create-a-model",
+      "title": "Create a model - Replicate"
+    },
+    {
+      "url": "https://www.together.ai/blog/fine-tuning-updates-sept-2025",
+      "title": "Fine-Tuning Platform Upgrades: Larger Models, Longer Contexts, Enhanced Hugging Face Integrations"
+    },
+    {
+      "url": "https://www.zenml.io/blog/streamlining-llm-fine-tuning-in-production-zenml-openpipe-integration",
+      "title": "Streamlining LLM Fine-Tuning in Production: ZenML + OpenPipe Integration - ZenML Blog"
+    },
+    {
+      "url": "https://labelstud.io/blog/fine-tuning-openai-models-a-guide-with-wikipedia-data",
+      "title": "Fine-Tuning OpenAI Models: A Guide with Wikipedia Data | Label Studio"
+    },
+    {
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1n01odu/d_cold_start_latency_for_large_models_new",
+      "title": "[D] Cold start latency for large models: new benchmarks show 141B in"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/prashanth-velidandi-98629b115_where-does-the-industry-stand-on-llm-cold-activity-7447654421121048577-tydp",
+      "title": "LLM Cold Starts: Industry State and Challenges - LinkedIn"
+    },
+    {
+      "url": "https://www.truefoundry.com/blog/benchmarking-mistral-7b",
+      "title": "Benchmarking Mistral-7B: Latency, Cost, RPS Analysis - Truefoundry"
+    },
+    {
+      "url": "https://www.reddit.com/r/BetterOffline/comments/1qizsau/the_true_cost_of_inference",
+      "title": "The True Cost of Inference : r/BetterOffline - Reddit"
+    },
+    {
+      "url": "https://introl.com/blog/inference-unit-economics-true-cost-per-million-tokens-guide",
+      "title": "Inference Unit Economics: The True Cost Per Million Tokens"
+    },
+    {
+      "url": "https://docs.digitalocean.com/products/inference/details/pricing",
+      "title": "Inference Pricing | DigitalOcean Documentation"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 80.8045802116394
+}

@@ -1,0 +1,71 @@
+{
+  "draft": "## LoRA vs. QLoRA: Differences and Quality Tradeoffs\n\n### What is LoRA?\n\nLoRA (Low-Rank Adaptation) is a method under Parameter-Efficient Fine-Tuning (PEFT) that injects trainable low-rank matrices into certain layers of a model. Standard LoRA freezes the base model weights at their original precision \u2014 typically float16 or bfloat16 \u2014 and trains only these small low-rank adapter matrices. This drastically reduces the number of parameters that need to be updated. LoRA recovers 90\u201395% of full fine-tuning quality on most tasks, and the gap narrows with higher rank values at the cost of more trainable parameters.\n\n### What is QLoRA, and how does it differ?\n\nQLoRA takes things a step further by quantizing the frozen base model weights to 4-bit precision using the NormalFloat4 (NF4) data type, while keeping the LoRA adapter weights in full precision for training stability. QLoRA introduces several innovations to save memory: (a) 4-bit NormalFloat (NF4), a data type that is information-theoretically optimal for normally distributed weights; (b) Double Quantization to reduce the average memory footprint by quantizing the quantization constants; and (c) Paged Optimizers to manage memory spikes.\n\nThe practical memory impact is dramatic. Meta's torchtune team confirmed that QLoRA on Llama 3.1 8B uses just 7.4 GiB of peak memory on an RTX 4090, compared to 18.9 GiB for full fine-tuning. QLoRA makes 13B fine-tuning feasible on a 24GB consumer GPU and 33B fine-tuning on 48GB GPUs \u2014 hardware budgets where standard LoRA simply cannot fit these models.\n\n### When does QLoRA's memory savings come with a measurable quality cost?\n\nFor most tasks, the quality gap is small. The original QLoRA paper (Dettmers et al., 2023) showed that 4-bit quantized fine-tuning matched 16-bit fine-tuning quality on standard benchmarks. The quality gap is typically under 2% on standard benchmarks.\n\nHowever, quality degradation becomes more noticeable in specific scenarios. Quantization introduces quantization errors that negatively impact the task performance of the model after fine-tuning. QLoRA achieves roughly 80\u201390% of full fine-tuning quality overall, and the additional quantization noise affects some tasks more than others \u2014 evaluation on target tasks determines acceptability. Standard LoRA retains full precision for base model weights, which can provide a small quality advantage on precision-sensitive tasks, and with sufficient GPU memory, there is no reason to accept the quantization tradeoff.\n\nIn short, QLoRA is the right choice when hardware is constrained, as its quality cost is negligible for most instruction-tuning and chat tasks. But for precision-critical applications \u2014 such as mathematical reasoning, code generation with exact correctness requirements, or tasks needing peak benchmark performance \u2014 standard LoRA or even full fine-tuning is preferable when the GPU budget allows [1][2].\n\n**Sources:**\n[1] Modal Blog \u2014 *LoRA vs. QLoRA: Efficient fine-tuning techniques for LLMs*\n[2] Introl Blog \u2014 *Fine-Tuning Infrastructure: LoRA, QLoRA, and PEFT at Scale*",
+  "sources": [
+    {
+      "url": "https://modal.com/blog/lora-qlora",
+      "title": "LoRA vs. QLoRA: Efficient fine-tuning techniques for LLMs"
+    },
+    {
+      "url": "https://medium.com/@sujathamudadla1213/difference-between-qlora-and-lora-for-fine-tuning-llms-0ea35a195535",
+      "title": "Difference between QLoRA and LoRA for Fine-Tuning LLMs. | by Sujatha Mudadla | Medium"
+    },
+    {
+      "url": "https://introl.com/blog/fine-tuning-infrastructure-lora-qlora-peft-scale-guide-2025",
+      "title": "Fine-Tuning Infrastructure: LoRA, QLoRA, and PEFT at Scale | Introl Blog"
+    },
+    {
+      "url": "https://www.redhat.com/en/topics/ai/lora-vs-qlora",
+      "title": "LoRA vs. QLoRA"
+    },
+    {
+      "url": "https://www.geeksforgeeks.org/deep-learning/fine-tuning-using-lora-and-qlora/",
+      "title": "Fine-Tuning using LoRA and QLoRA - GeeksforGeeks"
+    },
+    {
+      "url": "https://medium.com/garantibbva-teknoloji/full-fine-tuning-lora-and-qlora-a-comparison-of-techniques-in-model-optimization-89038d36865f",
+      "title": "Full Fine-Tuning, LoRA, and qLoRA: A Comparison of Techniques in Model Optimization | by Gokcer Belgusen | Garanti BBVA Teknoloji | Medium"
+    },
+    {
+      "url": "https://medium.com/@levxn/lora-and-qlora-effective-methods-to-fine-tune-your-llms-in-detail-6e56a2a13f3c",
+      "title": "LoRA and QLoRA- Effective methods to Fine-tune your LLMs in detail. | by Levin M S | Medium"
+    },
+    {
+      "url": "https://medium.com/@dsh.2065/fine-tuning-llms-with-lora-and-qlora-from-confusion-to-kinda-working-results-89b348bcce71",
+      "title": "Fine-Tuning LLMs with LoRA and QLoRA: From Confusion to (Kinda) Working Results | by Deepesh Sharma | Medium"
+    },
+    {
+      "url": "https://www.ertas.ai/compare/qlora-vs-lora",
+      "title": "QLoRA vs LoRA (2026): Which Fine-Tuning Method Is Better? | Ertas AI"
+    },
+    {
+      "url": "https://www.buildmvpfast.com/blog/fine-tune-llm-laptop-qlora-local-gpu-2026",
+      "title": "Fine-Tune LLMs on Your Laptop with QLoRA in 2026"
+    },
+    {
+      "url": "https://www.runpod.io/articles/guides/how-to-fine-tune-large-language-models-on-a-budget",
+      "title": "How can I fine-tune large language models on a budget using LoRA and QLoRA on cloud GPUs?"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2410.14713",
+      "title": "QuAILoRA: Quantization-Aware Initialization for LoRA"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2305.14314",
+      "title": "QLoRA: Efficient Finetuning of Quantized LLMs"
+    },
+    {
+      "url": "https://watercrawl.dev/blog/LoRA-and-QLoRA",
+      "title": "\ud83d\udd0e LoRA and QLoRA: Efficient Fine-Tuning for Large Language Models | WaterCrawl Blog"
+    },
+    {
+      "url": "https://github.com/artidoro/qlora",
+      "title": "GitHub - artidoro/qlora: QLoRA: Efficient Finetuning of Quantized LLMs \u00b7 GitHub"
+    },
+    {
+      "url": "https://heidloff.net/article/qlora/",
+      "title": "Memory-efficient Fine-tuning with with QLoRA | Niklas Heidloff"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 22.980143070220947
+}

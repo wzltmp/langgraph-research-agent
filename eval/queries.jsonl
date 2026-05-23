@@ -1,0 +1,20 @@
+{"id": "f01", "category": "factual", "query": "What is the maximum context window of Claude Sonnet 4.6, and how does it compare to Claude Opus 4.7?", "must_mention": ["context window", "Sonnet"]}
+{"id": "f02", "category": "factual", "query": "What is the current price per million tokens for Claude Haiku 4.5 input and output as of 2026?", "must_mention": ["Haiku", "token"]}
+{"id": "f03", "category": "factual", "query": "Who is the current CEO of OpenAI as of May 2026?", "must_mention": ["OpenAI", "CEO"]}
+{"id": "f04", "category": "factual", "query": "What is Tavily Search API's free tier monthly search limit as of 2026?", "must_mention": ["Tavily", "free"]}
+{"id": "f05", "category": "factual", "query": "What is the latest stable version of LangGraph published on PyPI as of May 2026?", "must_mention": ["LangGraph", "version"]}
+{"id": "f06", "category": "factual", "query": "What is the recommended chunk size and overlap when using OpenAI text-embedding-3-small for a typical document-QA RAG pipeline?", "must_mention": ["embedding", "chunk"]}
+{"id": "f07", "category": "factual", "query": "What was the Federal Reserve's federal funds rate target range at the end of Q1 2026?", "must_mention": ["Federal Reserve", "rate"]}
+{"id": "m01", "category": "multi-hop", "query": "Compare LangGraph and CrewAI for building stateful multi-agent workflows: state management, debugging, and production maturity.", "must_mention": ["LangGraph", "CrewAI"]}
+{"id": "m02", "category": "multi-hop", "query": "What are the trade-offs between cross-encoder rerankers and ColBERT-v2 for production RAG pipelines?", "must_mention": ["cross-encoder", "ColBERT"]}
+{"id": "m03", "category": "multi-hop", "query": "How does prompt caching pricing differ between Anthropic Claude and OpenAI GPT for an agent that makes repeated long-context calls?", "must_mention": ["prompt caching", "Anthropic", "OpenAI"]}
+{"id": "m04", "category": "multi-hop", "query": "When does hybrid retrieval (BM25 + dense vectors) outperform pure dense retrieval, and by how much in published benchmarks?", "must_mention": ["BM25", "hybrid"]}
+{"id": "m05", "category": "multi-hop", "query": "What is the operational difference between MCP (Model Context Protocol) servers and traditional REST APIs for exposing tools to LLM agents?", "must_mention": ["MCP", "Model Context Protocol"]}
+{"id": "m06", "category": "multi-hop", "query": "Compare HuggingFace Inference Endpoints, Modal, and Replicate for serving a fine-tuned 7B parameter model: cost, cold start, and deploy ergonomics.", "must_mention": ["HuggingFace", "Modal", "Replicate"]}
+{"id": "m07", "category": "multi-hop", "query": "What is the difference between LoRA and QLoRA fine-tuning, and when does the memory savings of QLoRA come with a measurable quality cost?", "must_mention": ["LoRA", "QLoRA"]}
+{"id": "r01", "category": "recent", "query": "What were the major announcements at OpenAI DevDay in October 2025?", "must_mention": ["OpenAI", "DevDay"]}
+{"id": "r02", "category": "recent", "query": "What did Anthropic announce in the Claude 4.7 launch in 2026?", "must_mention": ["Anthropic", "Claude"]}
+{"id": "r03", "category": "recent", "query": "What is the current implementation status of the EU AI Act's general-purpose AI obligations as of mid-2026?", "must_mention": ["EU AI Act"]}
+{"id": "r04", "category": "recent", "query": "What were the most-cited RAG-related papers at NeurIPS 2025?", "must_mention": ["NeurIPS", "RAG"]}
+{"id": "r05", "category": "recent", "query": "Did Meta release Llama 4 in 2025? If so, what is its context window and what are its key capabilities?", "must_mention": ["Llama 4", "Meta"]}
+{"id": "r06", "category": "recent", "query": "What changed in the LangGraph 1.x release line during 2025-2026?", "must_mention": ["LangGraph"]}

@@ -1,0 +1,66 @@
+{
+  "draft": "# Most-Cited RAG-Related Papers at NeurIPS 2025\n\n**Important caveat:** The available sources do not provide citation count data or citation rankings for NeurIPS 2025 papers. It is not possible to definitively identify which RAG-related papers were \"most-cited\" based on the available evidence. What can be reported are notable RAG papers accepted at NeurIPS 2025, based on their documented contributions.\n\n## Notable RAG Papers at NeurIPS 2025\n\nSeveral RAG-focused papers appeared at NeurIPS 2025. **DynamicRAG** [1] introduced a reinforcement learning-based reranker that dynamically adjusts both the number and ordering of retrieved documents per query, using LLM output quality as a reward signal, achieving state-of-the-art results across seven knowledge-intensive benchmarks. **Chain-of-Retrieval Augmented Generation (CoRAG)** [2] proposed multi-step retrieval with dynamic query reformulation, trained via rejection sampling over intermediate retrieval chains, achieving over 10 points improvement in exact match on multi-hop QA tasks and establishing state-of-the-art results on the KILT benchmark. **CoopRAG** [5] introduced a cooperative framework enabling retrievers and LLMs to exchange knowledge through a dual-layer contrasting mechanism, unrolling questions into sub-questions and reasoning chains, outperforming prior methods on both multi-hop and simple QA datasets.\n\nIt is worth noting that **RankRAG** [4], which unified context ranking and answer generation within a single instruction-tuned LLM, appeared at **NeurIPS 2024**, not 2025, and should not be conflated with the 2025 proceedings.\n\n## Limitations of This Analysis\n\nNeurIPS 2025 papers were recently accepted, and citation metrics for 2025 proceedings are not yet meaningfully established [6], [7]. Identifying \"most-cited\" papers at this stage is premature. For accurate citation data, databases such as Google Scholar or Semantic Scholar would need to be consulted directly once sufficient post-publication time has elapsed.",
+  "plan": [
+    "NeurIPS 2025 retrieval-augmented generation papers citations",
+    "most cited RAG papers NeurIPS 2025",
+    "NeurIPS 2025 conference proceedings RAG ranking by citations",
+    "top RAG research papers NeurIPS December 2025",
+    "NeurIPS 2025 accepted papers retrieval augmented generation citation count"
+  ],
+  "sources": [
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/118330",
+      "title": "NeurIPS Poster DynamicRAG: Leveraging Outputs of Large ..."
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/116740",
+      "title": "NeurIPS Poster Chain-of-Retrieval Augmented Generation"
+    },
+    {
+      "url": "https://github.com/DavidZWZ/Awesome-RAG-Reasoning",
+      "title": "[EMNLP 2025] Awesome RAG Reasoning Resources - GitHub"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2024/poster/95135",
+      "title": "NeurIPS Poster RankRAG: Unifying Context Ranking with Retrieval-Augmented Generation in LLMs"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/119248",
+      "title": "Cooperative Retrieval-Augmented Generation for Question Answering"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/papers.html",
+      "title": "NeurIPS 2025 Papers"
+    },
+    {
+      "url": "https://www.paperdigest.org/2025/11/neurips-2025-papers-with-code-data",
+      "title": "NeurIPS 2025 Papers with Code & Data"
+    },
+    {
+      "url": "https://www.reddit.com/r/MachineLearning/comments/1nie5rl/d_neurips_2025_decisions",
+      "title": "[D] - NeurIPS 2025 Decisions : r/MachineLearning - Reddit"
+    },
+    {
+      "url": "https://www.facebook.com/groups/devtitans/posts/1148018020831715",
+      "title": "Outstanding research papers from Neurips 2025 - Facebook"
+    },
+    {
+      "url": "https://neurips.cc/virtual/2025/poster/121659",
+      "title": "Worse than Zero-shot? A Fact-Checking Dataset for Evaluating the ..."
+    },
+    {
+      "url": "https://intuitionlabs.ai/articles/neurips-2025-conference-summary-trends",
+      "title": "NeurIPS 2025: A Guide to Key Papers, Trends & Stats | IntuitionLabs"
+    },
+    {
+      "url": "https://cs.nju.edu.cn/lm/en/post/2025-10-11-neurips-2025-accepted-papers/index.html",
+      "title": "NeurIPS 2025 Accepted Papers Overview - \u5357\u4eac\u5927\u5b66"
+    },
+    {
+      "url": "https://papercopilot.com/paper-list/neurips-paper-list/neurips-2025-paper-list",
+      "title": "NeurIPS 2025 Accepted Paper List - Paper Copilot"
+    }
+  ],
+  "iterations": 1,
+  "elapsed_sec": 47.182912826538086
+}

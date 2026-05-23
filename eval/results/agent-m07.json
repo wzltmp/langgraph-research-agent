@@ -1,0 +1,126 @@
+{
+  "draft": "## LoRA vs. QLoRA Fine-Tuning: Differences and Quality Trade-offs\n\n**Core Architectural Difference**\n\nBoth LoRA and QLoRA freeze a model's pre-trained weights and inject trainable low-rank adapter matrices, training only 0.5\u20135% of total parameters [1]. The critical distinction is that QLoRA additionally quantizes the frozen base model weights to 4-bit precision (using NormalFloat4 format) before applying the LoRA adapters, which themselves remain in higher precision [1][3]. This combination allows, for example, a 33B-parameter model to be fine-tuned on a single 24GB RTX 4090 GPU \u2014 hardware that would be wholly inadequate for standard LoRA on models of that scale [3].\n\n**Memory Savings**\n\nThe memory reduction is substantial and concrete. LoRA requires roughly 2+ GB of VRAM per 1GB of model size, while QLoRA cuts that to approximately 0.5+ GB per 1GB \u2014 a roughly 4\u00d7 reduction compared to LoRA alone [1]. Both methods produce small, portable adapter files (6\u20138MB) rather than full model copies, but QLoRA's quantized base makes the overall training footprint dramatically smaller [2].\n\n**When Quality Costs Become Measurable**\n\nThis is the most nuanced aspect. QLoRA's quantization of the base model introduces rounding errors that can degrade accuracy, and while the unquantized adapters partially compensate, the base model absorbs most of the performance degradation [1]. However, for many standard fine-tuning tasks, research and experiments show no *statistically significant* quality difference from full-precision fine-tuning [3]. Quality costs become more measurable in specific scenarios: tasks requiring high numerical precision, very long-context reasoning, or fine-tuning on small, domain-specific datasets where the model has less signal to overcome quantization noise [1][3]. When hardware is available and quality is paramount \u2014 particularly for production deployments \u2014 LoRA is the preferable choice; QLoRA is best reserved for cases where the memory constraint is the binding limitation and a small accuracy trade-off is acceptable [1].\n\nIn short, QLoRA is a pragmatic engineering compromise: it democratizes fine-tuning of large models on consumer hardware, but practitioners should validate task-specific quality on benchmarks before assuming the quantization cost is negligible.",
+  "plan": [
+    "What is the empirical performance difference (e.g.",
+    "perplexity",
+    "accuracy drop %) between QLoRA and full-precision LoRA on standard benchmarks",
+    "Are there specific task categories or domains where QLoRA consistently underperforms LoRA",
+    "Does the choice of quantization scheme (4-bit vs 8-bit) in QLoRA produce measurable quality differences"
+  ],
+  "sources": [
+    {
+      "url": "https://modal.com/blog/lora-qlora",
+      "title": "LoRA vs. QLoRA: Efficient fine-tuning techniques for LLMs"
+    },
+    {
+      "url": "https://www.mercity.ai/blog-post/guide-to-fine-tuning-llms-with-lora-and-qlora",
+      "title": "In-depth guide to fine-tuning LLMs with LoRA and QLoRA - Mercity.ai"
+    },
+    {
+      "url": "https://www.meta-intelligence.tech/en/insight-lora-finetuning",
+      "title": "LoRA & QLoRA Fine-Tuning: Build Custom LLMs on a Single GPU [2026 Guide]"
+    },
+    {
+      "url": "https://lightning.ai/pages/community/lora-insights",
+      "title": "Finetuning LLMs with LoRA and QLoRA: Insights from Hundreds of Experiments - Lightning AI"
+    },
+    {
+      "url": "https://medium.com/@to.adarshsingh/lora-vs-qlora-a-comprehensive-comparison-ff12117d669b",
+      "title": "LoRA vs QLoRA: A Comprehensive Comparison"
+    },
+    {
+      "url": "https://pub.towardsai.net/lora-qlora-dora-which-fine-tuning-method-should-you-actually-use-296b53ea1aa9",
+      "title": "LoRA, QLoRA, DoRA \u2014 Which Fine-Tuning Method Should You ..."
+    },
+    {
+      "url": "https://medium.com/@tonytong.ai/interactive-study-with-conversation1st-ai-qlora-efficient-finetuning-of-quantized-llms-7b50cb31ea19",
+      "title": "Interactive Study with Conversation1st.ai \u2014 QLoRA: Efficient Finetuning of Quantized LLMs"
+    },
+    {
+      "url": "https://www.ibm.com/docs/en/watsonx/w-and-w/2.1.0?topic=tuning-qlora-fine",
+      "title": "IBM watsonx.ai and watsonx.governance"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/14q51cf/why_isnt_qlora_being_used_more_widely_for_fine",
+      "title": "Why isn't QLoRA being used more widely for fine tuning models?"
+    },
+    {
+      "url": "https://www.newline.co/@Dipen/adapterfusion-vs-loraqlora-for-ai-applications--43288f9c",
+      "title": "AdapterFusion vs LoRA\u2011QLoRA for AI Applications - Newline.co"
+    },
+    {
+      "url": "https://www.redhat.com/en/topics/ai/lora-vs-qlora",
+      "title": "LoRA vs. QLoRA"
+    },
+    {
+      "url": "https://medium.com/@shubhodaya.hampiholi/fine-tuning-llms-for-production-a-practical-guide-to-qlora-evaluation-and-deployment-e161a68584c8",
+      "title": "Fine-Tuning LLMs for Production: A Practical Guide to QLoRA ..."
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12633606",
+      "title": "For clinical data extraction, QLoRA attains accuracy close to LoRA while requiring lower compute resources"
+    },
+    {
+      "url": "https://www.linkedin.com/pulse/lora-vs-qlora-efficient-techniques-fine-tuning-llms-padhy-6ff3c",
+      "title": "LoRA vs. QLoRA: Efficient Techniques for Fine-Tuning LLMs"
+    },
+    {
+      "url": "https://academic.oup.com/rfs/article/37/11/3490/7749383",
+      "title": "Comprehensive 2022 Look at the Empirical Performance of Equity ..."
+    },
+    {
+      "url": "https://www.researchgate.net/publication/5217192_A_Comprehensive_Look_at_The_Empirical_Performance_of_Equity_Premium_Prediction",
+      "title": "A Comprehensive Look at The Empirical Performance of Equity ..."
+    },
+    {
+      "url": "https://breesefine7110.tulane.edu/wp-content/uploads/sites/16/2015/10/Goyal-and-Welch-2008.pdf",
+      "title": "[PDF] A Comprehensive Look at The Empirical Performance of Equity ..."
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Perplexity",
+      "title": "Perplexity - Wikipedia"
+    },
+    {
+      "url": "https://www.perplexity.ai",
+      "title": "Perplexity AI"
+    },
+    {
+      "url": "https://www.builder.io/blog/perplexity-computer",
+      "title": "Perplexity Computer Review: What It Gets Right (and Wrong)"
+    },
+    {
+      "url": "https://www.newline.co/@Dipen/top-7-qlora-tools-for-finetuning-llms--167fe310",
+      "title": "Top 7 QLoRA Tools for Fine\u2011Tuning LLMs - Newline.co"
+    },
+    {
+      "url": "https://medium.com/@jsmith0475/advancing-parameter-efficient-fine-tuning-a-comparative-analysis-of-lora-and-qlora-in-large-d449f0743481",
+      "title": "Advancing Parameter-Efficient Fine-Tuning: A Comparative Analysis ..."
+    },
+    {
+      "url": "https://www.newline.co/@Dipen/ai-applications-with-loraqlora-hybrid--620954dc",
+      "title": "AI Applications with LoRA\u2011QLoRA Hybrid - Newline.co"
+    },
+    {
+      "url": "https://medium.com/@hayagriva99999/lora-and-qlora-an-efficient-approach-to-fine-tuning-large-models-under-the-hood-948468424cd6",
+      "title": "LoRA And QLoRA: An Efficient Approach to Fine-tuning Large ..."
+    },
+    {
+      "url": "https://www.facebook.com/datasciencedojo/posts/-lora-low-rank-adaptation-is-one-of-those-ideas-that-redefined-efficiency-in-mod/851015337448619",
+      "title": "LoRA (Low-Rank Adaptation) is one of those ideas that redefined ..."
+    },
+    {
+      "url": "https://www.digitalapplied.com/blog/quantization-tradeoffs-4bit-8bit-fp8-performance-data",
+      "title": "Quantization Tradeoffs: 4-bit vs 8-bit vs FP8 Data"
+    },
+    {
+      "url": "https://www.sitepoint.com/quantized-local-llms-4bit-vs-8bit-analysis",
+      "title": "Quantized Local LLMs: 4-bit vs 8-bit Performance Analysis | SitePoint"
+    },
+    {
+      "url": "https://medium.com/@mailpraveenreddy.c/qlora-explained-how-4-bit-quantization-enables-efficient-lora-fine-tuning-7fe16aef9b62",
+      "title": "How 4-bit Quantization Enables Efficient LoRA Fine-Tuning - Medium"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 65.69964694976807
+}

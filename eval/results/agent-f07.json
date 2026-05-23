@@ -1,0 +1,57 @@
+{
+  "draft": "## Federal Reserve Federal Funds Rate Target Range at End of Q1 2026\n\nAt the conclusion of the first quarter of 2026, the Federal Reserve maintained its federal funds rate target range at **3.50% to 3.75%**. This decision was formalized at the FOMC's March 18, 2026 meeting, where the Committee voted to hold rates steady [7].\n\nThe rate had remained unchanged since late 2025, following three consecutive rate cuts beginning in September 2025 [5]. The January 2026 FOMC meeting \u2014 the first of the year \u2014 also held the target range steady at 3.50%\u20133.75%, signaling a cautious and data-dependent pause in the easing cycle [5].\n\nAt the March meeting, the FOMC's decision to hold was not unanimous; one member dissented in favor of a 25-basis-point cut [6]. The Fed's updated economic projections reflected growing concern about inflation, with the core PCE forecast for 2026 revised upward to 2.7%, while the growth forecast was simultaneously raised to 2.4% [6]. Federal Reserve Chair Powell acknowledged that tariff-related uncertainty was complicating the inflation outlook and that the Committee preferred to wait for clearer data before adjusting policy further [5].\n\nThe official FOMC statement noted that while economic activity was expanding at a solid pace, inflation remained \"somewhat elevated\" relative to the Fed's 2% target, and job gains had slowed [7]. The Committee emphasized a careful, data-driven approach to any future adjustments.\n\nLooking ahead, the median FOMC member projected one additional rate cut in 2026 and one more in 2027, ultimately bringing the federal funds rate to approximately 3.125% [6]. FRED data confirms the upper limit of the target range stood at **3.75%** as of March 31, 2026, consistent across subsequent weeks into late May 2026 [1].\n\nIn summary, the federal funds rate target range at the end of Q1 2026 was firmly set at **3.50%\u20133.75%**, reflecting the Fed's cautious stance amid persistent inflation and broader economic uncertainty.",
+  "plan": [
+    "Federal Reserve federal funds rate target range March 2026",
+    "Fed funds rate Q1 2026 end",
+    "FOMC federal funds rate decision March 2026",
+    "Federal Reserve interest rate target 31 March 2026"
+  ],
+  "sources": [
+    {
+      "url": "https://fred.stlouisfed.org/series/DFEDTARU",
+      "title": "Federal Funds Target Range - Upper Limit (DFEDTARU) - FRED"
+    },
+    {
+      "url": "https://fred.stlouisfed.org/series/DFF",
+      "title": "Federal Funds Effective Rate (DFF) | FRED | St. Louis Fed"
+    },
+    {
+      "url": "https://www.forbes.com/advisor/investing/fed-funds-rate-history",
+      "title": "Federal Funds Rate History 1990 to 2026"
+    },
+    {
+      "url": "https://tradingeconomics.com/united-states/interest-rate",
+      "title": "United States Fed Funds Interest Rate"
+    },
+    {
+      "url": "https://www.americascreditunions.org/news-media/news/fomc-holds-federal-funds-rate-steady-first-meeting-2026",
+      "title": "FOMC holds federal funds rate steady in first meeting of 2026"
+    },
+    {
+      "url": "https://am.jpmorgan.com/us/en/asset-management/liq/insights/portfolio-insights/fixed-income/fixed-income-perspectives/fomc-statement-march-2026",
+      "title": "FOMC Statement: March 2026 | J.P. Morgan Asset Management"
+    },
+    {
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20260318a.htm",
+      "title": "Federal Reserve issues FOMC statement"
+    },
+    {
+      "url": "https://www.cnbc.com/2026/04/29/fed-interest-rate-decision-april-2026.html",
+      "title": "Fed holds rates steady but with highest level of dissent since 1992"
+    },
+    {
+      "url": "https://www.facebook.com/MothershipSG/posts/the-bank-said-in-march-2026-that-is-still-expected-one-25-basis-point-cut-in-the/1411506704351427",
+      "title": "The bank said in March 2026 that is still expected one 25 basis point ..."
+    },
+    {
+      "url": "https://www.cnbc.com/2026/03/18/fed-interest-rate-decision-march-2026.html",
+      "title": "Fed interest rate decision March 2026: Holds rates steady"
+    },
+    {
+      "url": "https://www.jpmorgan.com/insights/markets-and-economy/economy/fed-meeting-january-2026",
+      "title": "Fed Leaves Rates Unchanged to Start 2026: Is a Cut Coming in ..."
+    }
+  ],
+  "iterations": 1,
+  "elapsed_sec": 36.62364482879639
+}

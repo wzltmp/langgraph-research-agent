@@ -1,0 +1,39 @@
+{
+  "draft": "Here is a comprehensive summary of what Anthropic announced with the Claude Opus 4.7 launch in 2026:\n\n---\n\n**Anthropic's Claude Opus 4.7 Launch (April 16, 2026)**\n\nAnthropic released Claude Opus 4.7 on April 16, 2026. The model is now generally available and is a notable improvement on Opus 4.6, particularly in advanced software engineering, with gains on the most difficult tasks. [1][2]\n\n**Coding and Agentic Improvements**\n\nUsers report being able to hand off their hardest coding work \u2014 the kind that previously needed close supervision \u2014 to Opus 4.7 with confidence. The model handles complex, long-running tasks with rigor and consistency, pays precise attention to instructions, and devises ways to verify its own outputs before reporting back. [4] Claude Opus 4.7 is designed for complex coding, agent workflows, multimodal tasks, and professional knowledge work. [6]\n\n**Vision Upgrades**\n\nOpus 4.7 processes images at resolutions up to 2,576 pixels on the long edge, representing more than three times the capacity of prior Claude models. [8] It's also more tasteful and creative when completing professional tasks, producing higher-quality interfaces, slides, and docs. [4]\n\n**New Developer Tools**\n\nAnthropic introduced a new \"xhigh\" effort level between high and max, giving users finer control over the tradeoff between reasoning and latency on hard problems. In Claude Code, the default effort level was raised to xhigh for all plans. [4] On the API platform, Anthropic launched task budgets in public beta, and in Claude Code, a new `/ultrareview` slash command was introduced to produce a dedicated review session that flags bugs and design issues. [4]\n\n**Cybersecurity Safeguards**\n\nOpus 4.7 is the first model in which Anthropic experimented with efforts to differentially reduce cyber capabilities compared to Mythos Preview. It is being released with safeguards that automatically detect and block requests indicating prohibited or high-risk cybersecurity uses. [4] Security professionals wishing to use Opus 4.7 for legitimate cybersecurity purposes such as vulnerability research and penetration testing are invited to join Anthropic's new Cyber Verification Program. [4]\n\n**Claude Design**\n\nAlongside the model, Anthropic released Claude Design, a collaborative visual creation tool on April 17, 2026, that lets users generate designs, prototypes, slides, and marketing materials through natural-language prompts, powered by Claude Opus 4.7. [2]\n\n**Availability**\n\nOpus 4.7 is available across all Claude products and the API, Amazon Bedrock, Google Cloud's Vertex AI, and Microsoft Foundry. [4]",
+  "sources": [
+    {
+      "url": "https://www.cnbc.com/2026/04/16/anthropic-claude-opus-4-7-model-mythos.html",
+      "title": "Anthropic rolls out Claude Opus 4.7, an AI model that is less risky than Mythos"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Claude_(language_model)",
+      "title": "Claude (language model) - Wikipedia"
+    },
+    {
+      "url": "https://dataconomy.com/2026/04/15/anthropic-to-launch-claude-opus-4-7-this-week/",
+      "title": "Anthropic To Launch Claude Opus 4.7 This Week - Dataconomy"
+    },
+    {
+      "url": "https://www.anthropic.com/news/claude-opus-4-7",
+      "title": "Introducing Claude Opus 4.7"
+    },
+    {
+      "url": "https://releasebot.io/updates/anthropic",
+      "title": "Anthropic Release Notes - May 2026 Latest Updates - Releasebot"
+    },
+    {
+      "url": "https://www.scriptbyai.com/anthropic-claude-timeline/",
+      "title": "Claude Timeline: From Claude 1, Claude Code to Claude Opus 4.7 (2026)"
+    },
+    {
+      "url": "https://cryptobriefing.com/anthropic-launches-claude-design-with-claude-opus-47-resolving-market-timelines/",
+      "title": "Anthropic launches Claude Design with Claude Opus 4.7, resolving market timelines"
+    },
+    {
+      "url": "https://rollingout.com/2026/04/16/anthropic-claude-opus-4-7-new-upgrades/",
+      "title": "Anthropic launches Claude Opus 4.7 with bold new upgrades"
+    }
+  ],
+  "web_searches": 1,
+  "elapsed_sec": 19.961894989013672
+}

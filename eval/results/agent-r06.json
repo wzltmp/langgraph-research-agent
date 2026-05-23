@@ -1,0 +1,108 @@
+{
+  "draft": "# LangGraph 1.x Changes During 2025\u20132026\n\n## Release Timeline and Stability\n\nLangGraph 1.0 alpha launched in mid-2025 alongside LangChain 1.0 alpha for both Python and JavaScript, with the stable 1.0 release targeting late October 2025 [1][5]. Notably, the alpha proved stable enough that developers did not need to restructure existing code when migrating to stable [5]. The release came with a formal stability commitment guaranteeing no breaking changes until a future v2.0, establishing LangGraph as a production-ready framework [4].\n\n## Core Philosophy and Architecture\n\nThe guiding principle of the 1.x line was \"shrink surface area, harden the runtime\" [1]. LangGraph became the underlying execution engine for LangChain 1.0's new `create_agent` abstraction, creating a clean separation: `create_agent` handles standard tool-calling loops while raw LangGraph provides explicit workflow control [4]. Several components were deprecated in favor of this unified model, including `create_react_agent`, `AgentState`, `AgentStatePydantic`, `ValidationNode`, and `MessageGraph` [6]. Python 3.9 support was also dropped, requiring Python 3.10 or higher [6].\n\n## Production Runtime Enhancements\n\nThe 1.x line hardened several production-facing capabilities. Core features included deterministic concurrency, checkpointing for persistence, human-in-the-loop via `interrupt()`, and time-travel functionality enabling resume, branching, and auditing from any prior checkpoint [1].\n\n## Later Incremental Improvements (v1.2.0)\n\nSubsequent patch releases added meaningful capabilities. Version 1.2.0 introduced per-node timeouts via `run_timeout` and `idle_timeout` options, node-level error handlers for recovery and compensation patterns, and graceful shutdown that saves resumable checkpoints [2]. A new beta `DeltaChannel` type was added to store only incremental deltas rather than full state snapshots, reducing checkpoint overhead for long-running threads with large data such as message lists [2]. Additionally, a version 3 event streaming API was launched with a content-block-centric protocol and typed per-channel projections including `run.values`, `run.messages`, `run.lifecycle`, and `run.subgraphs` [2].\n\nTaken together, the 1.x line transformed LangGraph from an experimental tool into a stable, operationally mature framework purpose-built for durable, controllable agent execution [4][1].",
+  "plan": [
+    "What are the specific dates/versions for v1.2.0 release and subsequent 1.x releases through 2026",
+    "What evidence supports the claim that \"alpha proved stable enough developers faced no breaking changes\"",
+    "What is the complete list of deprecated components and their replacement paths"
+  ],
+  "sources": [
+    {
+      "url": "https://aimug.org/docs/sep-2025/thunderstorm-talks/langchain-langgraph-update",
+      "title": "LangChain / LangGraph 1.0 Alpha Update | AI Middleware Users Group"
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/releases/changelog",
+      "title": "Changelog - Docs by LangChain"
+    },
+    {
+      "url": "https://agentnativedev.medium.com/langchain-and-langgraph-v1-0-beyond-release-notes-into-real-roi-7538fc02ff83",
+      "title": "LangChain and LangGraph v1.0: Beyond Release Notes, Into Real ..."
+    },
+    {
+      "url": "https://dev.to/theprodsde/langgraph-vs-semantic-kernel-python-ai-agents-in-2026-1p4g",
+      "title": "LangGraph vs Semantic Kernel: Python AI Agents in 2026"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/jovannjegic_langchain-langgraph-10-alpha-released-activity-7368973420585263104-DB8J",
+      "title": "LangChain & LangGraph 1.0 alpha released, stable in October"
+    },
+    {
+      "url": "https://docs.langchain.com/oss/python/migrate/langgraph-v1",
+      "title": "LangGraph v1 migration guide - Docs by LangChain"
+    },
+    {
+      "url": "https://learnopencv.com/langgraph-self-correcting-agent-code-generation",
+      "title": "LangGraph: Building self-correcting RAG agent"
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/1hsjdto/how_to_enable_feedbackdriven_workflow_improvement",
+      "title": "How to Enable Feedback-Driven Workflow Improvement in Agentic ..."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=dIb-DujRNEo",
+      "title": "Agentic AI With Langgraph And MCP Crash Course-Part 1 - YouTube"
+    },
+    {
+      "url": "https://eastondev.com/blog/en/posts/ai/20260424-langgraph-agent-architecture",
+      "title": "LangGraph State Management in Practice: 2026 Agent Architecture Best Practices \u00b7 BetterLink Blog"
+    },
+    {
+      "url": "https://medium.com/@o39joey/a-comprehensive-guide-to-langgraph-managing-agent-state-with-tools-ae932206c7d7",
+      "title": "A Comprehensive Guide to LangGraph: Managing Agent State with Tools"
+    },
+    {
+      "url": "https://sparkco.ai/blog/mastering-langgraph-state-management-in-2025",
+      "title": "Mastering LangGraph State Management in 2025 - Sparkco"
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/issues/4973",
+      "title": "LangGraph v1 roadmap \u2013 feedback wanted! #4973 - GitHub"
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/releases",
+      "title": "Releases \u00b7 langchain-ai/langgraph - GitHub"
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/1l41wxv/langgraph_v1_roadmap_feedback_wanted",
+      "title": "LangGraph v1 roadmap - feedback wanted! : r/LangChain - Reddit"
+    },
+    {
+      "url": "https://nodejs.org/en/about/previous-releases",
+      "title": "Node.js \u2014 Node.js Releases"
+    },
+    {
+      "url": "https://github.com/hashicorp/terraform/releases",
+      "title": "Releases \u00b7 hashicorp/terraform - GitHub"
+    },
+    {
+      "url": "https://cert-manager.io/docs/releases",
+      "title": "Supported Releases - cert-manager Documentation"
+    },
+    {
+      "url": "https://www.robeco.com/en-us/insights/2026/05/innovation-where-it-matters-generating-alpha-while-maintaining-disciplined-control",
+      "title": "Innovation where it matters: generating alpha while maintaining ..."
+    },
+    {
+      "url": "https://medium.com/@reyanshicodes/ai-didnt-replace-developers-in-2026-it-exposed-them-89f64b6be2ef",
+      "title": "AI Didn't Replace Developers in 2026 \u2014 It Exposed Them - Medium"
+    },
+    {
+      "url": "https://github.com/microsoft/FluidFramework/wiki/Breaking-vs-Non-breaking-Changes",
+      "title": "Breaking vs Non breaking Changes \u00b7 microsoft/FluidFramework Wiki"
+    },
+    {
+      "url": "https://community.atlassian.com/forums/Jira-questions/Can-I-make-quot-deprecated-quot-old-unused-components/qaq-p/729647",
+      "title": "Can I make \"deprecated\" (old, unused) components u..."
+    },
+    {
+      "url": "https://cwiki.apache.org/confluence/display/NIFI/Migrating+Deprecated+Components+and+Features+for+2.0.0",
+      "title": "Migrating Deprecated Components and Features for 2.0.0 - Apache NiFi - Apache Software Foundation"
+    },
+    {
+      "url": "https://javadoc.jetty.org/jetty-12/deprecated-list.html",
+      "title": "Deprecated List (Jetty :: Project 12.0.35 API)"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 58.7971830368042
+}

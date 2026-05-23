@@ -1,0 +1,96 @@
+{
+  "draft": "# When Hybrid Retrieval Outperforms Pure Dense Retrieval\n\nHybrid retrieval (BM25 + dense vectors) does not universally outperform pure dense retrieval \u2014 its advantage is conditional on query type, domain, and implementation quality.\n\n## When Hybrid Retrieval Wins\n\nHybrid retrieval most reliably outperforms pure dense retrieval in scenarios involving **exact terminology, product codes, proper nouns, or domain-specific jargon** where dense models lack precision [1]. In these cases, BM25's exact keyword matching compensates for a known weakness of dense embeddings: they can retrieve semantically plausible but factually incorrect results when specific tokens matter [2]. Legal and technical domains are cited as strong use cases, where statutory references and precise terminology require lexical matching that dense models frequently miss [1].\n\nHybrid approaches also outperform pure dense retrieval when **queries are short and specific**, since dense models struggle more with limited context, whereas BM25 reliably surfaces exact matches [2].\n\n## Benchmark Evidence\n\nThe most concrete quantitative result available comes from practitioner testing: on a 50-question evaluation set, switching from pure dense retrieval to hybrid (BM25 + dense) improved accuracy from approximately **60% to 85%** \u2014 a ~25 percentage point gain [3]. While this is a single case study rather than a standardized benchmark, it illustrates the magnitude of improvement possible in favorable conditions.\n\nResearch on LexBoost confirms that hybrid-inspired methods can match or exceed exhaustive dense retrieval effectiveness while adding minimal latency overhead, since the dense neighbor component is built offline at index time rather than at query time [7].\n\n## When Hybrid Does Not Help\n\nCritically, hybrid retrieval can **underperform BM25 alone** when fusion is poorly calibrated [4]. A key implementation challenge is score incompatibility: BM25 scores are unbounded (roughly 0.1\u201350+) while dense similarity scores cluster in narrow ranges (0.6\u20130.9), making direct score combination invalid [1]. Reciprocal Rank Fusion (RRF) is recommended precisely because it is score-agnostic and avoids this problem [1]. Without careful fusion and reranking, hybrid approaches show inconsistent results across datasets [4].\n\n## Summary\n\nHybrid retrieval provides the clearest gains \u2014 potentially 20\u201325 percentage points in accuracy \u2014 on **keyword-sensitive, domain-specific queries** with proper RRF-based fusion [1][3]. On semantically rich, conversational queries, pure dense retrieval often remains competitive or superior [4].",
+  "plan": [
+    "benchmark comparison metrics across standard IR datasets",
+    "hybrid retrieval performance on BEIR or MS MARCO with specific MRR/NDCG numbers",
+    "explanation of why LexBoost's \"comparable to exhaustive dense\" differs from the 25-point improvement claim"
+  ],
+  "sources": [
+    {
+      "url": "https://ranjankumar.in/building-a-full-stack-hybrid-search-system-bm25-vectors-cross-encoders-with-docker",
+      "title": "Building Hybrid Search That Actually Works: BM25 + Dense Retrieval + Cross-Encoders | Ranjan Kumar"
+    },
+    {
+      "url": "https://app.answerthis.io/shared/compare-bm25-and-llm-based-vector-embeddings-for-i-4UI",
+      "title": "BM25 vs LLM-Based Vector Embeddings for Information Retrieval"
+    },
+    {
+      "url": "https://www.reddit.com/r/Rag/comments/1rf7xf6/whats_your_experience_with_hybrid_retrieval",
+      "title": "What's your experience with hybrid retrieval (vector + BM25) vs pure ..."
+    },
+    {
+      "url": "https://www.cosdata.io/blog/the-hybrid-search-trap-why-bm-25-alone-often-beats-hybrid-retrieval",
+      "title": "The Hybrid Search Trap - Why BM25 Alone Often Beats Hybrid Retrieval"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=XvKiTfd6Xvo",
+      "title": "The Complete Guide to Hybrid Search in RAG (BM25 + Embeddings ..."
+    },
+    {
+      "url": "https://blog.premai.io/hybrid-search-for-rag-bm25-splade-and-vector-search-combined",
+      "title": "Hybrid Search for RAG: BM25, SPLADE, and Vector Search Combined"
+    },
+    {
+      "url": "https://arxiv.org/html/2409.05882v1",
+      "title": "Improving Lexical Document Retrieval with Nearest Neighbors - arXiv"
+    },
+    {
+      "url": "https://ieeexplore.ieee.org/document/11379254",
+      "title": "Evaluating Lexical, Dense, and Hybrid Retrieval Pipelines for RAG | IEEE Conference Publication | IEEE Xplore"
+    },
+    {
+      "url": "https://bigdataboutique.com/blog/sparse-vs-dense-vectors-how-lexical-and-semantic-search-actually-work",
+      "title": "Sparse vs Dense Vectors: How Lexical and Semantic Search Actually Work - BigData Boutique"
+    },
+    {
+      "url": "https://blog.gopenai.com/hybrid-search-in-rag-dense-sparse-bm25-splade-reciprocal-rank-fusion-and-when-to-use-which-fafe4fd6156e",
+      "title": "Hybrid Search in RAG: Dense + Sparse (BM25/SPLADE ... - GoPenAI"
+    },
+    {
+      "url": "https://mbrenndoerfer.com/writing/hybrid-search-bm25-dense-retrieval-fusion",
+      "title": "Hybrid Search: BM25 and Dense Retrieval Combined - Interactive"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/charukagunawardhane_how-can-we-utilize-hybrid-search-to-enhance-activity-7395671357684006912-qkmm",
+      "title": "How Hybrid Search Enhances RAG Systems | Charuka Gunawardhane posted on the topic | LinkedIn"
+    },
+    {
+      "url": "https://aimultiple.com/hybrid-rag",
+      "title": "Hybrid RAG: Boosting RAG Accuracy"
+    },
+    {
+      "url": "https://zilliz.com/glossary/beir",
+      "title": "Benchmarking IR Information Retrieval (BEIR)"
+    },
+    {
+      "url": "https://webis.de/data/ir-benchmarks.html",
+      "title": "Webis Data IR Benchmarks"
+    },
+    {
+      "url": "https://www.emergentmind.com/topics/beir-benchmark",
+      "title": "BEIR Benchmark for IR Models - Emergent Mind"
+    },
+    {
+      "url": "https://blog.vespa.ai/improving-zero-shot-ranking-with-vespa-part-two",
+      "title": "Improving Zero-Shot Ranking with Vespa Hybrid Search - part two | Vespa Blog"
+    },
+    {
+      "url": "https://medium.com/@adnanmasood/hybrid-retrieval-augmented-generation-systems-for-knowledge-intensive-tasks-10347cbe83ab",
+      "title": "Hybrid Retrieval-Augmented Generation Systems for Knowledge ..."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=86hv0ZpcIJ0",
+      "title": "MTEB, BEIR, MS MARCO, Metrics & Emerging Trends - YouTube"
+    },
+    {
+      "url": "https://arxiv.org/abs/2409.05882",
+      "title": "Improving Lexical Document Retrieval with Nearest Neighbors - arXiv"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/National_Socialist_Program",
+      "title": "National Socialist Program - Wikipedia"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 64.61742806434631
+}

@@ -1,0 +1,96 @@
+{
+  "draft": "# OpenAI DevDay October 2025: Major Announcements\n\nOpenAI held its third annual DevDay on October 6, 2025, at Fort Mason in San Francisco, drawing over 1,500 attendees. CEO Sam Altman delivered the opening keynote, with a fireside chat featuring Apple designer Jony Ive later in the day [2].\n\n## ChatGPT as a Platform\n\nThe most significant strategic announcement was OpenAI's transformation of ChatGPT into an application platform resembling an operating system. A new **Apps SDK**, built on Model Context Protocol (MCP) as an open standard, allows third-party apps\u2014including Spotify, Canva, Zillow, Figma, Booking.com, and Expedia\u2014to integrate directly into ChatGPT with deep context and data-sharing capabilities [7]. This represents a deliberate shift away from raw model development toward making AI practically useful across all software [8]. The scale of the platform is notable: ChatGPT serves 800 million weekly active users, with 4 million developers processing 6 billion tokens per minute via the API [7].\n\n## AgentKit and Developer Tooling\n\nOpenAI launched **AgentKit**, a comprehensive toolkit for building, deploying, and monitoring AI agent workflows, complete with visual builders and evaluation tools [1]. Additional developer tools included **ChatKit** and **Codex**, the latter now generally available with a reported 10x increase in usage since August 2025 [1]. These tools collectively represent OpenAI's push to own the \"agentic stack\" for developers [8].\n\n## Model Releases via API\n\nOn the model side, OpenAI made **GPT-5 Pro**, **gpt-realtime-mini**, and **Sora 2** available through the API [1]. GPT-5 Pro offers high-accuracy reasoning capabilities, while Sora 2 enables realistic text-to-video generation for developers to integrate into their own products [6]. However, these were largely broader rollouts of existing models rather than entirely new releases, consistent with OpenAI's pattern of launching major models outside of scheduled events [8].\n\nOverall, DevDay 2025 signaled OpenAI's pivot from being a model provider to becoming the foundational layer for conversational software and agentic applications.",
+  "plan": [
+    "unsupported claim about Jony Ive fireside chat details",
+    "missing verification of specific app integrations and their integration depth",
+    "missing details on GPT-5 Pro capabilities and availability criteria"
+  ],
+  "sources": [
+    {
+      "url": "https://www.zdnet.com/article/everything-openai-announced-at-devday-2025-agent-kit-apps-sdk-chatgpt-and-more",
+      "title": "Everything OpenAI announced at DevDay 2025: AgentKit, Apps SDK, ChatGPT, and more | ZDNET"
+    },
+    {
+      "url": "https://techcrunch.com/2025/10/06/what-to-expect-at-openais-devday-2025-and-how-to-watch-it",
+      "title": "What to expect at OpenAI's DevDay 2025, and how to watch it | TechCrunch"
+    },
+    {
+      "url": "https://www.cnbc.com/2025/10/06/open-ai-devday-live-updates-altman-jony-ive.html",
+      "title": "OpenAI DevDay: Jony Ive says pace of change in AI is 'extraordinary'"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=eF0al29IGOc",
+      "title": "OpenAI DevDay 2025: Agent Builder, GPT-5 Pro, and the ... - YouTube"
+    },
+    {
+      "url": "https://marketing4ecommerce.net/en/openai-gpt-5-pro",
+      "title": "OpenAI introduces GPT-5 Pro at DevDay 2025"
+    },
+    {
+      "url": "https://medium.com/@servifyspheresolutions/openai-devday-2025-models-explained-gpt-5-pro-sora-2-gpt-image-1-mini-and-more-f5fe30ba9456",
+      "title": "OpenAI DevDay 2025 Models Explained: GPT-5 Pro, Sora ... - Medium"
+    },
+    {
+      "url": "https://mindset.ai/blogs/the-loop-ep33-openain-devday-2025-summarized",
+      "title": "Top Three Announcements From OpenAI DevDay 2025 | In The Loop Episode 33 \u2014 Mindset AI"
+    },
+    {
+      "url": "https://www.prompthub.us/blog/openai-devday-2025-roundup-apps-agents-and-the-new-ai-stack",
+      "title": "OpenAI DevDay 2025 Roundup: Apps, Agents, and the New AI Stack"
+    },
+    {
+      "url": "https://techinformed.com/openai-devday-2025-apps-agents-and-enterprise-push",
+      "title": "OpenAI DevDay 2025: Apps, Agents, and Enterprise Push - TechInformed OpenAI DevDay 2025: Apps, Agents, and Enterprise Push"
+    },
+    {
+      "url": "https://imagenly.ai/blog/openai-dev-day-2025-complete-breakdown",
+      "title": "OpenAI Dev Day 2025: Everything Announced Today (Complete ..."
+    },
+    {
+      "url": "https://openai.com/devday",
+      "title": "OpenAI DevDay 2025"
+    },
+    {
+      "url": "https://cybernews.com/ai-news/openai-dev-day-2025-altman-keynote-api-announcenents",
+      "title": "OpenAI DevDay 2025 key takeaways\u200b | Cybernews"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=wLb9g_8r-mE",
+      "title": "A conversation with Jony Ive - YouTube"
+    },
+    {
+      "url": "https://www.nbcnews.com/tech/tech-news/tim-cook-disputes-absurd-reports-about-jony-ive-s-departure-n1025461",
+      "title": "Tim Cook disputes 'absurd' reports about Jony Ive's departure from Apple"
+    },
+    {
+      "url": "https://mashable.com/article/jony-ive-leaving-apple",
+      "title": "Apple's design chief Jony Ive is leaving the company - Mashable"
+    },
+    {
+      "url": "https://appinstitute.com/common-integration-issues-in-no-code-platforms",
+      "title": "Common Integration Issues in No-Code Platforms - App Institute"
+    },
+    {
+      "url": "https://pheedloop.com/blog/event-tech-ams-integration-questions",
+      "title": "Event Tech and AMS Integrations: 12 Questions to Ask Before You Buy"
+    },
+    {
+      "url": "https://stackoverflow.com/questions/78163859/itms-91053-missing-api-declaration-privacy",
+      "title": "ios - ITMS-91053: Missing API declaration - Privacy - Stack Overflow"
+    },
+    {
+      "url": "https://www.reddit.com/r/ChatGPTPro/comments/1mk8hm4/openai_announces_gpt5_a_unified_system_replacing",
+      "title": "OpenAI Announces GPT-5: A Unified System Replacing All Previous ..."
+    },
+    {
+      "url": "https://www.wired.com/story/openais-gpt-5-is-here",
+      "title": "OpenAI Finally Launched GPT-5. Here's Everything You Need to Know"
+    },
+    {
+      "url": "https://openai.com/index/introducing-gpt-5",
+      "title": "Introducing GPT-5 - OpenAI"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 57.44655203819275
+}

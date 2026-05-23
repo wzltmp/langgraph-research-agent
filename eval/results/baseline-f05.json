@@ -1,0 +1,67 @@
+{
+  "draft": "Here is a comprehensive answer based on the latest available data:\n\n---\n\n## Latest Stable Version of LangGraph on PyPI (May 2026)\n\nAs of May 2026, the latest stable version of **LangGraph** published on PyPI is **1.2.1**. According to PyPI download stats, LangGraph's latest version is **1.2.1**, with key dependencies including `langchain-core`, `langgraph-checkpoint`, `langgraph-prebuilt`, `langgraph-sdk`, `pydantic`, and `xxhash`.\n\nThis follows the major **1.2.0** release, which itself was a significant milestone for the framework. LangGraph 1.2.0 was released on May 11, 2026, and was described as fixing long-standing production pain points by treating an agent run as a durable graph execution rather than a Python function call.\n\n### Version History Leading Up to 1.2.x\n\nLangGraph has had a rapid release cadence in the 1.x series. Earlier stable releases in the run-up to 1.2 included **1.1.0** (March 10, 2026), **1.0.10** (February 27, 2026), **1.0.9** (February 19, 2026), **1.0.8** (February 6, 2026), and **1.0.0** (October 17, 2025). LangGraph's release cadence has been fast \u2014 three minor versions shipped between January and May 2026 alone.\n\n### About LangGraph\n\nLangGraph is a library for building stateful, multi-actor applications with LLMs, built on top of LangChain. It extends the LangChain Expression Language with the ability to coordinate multiple chains (or actors) across multiple steps of computation in a cyclic manner. It is LangChain's low-level agent orchestration framework and runtime, suited for advanced use cases that require a combination of deterministic and agentic workflows, heavy customization, and carefully controlled latency.\n\n### Ecosystem Packages\n\nAlongside the core `langgraph` package, related packages have also been actively updated:\n- **langgraph-sdk** (latest: 0.3.15) was released on May 22, 2026, and serves as the SDK for interacting with the LangGraph API.\n- **langgraph-cli** (latest: 0.4.26) was released on May 12, 2026.\n- **langgraph-checkpoint-sqlite** (latest: 3.1.0) was released on May 12, 2026, as a SQLite implementation of the LangGraph checkpoint saver.\n\nIn summary, **LangGraph 1.2.1** is the latest stable release on PyPI as of May 2026, capping a period of very active development in the 1.x line that began with 1.0.0 in October 2025.",
+  "sources": [
+    {
+      "url": "https://pypi.org/project/langgraph/",
+      "title": "LangGraph"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-cli/",
+      "title": "langgraph-cli \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/ag-ui-langgraph/",
+      "title": "ag-ui-langgraph \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-prebuilt/",
+      "title": "langgraph-prebuilt \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-sdk/",
+      "title": "langgraph-sdk \u00b7 PyPI"
+    },
+    {
+      "url": "https://github.com/langchain-ai/langgraph/releases",
+      "title": "Releases \u00b7 langchain-ai/langgraph"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph/0.0.25/",
+      "title": "langgraph \u00b7 PyPI"
+    },
+    {
+      "url": "https://tech-insider.org/langgraph-tutorial-python-stateful-agent-13-steps-2026/",
+      "title": "LangGraph Tutorial: Build AI Agents in 13 Steps [2026]"
+    },
+    {
+      "url": "https://www.piwheels.org/project/langgraph-api/",
+      "title": "piwheels - langgraph-api"
+    },
+    {
+      "url": "https://pypi.org/project/langgraph-checkpoint-sqlite/",
+      "title": "langgraph-checkpoint-sqlite \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/project/langchain/",
+      "title": "langchain \u00b7 PyPI"
+    },
+    {
+      "url": "https://pypi.org/user/langchain/",
+      "title": "Profile of langchain \u00b7 PyPI"
+    },
+    {
+      "url": "https://deps.dev/pypi/langgraph/0.1.19/dependencies?filter=license:%22MIT%22",
+      "title": "Dependencies | langgraph | PyPI"
+    },
+    {
+      "url": "https://pypistats.org/packages/langgraph",
+      "title": "PyPI Download Stats"
+    },
+    {
+      "url": "https://reference.langchain.com/python/langgraph/version",
+      "title": "version | langgraph | LangChain Reference"
+    }
+  ],
+  "web_searches": 2,
+  "elapsed_sec": 19.80415391921997
+}

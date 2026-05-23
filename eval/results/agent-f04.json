@@ -1,0 +1,72 @@
+{
+  "draft": "## Tavily Search API Free Tier Monthly Search Limit (2026)\n\nAs of 2026, Tavily Search API's free tier provides **1,000 API credits per month**, requiring no credit card to access. This allocation is available under what Tavily calls the \"Researcher\" plan, designed for new users and developers testing the platform before committing to paid options [3][8].\n\n### Credit-to-Search Conversion\n\nUnderstanding the practical search limit requires knowing how credits map to requests. Each basic search query consumes 1 API credit, meaning the free tier effectively supports up to **1,000 basic searches per month** [3]. More resource-intensive query types may consume additional credits per request, so actual search volume could be lower depending on usage patterns.\n\n### Paid Upgrade Options\n\nFor users exceeding the free tier, Tavily offers several upgrade paths [4][8]:\n\n- **Pay-As-You-Go**: $0.008 per credit, with no monthly commitment\n- **Project Plan**: 4,000 credits/month at approximately $0.123/month\n- **Higher subscription tiers**: Ranging up to enterprise-level custom pricing, with per-credit costs decreasing as volume increases ($0.005\u2013$0.0075 per credit on subscription plans)\n\n### Rate Limits vs. Monthly Limits\n\nIt is worth distinguishing monthly credit limits from rate limits. Separately, Tavily enforces per-minute request caps: up to **100 requests per minute (RPM)** in development environments and **1,000 RPM** in production environments [5]. These apply regardless of tier and govern request frequency rather than total monthly volume.\n\n### Context\n\nTavily was acquired by Nebius in February 2026 [7], though as of available documentation, the free tier monthly credit allocation of 1,000 credits remains unchanged from prior periods [3][4][8]. Users relying on this limit for production planning should monitor Tavily's official documentation for any post-acquisition pricing adjustments.\n\nIn summary, the free tier monthly search limit is **1,000 credits**, equating to up to 1,000 basic searches per month [3][8].",
+  "plan": [
+    "Tavily Search API free tier limit 2026 verification",
+    "Tavily Nebius acquisition February 2026 impact on pricing",
+    "Keiro API free tier comparison accuracy"
+  ],
+  "sources": [
+    {
+      "url": "https://www.buildmvpfast.com/api-costs/ai-search",
+      "title": "AI Search API Pricing (April 2026) | Tavily, Exa, Serper, SerpAPI ..."
+    },
+    {
+      "url": "https://www.reddit.com/r/LangChain/comments/1q7548g/im_the_tech_lead_at_keiro_were_5x_faster_than",
+      "title": "I'm the Tech Lead at Keiro - we're 5x faster than Tavily and ... - Reddit"
+    },
+    {
+      "url": "https://docs.tavily.com/documentation/api-credits",
+      "title": "Credits & Pricing - Tavily Docs"
+    },
+    {
+      "url": "https://docs.tavily.com/faq/faq",
+      "title": "Frequently Asked Questions - Tavily Docs"
+    },
+    {
+      "url": "https://help.tavily.com/articles/3240802908-rate-limits",
+      "title": "Rate Limits - Tavily Help Center"
+    },
+    {
+      "url": "https://medium.com/@minhle_0210/boost-your-rag-performance-with-tavily-search-api-607a6437ab8e",
+      "title": "Boost Your RAG Performance with Tavily Search API | by Minh Le Duc"
+    },
+    {
+      "url": "http://websearchapi.ai/blog/tavily-alternatives",
+      "title": "Beyond Tavily - The Complete Guide to AI Search APIs in 2026"
+    },
+    {
+      "url": "https://www.tavily.com/pricing",
+      "title": "Find a plan to power your AI Agents - Tavily"
+    },
+    {
+      "url": "https://openclawlaunch.com/guides/tavily-api-key",
+      "title": "TAVILY_API_KEY: Free Signup, Direct Link & Code Examples (2026)"
+    },
+    {
+      "url": "https://docs.tavily.com/documentation/rate-limits",
+      "title": "Rate Limits - Tavily Docs"
+    },
+    {
+      "url": "https://sacra.com/c/tavily",
+      "title": "Tavily funding, news & analysis | Sacra"
+    },
+    {
+      "url": "https://nebius.com/newsroom/nebius-announces-agreement-to-acquire-tavily-to-add-agentic-search-to-its-ai-cloud-platform",
+      "title": "Nebius announces agreement to acquire Tavily to add agentic search to its AI cloud platform"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/rotem-weiss_super-excited-to-share-that-tavily-is-joining-activity-7427039565422698496-TFw2",
+      "title": "Super excited to share that Tavily is joining Nebius. Building Tavily has been a deeply non-linear journey - constant iteration, hard calls, and learning to stay short-term impatient while remaining\u2026 | Rotem Weiss | 190 comments"
+    },
+    {
+      "url": "https://keirolabs.cloud/blogs/comparisons/what-is-the-best-api-for-devrel-and-community-research",
+      "title": "What Is the Best API for DevRel and Community Research? | Keiro"
+    },
+    {
+      "url": "https://pecollective.com/blog/ai-free-tiers-compared",
+      "title": "11 AI Free Tiers Compared: Limits and Catches (2026)"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 54.48245406150818
+}

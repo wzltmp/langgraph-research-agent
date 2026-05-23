@@ -1,0 +1,105 @@
+{
+  "draft": "# Meta's Llama 4 Release in 2025\n\n## Release Status\n\nYes, Meta released Llama 4 in 2025. Two models \u2014 **Llama 4 Scout** and **Llama 4 Maverick** \u2014 were officially launched on **April 5, 2025** [3]. A third model, Llama 4 Behemoth, was originally anticipated for early summer 2025 but has since been delayed to fall 2025 or later as Meta works to improve its performance to match earlier public claims [1].\n\n## Context Windows\n\nThe two released models feature notably large context windows. Llama 4 Scout supports a **10 million-token context window**, the largest of the family, while Llama 4 Maverick offers a **1 million-token context window** [3][4]. These represent a significant expansion in long-context processing capacity compared to prior generations.\n\n## Key Capabilities\n\nBoth Scout and Maverick share several important capabilities [3][4]:\n\n- **Multimodal input**: Both models accept text and image inputs, built using an \"early fusion\" architecture that enables unified vision-language understanding, though outputs are text-only.\n- **Mixture-of-Experts (MoE) architecture**: Despite large total parameter counts (Scout at 109B, Maverick at 400B), only approximately 17B parameters are activated per token, making inference more efficient.\n- **Reasoning and knowledge tasks**: Both models demonstrate strong performance on reasoning, coding, and knowledge benchmarks, competing with models like GPT-4o and Gemini 2.0 [4].\n- **Multilingual support**: The models support 12 languages for text input [3].\n\n## Summary\n\nIn short, Meta did release Llama 4 in 2025, delivering two capable multimodal models with exceptionally large context windows, while the flagship Behemoth model remains pending due to ongoing development challenges [1][3].",
+  "plan": [
+    "What evidence supports the April 5",
+    "2025 release date",
+    "What specific benchmarks demonstrate competitiveness with GPT-4o and Gemini 2.0",
+    "Does Meta officially confirm the MoE activation figures and technical architecture details"
+  ],
+  "sources": [
+    {
+      "url": "https://siliconangle.com/2025/05/15/meta-postpone-release-llama-4-behemoth-model-report-claims",
+      "title": "Meta to postpone release of Llama 4 Behemoth model, report claims"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1hhyozf/we_will_get_multiple_release_of_llama_4_in_2025",
+      "title": "We will get multiple release of Llama 4 in 2025"
+    },
+    {
+      "url": "https://www.techtarget.com/whatis/feature/Meta-Llama-4-explained-Everything-you-need-to-know",
+      "title": "Meta Llama 4 explained: Everything you need to know - TechTarget"
+    },
+    {
+      "url": "https://gradientflow.com/llama-4-what-you-need-to-know",
+      "title": "Llama 4: What You Need to Know - Gradient Flow"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=k6g-8pl8sXc",
+      "title": "How Big a Deal is Llama 4's 10M Token Context Window? - YouTube"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1jt35yu/what_is_your_opinion_on_using_llama_4s_10m",
+      "title": "What is your opinion on using Llama 4's 10M context window as ..."
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=TIZmjmsBh20",
+      "title": "LLAMA 4 in 9 Minutes - YouTube"
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1jsbdm8/llama_4_benchmarks",
+      "title": "Llama 4 benchmarks : r/LocalLLaMA - Reddit"
+    },
+    {
+      "url": "https://techcrunch.com/2025/04/05/meta-releases-llama-4-a-new-crop-of-flagship-ai-models",
+      "title": "Meta releases Llama 4, a new crop of flagship AI models | TechCrunch"
+    },
+    {
+      "url": "https://www.cnbc.com/2025/04/05/meta-debuts-new-llama-4-models-but-most-powerful-ai-model-is-still-to-come.html",
+      "title": "Meta debuts new Llama 4 models, but most powerful AI model is still ..."
+    },
+    {
+      "url": "https://www.reddit.com/r/LocalLLaMA/comments/1jrfqnu/meta_set_to_release_llama_4_this_month_per_the",
+      "title": "Meta Set to Release Llama 4 This Month, per The Information ..."
+    },
+    {
+      "url": "https://www.brookings.edu/articles/the-power-of-protest-in-the-us",
+      "title": "The power of protest in the US | Brookings"
+    },
+    {
+      "url": "https://www.instagram.com/reel/DIH7ouZP6_f",
+      "title": "We do not have a functioning democracy anymore. Trump and his ..."
+    },
+    {
+      "url": "https://www.history.com/this-day-in-history/april-5",
+      "title": "What Happened on April 5 | HISTORY"
+    },
+    {
+      "url": "https://www.imdb.com/year/2025",
+      "title": "Movie, Release date between 2025-01-01 and 2025-12-31 (Sorted by Popularity Ascending)"
+    },
+    {
+      "url": "https://www.boxofficemojo.com/calendar/2025-01-01",
+      "title": "Domestic Release Schedule - Box Office Mojo"
+    },
+    {
+      "url": "https://www.movieinsider.com/movies/2025",
+      "title": "Movies Released in 2025 List"
+    },
+    {
+      "url": "https://llmbase.ai/compare/gemini-2-0-flash,gpt-4o-chatgpt",
+      "title": "Compare Gemini 2.0 Flash (Feb '25) vs GPT-4o (ChatGPT) | AI Model Comparison"
+    },
+    {
+      "url": "https://medium.com/data-science-collective/why-is-llama-4-much-better-than-gpt-4o-and-gemini-2-0-flash-here-is-the-result-6532da7534fb",
+      "title": "Why is LLama 4 Much Better Than GPT-4o and Gemini 2.0 Flash"
+    },
+    {
+      "url": "https://www.reddit.com/r/ChatGPT/comments/1hgxs9i/how_come_gemini_20_flash_surpasses_4o_on_almost",
+      "title": "How come Gemini 2.0 Flash surpasses 4o on almost every ... - Reddit"
+    },
+    {
+      "url": "https://www.techtarget.com/searchenterpriseai/feature/Mixture-of-experts-models-explained-What-you-need-to-know",
+      "title": "Mixture-of-experts models explained: What you need to know"
+    },
+    {
+      "url": "https://www.facebook.com/groups/698593531630485/posts/1447055796784251",
+      "title": "MoE Architecture - Facebook"
+    },
+    {
+      "url": "https://dev.to/sohamehta/llama-4-metas-moe-powered-multimodal-revolution-3f3k",
+      "title": "Llama 4: Meta\u2019s MoE-Powered Multimodal Revolution - DEV Community"
+    }
+  ],
+  "iterations": 2,
+  "elapsed_sec": 50.075531005859375
+}
