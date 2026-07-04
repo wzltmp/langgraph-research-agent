@@ -23,6 +23,7 @@ from dotenv import load_dotenv
 from tavily import TavilyClient
 
 from src.exceptions import EmptyLLMResponseError, PlanParseError
+from src.mcp_client import summarize_via_mcp
 from src.state import AgentState, Source
 
 load_dotenv()
@@ -186,6 +187,19 @@ def read_node(state: AgentState) -> AgentState:
             break
         if source["content"]:
             continue
+
+        mcp_summary = summarize_via_mcp(source["url"], n_bullets=3)
+        if mcp_summary is not None:
+            sources[idx] = Source(
+                url=source["url"],
+                title=source["title"],
+                snippet=source["snippet"],
+                content=mcp_summary[:CONTENT_CHAR_LIMIT],
+            )
+            notes.append(f"({source['title']}) {mcp_summary}")
+            budget -= 1
+            continue
+
         text = _fetch_clean_text(source["url"]) or source["snippet"] or ""
         sources[idx] = Source(
             url=source["url"],

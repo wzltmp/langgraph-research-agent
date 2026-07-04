@@ -65,7 +65,8 @@ graph TD
 2. **Model split: Sonnet for writing, Haiku for the rest.** The writer needs synthesis quality. The planner, reader, and critic are pattern-recognition tasks where Haiku is roughly free relative to Sonnet. Empirical cost: ~$0.05–$0.10 per query end-to-end.
 3. **Parallel sub-query search.** Sub-queries are dispatched to Tavily concurrently via a `ThreadPoolExecutor` (`max_workers=5`). With 4 sub-queries this drops search latency from ~4–8s sequential to ~1–2s — the largest single latency win in the pipeline.
 4. **Cross-iteration source dedup + read-skip.** When the critic triggers another search pass, new sources are merged with existing ones (not replaced), and the reader skips any source whose `content` field is already populated. This prevents redundant Tavily calls and trafilatura fetches.
-5. **LLM-judge eval with cost tracking.** Twenty queries spanning factual / multi-hop / recent, judged on three explicit axes by Claude Sonnet 4.6, with `must_mention` keyword heuristic as a sanity check. Each run is saved to `eval/results/*.json`, with per-query token usage and estimated $ cost tracked in `summary.csv`.
+5. **Read step calls a deployed MCP server instead of duplicating fetch+summarize logic.** `read_node` first tries `summarize_via_mcp()`, which calls the `summarize_url` tool on the live [mcp-automations](https://github.com/wzltmp/mcp-automations) MCP server — the same fetch-and-summarize job this repo used to reimplement locally. Any failure (network error, tool error, timeout) falls back to the original local `_fetch_clean_text` + Haiku-summarize path unchanged, so a dependent-service outage degrades gracefully instead of breaking the agent.
+6. **LLM-judge eval with cost tracking.** Twenty queries spanning factual / multi-hop / recent, judged on three explicit axes by Claude Sonnet 4.6, with `must_mention` keyword heuristic as a sanity check. Each run is saved to `eval/results/*.json`, with per-query token usage and estimated $ cost tracked in `summary.csv`.
 
 ## Code quality
 
@@ -121,7 +122,6 @@ LangGraph auto-instruments to [LangSmith](https://smith.langchain.com) when thre
 
 ## Caveats and what I'd do next
 
-- **No parallel sub-query search.** Each sub-query runs sequentially. Going parallel with `asyncio.gather` would cut wall time by 2-3×.
 - **No source caching across queries.** Two users asking similar questions don't share retrieval results. A simple URL-keyed cache would help on a high-traffic deployment.
 - **Single-query, no chat history.** Each invocation is independent. A real research session would benefit from follow-up turns sharing state.
 - **No streaming token output.** The Streamlit UI streams node-level progress but not Sonnet's tokens within the writer. Adding `messages.stream()` for the writer would make the long wait feel shorter.

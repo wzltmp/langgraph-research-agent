@@ -97,9 +97,9 @@ def test_read_node_skips_already_read_sources():
         del model, prompt, max_tokens
         return "fake-summary"
 
-    with patch.object(nodes, "_fetch_clean_text", side_effect=_fake_fetch), patch.object(
-        nodes, "_chat", side_effect=_fake_chat
-    ):
+    with patch.object(nodes, "summarize_via_mcp", return_value=None), patch.object(
+        nodes, "_fetch_clean_text", side_effect=_fake_fetch
+    ), patch.object(nodes, "_chat", side_effect=_fake_chat):
         out = nodes.read_node(state)
 
     assert fetch_calls == ["u2"]
@@ -121,13 +121,36 @@ def test_read_node_respects_max_sources_budget():
     ]
     state = _state(query="Q", sources=already_read + fresh, notes=[])
 
-    with patch.object(nodes, "_fetch_clean_text", return_value="X"), patch.object(
-        nodes, "_chat", return_value="summary"
-    ):
+    with patch.object(nodes, "summarize_via_mcp", return_value=None), patch.object(
+        nodes, "_fetch_clean_text", return_value="X"
+    ), patch.object(nodes, "_chat", return_value="summary"):
         out = nodes.read_node(state)
 
     read_count = sum(1 for s in out["sources"] if s["content"])
     assert read_count == nodes.MAX_SOURCES_READ
+
+
+def test_read_node_uses_mcp_summary_and_skips_local_fetch_when_available():
+    """When the MCP Automations server returns a summary, read_node must use it
+    directly and must NOT fall back to the local fetch+chat path."""
+    state = _state(
+        query="Q",
+        sources=[Source(url="u1", title="T1", snippet="s1", content="")],
+        notes=[],
+    )
+
+    def _fail_if_called(*args, **kwargs):
+        raise AssertionError("local fetch/chat path should not run when MCP succeeds")
+
+    with patch.object(
+        nodes, "summarize_via_mcp", return_value="- mcp bullet one\n- mcp bullet two"
+    ), patch.object(nodes, "_fetch_clean_text", side_effect=_fail_if_called), patch.object(
+        nodes, "_chat", side_effect=_fail_if_called
+    ):
+        out = nodes.read_node(state)
+
+    assert out["sources"][0]["content"] == "- mcp bullet one\n- mcp bullet two"
+    assert "mcp bullet one" in out["notes"][0]
 
 
 # ---------- critique_node iteration logic ----------
